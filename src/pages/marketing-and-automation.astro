@@ -113,9 +113,11 @@ const outcomes = [
     margin: 0;
   }
 
+  /* Theme: the middle of 20/60/20 columns, which stops growing at about 40em. */
   .closing {
     display: flex;
     width: 60%;
+    max-width: var(--measure-closing);
     margin-inline: auto;
     padding-block: var(--space-md);
     flex-direction: column;

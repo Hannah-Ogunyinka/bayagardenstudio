@@ -175,6 +175,7 @@
   --measure-band: 31.25rem;             /* 500px: text beside the image in service intro bands */
   --measure-hero-intro: 28rem;          /* 448px: service and projects hero intros */
   --measure-intro: 37.5rem;             /* 600px: centred page intros */
+  --measure-closing: 40.625em;          /* closing line on the Grow page (scales with its text) */
   --measure-cta: 40.625rem;             /* 650px: call-to-action headings */
   --measure-plan: 25rem;                /* 400px: pricing plan cards */
   --plan-column: 26.625rem;             /* 426px: care plan column holding one card */
