@@ -147,6 +147,7 @@
   --measure-intro: 37.5rem;             /* 600px: centred page intros */
   --measure-cta: 40.625rem;             /* 650px: call-to-action headings */
   --measure-plan: 25rem;                /* 400px: pricing plan cards */
+  --plan-column: 26.625rem;             /* 426px: care plan column holding one card */
   --measure-project: 23.75rem;          /* 380px: project card summaries */
   --measure-photo: 43.75rem;            /* 700px: photography panel */
 

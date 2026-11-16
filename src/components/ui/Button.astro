@@ -66,7 +66,12 @@ const { href, variant = 'fill', arrow = false, size = 'default', class: classNam
     border-color: var(--color-purple);
     background-color: var(--color-glass);
     color: var(--color-text);
-    font-weight: 500;
+    font-weight: var(--weight-medium);
+
+    /* Theme core-button.css: outline buttons tighten on small phones. */
+    @media (--xs-down) {
+      padding: 0.8em 2.4em;
+    }
   }
 
   .button--outline:hover {

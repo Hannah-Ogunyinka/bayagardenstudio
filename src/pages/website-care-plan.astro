@@ -36,6 +36,8 @@ const plans = [
   {
     name: 'Comprehensive plan',
     price: 125,
+    /* The theme sets this price on two lines, with a blank line under "from". */
+    stacked: true,
     features: [
       ...shared,
       'Daily cloud back ups',
@@ -88,7 +90,7 @@ const plans = [
       </p>
       <p>Baya Garden Studio will handle all the technical details, so you can focus on running your business.</p>
     </div>
-    <div>
+    <div class="why__lined">
       <p>
         We’ll keep your website software up-to-date, perform regular backups to prevent data loss, and optimise the
         backend codebase and assets to keep your site responsive and performant.
@@ -104,13 +106,21 @@ const plans = [
     <h2 id="pricing-title">Website Care Plans</h2>
     <div class="plans">
       {
-        plans.map(({ name, price, features }) => (
+        plans.map(({ name, price, features, stacked }) => (
           <article class="plan" aria-labelledby={`plan-${price}`}>
             <div class="plan__head">
               <h3 id={`plan-${price}`}>{name}</h3>
-              <p class="plan__price">
-                <span class="plan__unit">from</span> £{price} <span class="plan__unit">Monthly</span>
-              </p>
+              {stacked ? (
+                <p class="plan__price plan__price--stacked">
+                  <span class="plan__unit">from</span>
+                  <br />
+                  <br />£{price} <span class="plan__unit">Monthly</span>
+                </p>
+              ) : (
+                <p class="plan__price">
+                  <span class="plan__unit">from</span> £{price} <span class="plan__unit">Monthly</span>
+                </p>
+              )}
               <Button href="/contact/" variant="outline" aria-describedby={`plan-${price}`}>
                 Book today
               </Button>
@@ -131,9 +141,12 @@ const plans = [
 </BaseLayout>
 
 <style>
+  /* Kept inside the 1920px frame on very wide screens, as on the live site. */
   .illustration img {
     display: block;
     width: 100%;
+    max-width: var(--container-wide);
+    margin-inline: auto;
     height: auto;
     margin-block: var(--space-md);
   }
@@ -156,10 +169,19 @@ const plans = [
     margin-block: 0 var(--stack-s);
   }
 
+  /* The theme's second column is one paragraph split by a blank line. */
+  .why__lined p {
+    margin-bottom: 1lh;
+  }
+
+  .why p:last-child {
+    margin-bottom: 0;
+  }
+
   .pricing {
     max-width: var(--container-wide);
     margin-inline: auto;
-    padding: var(--space-md) var(--space-md) var(--space-2xl);
+    padding: var(--space-md);
   }
 
   .pricing h2 {
@@ -173,16 +195,24 @@ const plans = [
     text-align: center;
   }
 
+  /* Theme: two 426px columns side by side down to 782px, each card capped
+     at 400px and centred in its column. */
   .plans {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, var(--plan-column)));
     justify-content: center;
-    align-items: flex-start;
-    /* The live cards sit 13px in from each 426px column. */
-    gap: var(--space-md) calc(var(--space-md) + 2 * 0.8125rem); /* token-exempt: live column inset */
+    align-items: start;
+    gap: var(--space-md);
+
+    /* Stacked WordPress columns sit flush. */
+    @media (--md-down) {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+    }
   }
 
   .plan {
+    justify-self: center;
     width: min(100%, var(--measure-plan));
     padding: var(--space-sm);
     border: var(--border-hairline) solid var(--color-grey-200);
@@ -211,13 +241,20 @@ const plans = [
     text-transform: capitalize;
   }
 
+  /* Theme: the price shrinks to its text and is centred; when it wraps on very
+     wide screens, "Monthly" drops to a left-aligned second line. */
   .plan__price {
     margin: 0;
     font-size: var(--text-h2-sm);
     font-weight: var(--weight-bold);
-    /* Wrapped prices stay compact, as on the live site; padding keeps one-line prices at full height. */
-    padding-block: 0.33em;
-    line-height: 1.05;
+    line-height: var(--leading-body);
+    text-align: start;
+  }
+
+  /* Theme: line-height 0.7 on the centred two-line price, so the gap under "from" stays tight. */
+  .plan__price--stacked {
+    line-height: 0.7; /* token-exempt: theme's stacked price */
+    text-align: center;
   }
 
   /* Bold at 18.66px or more, so the brighter purple passes large-text contrast. */
@@ -225,11 +262,6 @@ const plans = [
     color: var(--color-purple);
     font-size: var(--text-lead);
     font-weight: var(--weight-bold);
-  }
-
-  .plan__head :global(.button) {
-    padding-inline: 2.8em;
-    font-weight: var(--weight-medium);
   }
 
   .plan__features {

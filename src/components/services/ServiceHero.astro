@@ -22,7 +22,7 @@ const hasAction = Astro.slots.has('action');
 
 <header class="service-hero">
   <p class="service-hero__eyebrow">{eyebrow}</p>
-  <h1 class:list={[`service-hero__title--${size}`]}>{title}</h1>
+  <h1 class:list={[`service-hero__title--${size}`, { 'service-hero__title--spaced': hasAction }]}>{title}</h1>
   <div class:list={['service-hero__foot', { 'service-hero__foot--action': hasAction, 'service-hero__foot--ruled': ruled }]}>
     <p class:list={['service-hero__intro', { 'service-hero__intro--wide': introWidth === 'wide' }]}>{intro}</p>
     {hasAction && <div class="service-hero__action"><slot name="action" /></div>}
@@ -62,6 +62,11 @@ const hasAction = Astro.slots.has('action');
 
   .service-hero__title--small {
     font-size: var(--text-display-sm);
+  }
+
+  /* With an action row (Support), the theme's title keeps its block gap below. */
+  .service-hero__title--spaced {
+    margin-bottom: var(--space-sm);
   }
 
   .service-hero__intro.service-hero__intro--wide {
