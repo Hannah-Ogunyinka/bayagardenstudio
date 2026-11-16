@@ -65,7 +65,7 @@ const hasAction = Astro.slots.has('action');
   }
 
   .service-hero__intro.service-hero__intro--wide {
-    max-width: 24.2em;
+    max-width: var(--measure-m); /* 480px */
   }
 
   .service-hero__foot--ruled {
@@ -79,7 +79,7 @@ const hasAction = Astro.slots.has('action');
   }
 
   .service-hero__intro {
-    max-width: 22.4em;
+    max-width: var(--measure-hero-intro);
     margin: 0;
     padding-block: var(--space-md);
     font-size: var(--text-body);

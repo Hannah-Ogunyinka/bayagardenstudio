@@ -51,7 +51,7 @@ const { image, paragraphGap = 'block' } = Astro.props;
   }
 
   .intro-band__text :global(p) {
-    max-width: 25em;
+    max-width: var(--measure-band);
     margin: 0 auto;
     color: inherit;
   }

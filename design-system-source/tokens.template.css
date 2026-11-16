@@ -142,6 +142,8 @@
   --measure-xl: 48rem;
   --measure-2xl: 52rem;
   --measure-prose: 32rem;               /* post body column, as on the live site */
+  --measure-band: 31.25rem;             /* 500px: text beside the image in service intro bands */
+  --measure-hero-intro: 28rem;          /* 448px: service and projects hero intros */
   --measure-intro: 37.5rem;             /* 600px: centred page intros */
   --measure-cta: 40.625rem;             /* 650px: call-to-action headings */
   --measure-plan: 25rem;                /* 400px: pricing plan cards */
@@ -171,6 +173,11 @@
   --container-max: 81.25rem;            /* 1300px: most content */
   --container-content: 80rem;           /* 1280px: home page sections */
   --container-cards: 78.75rem;          /* 1260px: package cards */
+  --card-min-h: 17.5rem;                /* 280px: Build page second-row cards */
+  --card-light-max-h: 35rem;            /* 560px: Build page lightweight card */
+  --hero-max-h: 67.5rem;                /* 1080px: tallest the services hero gets */
+  --space-hero-after: 16rem;            /* theme spacer under the services hero */
+  --space-hero-after-fluid: clamp(1rem, 49.455vw - 26.509rem, 16rem); /* the same spacer from 890px to 1420px */
   --container-policy: 70rem;            /* 1120px: privacy and cookie policies */
   --container-about: 63.75rem;          /* 1020px: about page text columns */
   --container-split: 67.5rem;           /* 1080px: two-column copy on service pages */
@@ -200,6 +207,7 @@
   --avatar-size: 3rem;                  /* 48px */
   --avatar-author: 6rem;                /* 96px: article author box */
   --icon-back: 1.5625rem;               /* 25px: back-link arrow */
+  --icon-add-on: 2.5rem;                /* 40px: Build page add-on icons */
   --icon-feature: 2rem;                 /* 32px service icons */
   --icon-social: 1.25rem;               /* 20px */
   --icon-offer: 3.75rem;                /* 60px home offer icons */

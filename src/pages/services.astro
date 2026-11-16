@@ -98,26 +98,31 @@ const services = [
 
 <style>
   /*
-   * Tiled hero, measured from the live site. Three columns of client-work tiles
-   * (1012 × 806 screenshots); the centre column sits half a tile higher and the
-   * grid starts under the header, so the top row is cropped.
+   * Tiled hero, from the theme's .services-pg-hero1-* rules: a 100vh section
+   * (at most 1080px) holding a three-column grid of 109%-wide tiles that is
+   * raised by 35% of the section (20% below 1421px), so the top row runs
+   * under the header and the bottom row runs under the service cards.
    */
   .hero {
     --gap: 2em;
-    --header-h: var(--header-height);
-    --tile-w: calc((108.5vw - 2 * var(--gap)) / 3);
-    --tile-h: calc(var(--tile-w) * 0.7976);
 
-    display: flow-root; /* keeps the grid's negative margin inside the hero */
-    overflow: clip;
-    margin-top: calc(-1 * var(--header-h));
-    margin-bottom: calc(var(--tile-h) * 0.78);
+    position: relative;
+    height: 100vh;
+    max-height: var(--hero-max-h);
+    margin-bottom: var(--space-hero-after);
+
+    @media (--hero-compact) {
+      margin-bottom: var(--space-hero-after-fluid);
+    }
   }
 
   .hero__grid {
+    position: relative;
+    bottom: 35%;
     display: grid;
-    grid-template-columns: repeat(3, var(--tile-w));
-    grid-auto-rows: calc((var(--tile-h) - var(--gap)) / 2);
+    /* 1fr, not minmax(0, 1fr): as on the live site, the centre column widens
+       to fit the title on narrow laptops. */
+    grid-template-columns: repeat(3, 1fr);
     grid-template-areas:
       '.           centre-top    .'
       'left-top    centre-top    right-top'
@@ -126,14 +131,35 @@ const services = [
       'left-bottom centre-bottom right-bottom'
       '.           centre-bottom .';
     gap: var(--gap);
-    margin-top: calc(-0.5 * (var(--tile-h) + var(--gap)));
-    margin-left: -2.85vw;
+    overflow-x: clip;
+
+    @media (--hero-compact) {
+      bottom: 20%;
+    }
+  }
+
+  /* Every cell is 109% of its column; tiles keep the screenshots' 1012 × 806 shape. */
+  .hero__tile,
+  .hero__title-tile {
+    position: relative;
+    width: 109%;
   }
 
   .hero__tile {
-    width: 100%;
-    height: 100%;
+    max-width: none;
+    height: auto;
+    aspect-ratio: 1012 / 806;
     object-fit: cover;
+  }
+
+  .hero__tile--left-top,
+  .hero__tile--left-bottom {
+    left: -9%;
+  }
+
+  .hero__tile--right-top,
+  .hero__tile--right-bottom {
+    right: -9%;
   }
 
   .hero__tile--centre-top {
@@ -187,17 +213,21 @@ const services = [
   /* Phones and tablets: only the centre column, stacked. */
   @media (--lg-down) {
     .hero {
-      --header-h: 0;
       --top-h: calc((109vw - var(--gap)) * 0.7944);
 
-      margin-bottom: calc(14vw + 9rem); /* token-exempt: space under the hero, measured from the live site */
+      overflow-x: clip;
+      height: auto;
+      max-height: none;
+      margin-bottom: calc(14vw + 9rem - 2 * var(--space-md)); /* token-exempt: space under the hero, measured from the live site */
     }
 
     .hero__grid {
+      bottom: auto;
       display: flex;
       flex-direction: column;
       gap: var(--gap);
       margin: 0;
+      overflow-x: visible;
     }
 
     .hero__tile--left-top,
@@ -234,8 +264,11 @@ const services = [
   }
 
   /* Service cards */
+  /* Positioned so the cards paint over the hero's bottom row, as on the live site. */
   .services {
+    position: relative;
     max-width: var(--container-wide);
+    padding-top: calc(2 * var(--space-md));
     margin-inline: auto;
     padding-inline: calc(var(--space-sm) + var(--space-md));
     padding-bottom: var(--space-2xl);

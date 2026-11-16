@@ -166,12 +166,17 @@ const addOns = [
       'theme     theme     seo     domain'
       'templates templates light   light'
       'support   support   light   light';
+    /* The two right-hand cards split the feature card's height evenly, as the
+       theme's calc(50% - gap / 2) does. */
+    grid-template-rows: 1fr 1fr auto auto;
     gap: var(--space-md);
+    margin-bottom: 0;
     padding: var(--space-xl) 0 var(--space-md);
     list-style: none;
 
     @media (--xl-down) {
       max-width: var(--container-narrow);
+      grid-template-rows: none;
       grid-template-columns: 1fr 1fr;
       grid-template-areas:
         'theme     theme'
@@ -192,10 +197,14 @@ const addOns = [
     display: flex;
     min-width: 0;
     flex-direction: column;
-    padding: var(--inset-m) 1.5em;
+    padding: var(--inset-m);
     border: var(--border-hairline) solid var(--color-grey-200);
     border-radius: var(--radius-panel);
     background-color: var(--color-white);
+  }
+
+  .card > :last-child {
+    margin-bottom: 0;
   }
 
   .card h3 {
@@ -219,6 +228,13 @@ const addOns = [
 
   .card--theme {
     grid-area: theme;
+    padding-inline: 1.5em;
+  }
+
+  /* The two narrow cards set their titles tighter. */
+  .card--seo h3,
+  .card--domain h3 {
+    line-height: var(--leading-snug);
   }
 
   .card--images {
@@ -233,6 +249,13 @@ const addOns = [
     grid-area: domain;
   }
 
+  /* Theme: the two left cards in the second row are at least 280px tall,
+     and the lightweight card at most 560px plus the gap. */
+  .card--templates,
+  .card--support {
+    min-height: var(--card-min-h);
+  }
+
   .card--templates {
     grid-area: templates;
   }
@@ -243,13 +266,16 @@ const addOns = [
 
   .card--light {
     grid-area: light;
+    max-height: calc(var(--card-light-max-h) + var(--space-md));
     overflow: hidden;
   }
 
+  /* Bleeds to the card's edges, as the theme's full-width image block does. */
   .card__image {
-    width: 100%;
+    width: calc(100% + 3em);
+    max-width: none;
     height: auto;
-    margin-top: auto;
+    margin: auto -1.5em 0;
   }
 
   .card__graphic {
@@ -269,7 +295,7 @@ const addOns = [
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: var(--space-md);
-    margin-block: var(--space-md) var(--space-xl);
+    margin-block: var(--space-md) 0;
     padding: 0;
     list-style: none;
 
@@ -290,8 +316,12 @@ const addOns = [
 
   .add-on__icon {
     display: block;
-    width: 1.7em;
+    width: var(--icon-add-on);
     height: auto;
+  }
+
+  .add-on > :last-child {
+    margin-bottom: 0;
   }
 
   /* At least 24px so the purple passes large-text contrast on the lilac card. */

@@ -33,3 +33,6 @@
 @custom-media --2xl-down (width <= 90em);
 @custom-media --3xl-up (width > 120em);
 @custom-media --3xl-down (width <= 120em);
+
+/* The theme's services hero rises less and has a smaller spacer below 1421px. */
+@custom-media --hero-compact (width < 88.8125em);
