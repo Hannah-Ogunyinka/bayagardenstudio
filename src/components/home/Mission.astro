@@ -1,0 +1,105 @@
+---
+import { getImage } from 'astro:assets';
+import Stamp from '@assets/icons/stamp-mission.svg';
+import desk from '@assets/images/home/mission-desk.jpg';
+
+const background = await getImage({ src: desk, width: 1920, format: 'webp', quality: 82 });
+---
+
+<section class="mission" aria-labelledby="mission-title" style={`--mission-bg: url('${background.src}')`}>
+  <div class="mission__overlay">
+    <Stamp class="mission__stamp" aria-hidden="true" />
+    <div class="mission__text">
+      <p class="mission__eyebrow">Our mission</p>
+      <h2 id="mission-title">Elevating Brands, Simplifying Workflows, Unleashing Creativity</h2>
+      <p>At Baya Garden Studio, website design and business automation is at the heart of what we do.</p>
+      <p>
+        We serve as your tech partners, sculpting your digital home and optimising your business processes, freeing you
+        up to do what you do best: Create.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .mission {
+    max-width: calc(var(--content-max) - 2 * var(--space-md));
+    margin: 0 var(--space-md);
+    border-radius: 1em;
+    background: var(--mission-bg) center / cover;
+
+    @media (min-width: 1921px) {
+      margin-inline: auto;
+    }
+  }
+
+  .mission__overlay {
+    position: relative;
+    display: flex;
+    min-height: 75vh;
+    max-height: 1080px;
+    align-items: center;
+    justify-content: flex-end;
+    padding: var(--space-md);
+    border-radius: 1em;
+    background-color: rgb(30 30 30 / 55%);
+
+    @media (max-width: 782px) {
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+
+  .mission__stamp {
+    position: absolute;
+    bottom: 10%;
+    left: 4%;
+    width: clamp(6rem, 12vw, 10rem);
+    color: var(--color-white);
+    animation: rotate 7s linear infinite;
+
+    @media (max-width: 782px) {
+      position: static;
+      margin-bottom: var(--space-md);
+    }
+  }
+
+  @keyframes rotate {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .mission__text {
+    max-width: 34rem;
+    text-align: right;
+
+    @media (max-width: 782px) {
+      text-align: center;
+    }
+  }
+
+  .mission p,
+  .mission h2 {
+    color: var(--color-white);
+  }
+
+  .mission__eyebrow {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    font-family: var(--font-heading);
+    font-size: var(--text-xl);
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .mission__text > p:not(.mission__eyebrow) {
+    font-size: var(--text-sm);
+  }
+</style>

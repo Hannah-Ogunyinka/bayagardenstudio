@@ -1,0 +1,106 @@
+---
+/**
+ * Newsletter sign-up (first name, last name, email).
+ * Posts to the on-demand /api/newsletter/ endpoint, which validates the input,
+ * checks Turnstile and adds the contact to Brevo. Works without JavaScript.
+ *
+ * Every field has a real label (visually hidden to keep the original design),
+ * and the status region announces the result to screen readers.
+ */
+interface Props {
+  /** Unique prefix so the form can appear twice on one page (menu + footer). */
+  id: string;
+  /** "stacked" in the menu overlay; "inline" in the footer band. */
+  layout?: 'stacked' | 'inline';
+}
+
+const { id, layout = 'stacked' } = Astro.props;
+const field = (name: string) => `${id}-${name}`;
+---
+
+<form
+  class:list={['newsletter-form', `newsletter-form--${layout}`]}
+  method="post"
+  action="/api/newsletter/"
+  data-newsletter-form
+  aria-describedby={field('status')}
+>
+  <div class="newsletter-form__names">
+    <div>
+      <label class="sr-only" for={field('first-name')}>First name</label>
+      <input id={field('first-name')} name="firstName" type="text" autocomplete="given-name" placeholder="First name" />
+    </div>
+    <div>
+      <label class="sr-only" for={field('last-name')}>Last name</label>
+      <input id={field('last-name')} name="lastName" type="text" autocomplete="family-name" placeholder="Last name" />
+    </div>
+  </div>
+  <div>
+    <label class="sr-only" for={field('email')}>Email address (required)</label>
+    <input
+      id={field('email')}
+      name="email"
+      type="email"
+      autocomplete="email"
+      placeholder="Email address"
+      required
+      aria-required="true"
+    />
+  </div>
+  <button type="submit">Sign up today</button>
+  <p id={field('status')} class="newsletter-form__status" role="status" aria-live="polite"></p>
+</form>
+
+<style>
+  .newsletter-form {
+    display: grid;
+    gap: 0.8rem;
+    font-family: var(--font-body);
+  }
+
+  .newsletter-form__names {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+  }
+
+  .newsletter-form--stacked .newsletter-form__names {
+    @media (max-width: 960px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  button {
+    justify-self: start;
+    padding: 0.9em 2.8em;
+    border: 0;
+    border-radius: var(--radius-button);
+    background-color: var(--color-purple);
+    color: var(--color-white);
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    letter-spacing: 0.04rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition:
+      background-color 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  button:hover {
+    background-color: var(--color-grey-950);
+    box-shadow: var(--shadow-float);
+  }
+
+  .newsletter-form__status:empty {
+    display: none;
+  }
+
+  .newsletter-form__status {
+    margin: 0;
+    padding: 0.8em 1em;
+    border-radius: 16px;
+    background-color: var(--color-grey-100);
+    color: var(--color-text);
+  }
+</style>

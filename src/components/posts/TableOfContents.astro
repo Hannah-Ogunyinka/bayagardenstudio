@@ -1,0 +1,65 @@
+---
+/** Generated from the post's own headings, so it never goes out of date. */
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+  headings: MarkdownHeading[];
+}
+
+const items = Astro.props.headings.filter((heading) => heading.depth === 2);
+---
+
+{
+  items.length > 1 && (
+    <nav class="toc" aria-labelledby="toc-title">
+      <h2 id="toc-title">Table of contents</h2>
+      <ol>
+        {items.map((heading) => (
+          <li>
+            <a href={`#${heading.slug}`}>{heading.text}</a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+  )
+}
+
+<style>
+  .toc {
+    position: sticky;
+    top: 2rem;
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+  }
+
+  h2 {
+    display: inline-block;
+    margin-bottom: 0.6rem;
+    padding: 0.2em 0.4em;
+    background-color: var(--color-text);
+    color: var(--color-white);
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    font-weight: 400;
+    text-transform: none;
+  }
+
+  ol {
+    margin: 0;
+    padding-left: 1.2em;
+  }
+
+  li {
+    margin-bottom: 0.4em;
+  }
+
+  a {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--color-purple);
+    text-decoration: underline;
+  }
+</style>

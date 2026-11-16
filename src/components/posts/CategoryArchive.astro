@@ -1,0 +1,60 @@
+---
+import PostCard from './PostCard.astro';
+import type { Post } from '@lib/content';
+
+interface Props {
+  name: string;
+  posts: Post[];
+}
+
+const { name, posts } = Astro.props;
+---
+
+<section class="archive">
+  <a class="back-link" href="/insights/"><span aria-hidden="true">←</span> Back to articles</a>
+  <h1>{name}</h1>
+  <ul class="archive__grid" role="list">
+    {
+      posts.map((post) => (
+        <li>
+          <PostCard post={post} headingLevel="h2" />
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .archive {
+    max-width: var(--content-max);
+    margin-inline: auto;
+    padding: var(--space-md) var(--space-md) var(--space-xl);
+  }
+
+  .back-link {
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .back-link span {
+    color: var(--color-purple);
+  }
+
+  h1 {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+  }
+
+  .archive__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+    gap: var(--space-md);
+    max-width: 960px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+</style>

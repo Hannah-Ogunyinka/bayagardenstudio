@@ -1,0 +1,75 @@
+/*
+ * Design tokens carried over from the WordPress theme (theme.json + live global styles).
+ * Names are semantic; the original WordPress slug is noted where it differs.
+ */
+:root {
+  /* Colour */
+  --color-purple-dark: #7b11a8;
+  --color-purple: #9747ff; /* custom-light-purple: the accent */
+  --color-green: #098485;
+  --color-grey-50: #f5f5f5;
+  --color-grey-100: #eaeaea; /* custom-very-light-grey: page background */
+  --color-grey-200: #dbdbdb;
+  --color-grey-400: #969696;
+  --color-grey-600: #646464;
+  --color-grey-800: #373737; /* custom-light-grey: body text */
+  --color-grey-950: #101014;
+  --color-black: #000;
+  --color-white: #fff;
+
+  --color-bg: var(--color-grey-100);
+  --color-text: var(--color-grey-800);
+  --color-accent: var(--color-purple);
+  --color-focus: var(--color-purple-dark);
+
+  /* Typography */
+  --font-heading: var(--font-poppins);
+  --font-body: var(--font-montserrat);
+
+  --text-xs: clamp(0.8rem, 0.8rem + ((1vw - 0.2rem) * 0.2), 1rem);
+  --text-sm: clamp(1rem, 1rem + ((1vw - 0.2rem) * 0.2), 1.2rem);
+  --text-base: clamp(1.13rem, 1.13rem + ((1vw - 0.2rem) * 0.17), 1.3rem);
+  --text-md: clamp(1.3rem, 1.3rem + ((1vw - 0.2rem) * 0.3), 1.6rem);
+  --text-lg: clamp(1.7rem, 1.7rem + ((1vw - 0.2rem) * 0.3), 2rem);
+  --text-xl: clamp(2rem, 2rem + ((1vw - 0.2rem) * 0.8), 2.8rem);
+  --text-subtitle: clamp(1.3rem, 1.3rem + ((1vw - 0.2rem) * 1.2), 2.5rem);
+  --text-2xl: clamp(1.7rem, 1.7rem + ((1vw - 0.2rem) * 2.8), 4.5rem);
+  --text-2xl-alt: clamp(2.2rem, 2.2rem + ((1vw - 0.2rem) * 2.4), 4.6rem);
+  --text-home-h1: clamp(4rem, 4rem + ((1vw - 0.2rem) * 4.6), 8.6rem);
+  --text-3xl: clamp(3rem, 3rem + ((1vw - 0.2rem) * 8), 11rem);
+  --text-4xl: clamp(5rem, 5rem + ((1vw - 0.2rem) * 11), 16rem);
+  --text-logo: clamp(0.9rem, 0.9rem + ((1vw - 0.2rem) * 0.6), 1.5rem);
+
+  /* Spacing */
+  --space-sm: clamp(0.5rem, 2.5vw, 1rem);
+  --space-md: clamp(1.5rem, 4vw, 3rem);
+  --space-lg: clamp(2rem, 5vw, 3rem);
+  --space-xl: clamp(3rem, 7vw, 5rem);
+  --space-2xl: clamp(4rem, 9vw, 7rem);
+  --space-3xl: clamp(5rem, 12vw, 9rem);
+  --space-4xl: clamp(6rem, 14vw, 13rem);
+  --space-cta-icon: clamp(1.3rem, 2.5vw, 1.6rem);
+  --space-service-icon: clamp(3rem, 7vw, 4.2rem);
+
+  /* Layout */
+  --content-max: 1920px;
+  --radius-pill: 64px;
+  --radius-button: 32px;
+  --radius-card: 24px;
+
+  /* Elevation */
+  --shadow-natural: 6px 6px 9px rgb(0 0 0 / 20%);
+  --shadow-deep: 12px 12px 50px rgb(0 0 0 / 40%);
+  --shadow-float: -6px 6px 10px 0 rgb(0 0 0 / 25%);
+  --shadow-footer: -6px 15px 12px 0 rgb(0 0 0 / 25%);
+
+  /* Motion */
+  --ease-menu: cubic-bezier(0.41, -0.06, 0.67, 1.04);
+  --duration-menu: 400ms;
+
+  /* Stacking order */
+  --z-floating-nav: 50;
+  --z-header: 10;
+  --z-menu-shim: 900;
+  --z-menu: 1000;
+}

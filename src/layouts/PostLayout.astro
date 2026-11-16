@@ -1,0 +1,135 @@
+---
+/** Single article: title + summary, category, date, featured image, contents, body, author. */
+import { Image } from 'astro:assets';
+import type { MarkdownHeading } from 'astro';
+import BaseLayout from './BaseLayout.astro';
+import CategoryTag from '@components/posts/CategoryTag.astro';
+import TableOfContents from '@components/posts/TableOfContents.astro';
+import AuthorBox from '@components/posts/AuthorBox.astro';
+import { formatDate, type Post } from '@lib/content';
+import '@styles/prose.css';
+
+interface Props {
+  post: Post;
+  headings: MarkdownHeading[];
+}
+
+const { post, headings } = Astro.props;
+const { title, description, summary, published, updated, categories, image } = post.data;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  image={image.src.src}
+  article={{ type: 'BlogPosting', published, modified: updated, section: categories[0] }}
+>
+  <article class="post">
+    <header class="post__header">
+      <div>
+        <a class="back-link" href="/insights/"><span aria-hidden="true">←</span> Back to articles</a>
+        <h1>{title}</h1>
+        <div class="post__meta">
+          {categories.map((category) => <CategoryTag name={category} />)}
+          <p>Posted on: <time datetime={published.toISOString()}>{formatDate(published)}</time></p>
+        </div>
+      </div>
+      {summary && <p class="post__summary">{summary}</p>}
+    </header>
+
+    <Image
+      src={image.src}
+      alt={image.alt}
+      layout="full-width"
+      loading="eager"
+      fetchpriority="high"
+      class="post__image"
+    />
+
+    <div class="post__body">
+      <TableOfContents headings={headings} />
+      <div class="prose">
+        <slot />
+        <AuthorBox />
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .post__header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+    max-width: var(--content-max);
+    margin-inline: auto;
+    padding: var(--space-md);
+
+    @media (max-width: 782px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .back-link span {
+    color: var(--color-purple);
+  }
+
+  .back-link:hover {
+    color: var(--color-purple-dark);
+  }
+
+  h1 {
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .post__meta p {
+    margin: 0.5rem 0 0;
+    font-size: var(--text-xs);
+  }
+
+  .post__summary {
+    max-width: 30rem;
+    padding-top: 1.5rem;
+    font-size: var(--text-base);
+  }
+
+  .post__image {
+    width: 100%;
+    max-height: 70vh;
+    aspect-ratio: 16 / 7;
+    object-fit: cover;
+    object-position: top;
+
+    @media (max-width: 768px) {
+      aspect-ratio: 4 / 3;
+    }
+  }
+
+  .post__body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 32rem) minmax(0, 1fr);
+    gap: var(--space-md);
+    padding: var(--space-md) var(--space-md) var(--space-xl);
+
+    @media (max-width: 960px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .post__body :global(.toc) {
+    justify-self: center;
+    align-self: start;
+  }
+</style>

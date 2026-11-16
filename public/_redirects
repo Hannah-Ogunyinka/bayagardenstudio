@@ -1,0 +1,3 @@
+# Permanent redirects carried over from WordPress (served by Cloudflare static assets).
+/project/ /projects/ 301
+/project /projects/ 301

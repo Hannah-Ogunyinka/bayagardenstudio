@@ -1,0 +1,183 @@
+---
+/**
+ * Homepage hero: the main heading with four device mock-ups floating
+ * gently around it (animation carried over from the WordPress theme).
+ * The images are decorative, so they are hidden from screen readers.
+ */
+import { Image } from 'astro:assets';
+import tabletGreenWide from '@assets/images/home/hero-tablet-green-wide.webp';
+import tabletPurple from '@assets/images/home/hero-tablet-purple.webp';
+import mobileRed from '@assets/images/home/hero-mobile-red.webp';
+import tabletGreen from '@assets/images/home/hero-tablet-green.webp';
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero__top">
+    <div class="hero__float hero__float--left" aria-hidden="true">
+      <Image src={tabletGreenWide} alt="" widths={[400, 640, 960]} sizes="40rem" loading="eager" />
+    </div>
+
+    <div class="hero__heading">
+      <h1 id="hero-title">Expertly crafted <span class="accent">digital</span> solutions</h1>
+      <p class="hero__strap">Web design | tech strategy | brand photography</p>
+    </div>
+
+    <div class="hero__float hero__float--right" aria-hidden="true">
+      <Image src={tabletPurple} alt="" widths={[400, 800, 1024]} sizes="50rem" loading="eager" />
+    </div>
+  </div>
+
+  <div class="hero__bottom" aria-hidden="true">
+    <div class="hero__float hero__float--bottom-left">
+      <Image src={mobileRed} alt="" widths={[480, 960]} sizes="30em" />
+    </div>
+    <div class="hero__float hero__float--bottom-right">
+      <Image src={tabletGreen} alt="" widths={[544, 1024]} sizes="34em" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-top: var(--space-sm);
+    overflow-x: clip;
+  }
+
+  .hero__top {
+    display: grid;
+    grid-template-columns: 17.5% 1fr 17.5%;
+    max-height: 1080px;
+    padding-bottom: var(--space-lg);
+
+    @media (min-width: 1441px) {
+      height: 75vh;
+    }
+
+    @media (max-width: 782px) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .hero__heading {
+    padding-top: var(--space-md);
+    text-align: center;
+
+    @media (max-width: 782px) {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+  }
+
+  h1 {
+    margin: 0;
+    font-size: var(--text-home-h1);
+    font-weight: 700;
+    line-height: 1;
+    text-transform: capitalize;
+  }
+
+  .accent {
+    color: var(--color-purple);
+  }
+
+  .hero__strap {
+    margin-top: var(--space-sm);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .hero__float {
+    position: relative;
+  }
+
+  .hero__float :global(img) {
+    width: 100%;
+    transform: translate(-3%, -5%);
+    animation: float 8s ease-in-out infinite alternate;
+  }
+
+  .hero__float--left {
+    width: clamp(20rem, 14rem + 28.6vw, 40rem);
+    right: clamp(9rem, 4rem + 24vw, 26rem);
+    padding-top: var(--space-sm);
+
+    :global(img) {
+      animation-delay: 400ms;
+    }
+  }
+
+  .hero__float--right {
+    width: clamp(20rem, 12.6rem + 37vw, 50rem);
+    left: clamp(2rem, 13rem - 14vw, 12rem);
+    padding-top: var(--space-md);
+
+    :global(img) {
+      animation-duration: 6500ms;
+      animation-delay: 640ms;
+    }
+
+    @media (min-width: 467px) and (max-width: 782px) {
+      left: clamp(20rem, 17rem + 14vw, 30rem);
+    }
+  }
+
+  @media (max-width: 782px) {
+    .hero__float--left :global(img) {
+      height: 8em;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+
+    .hero__float--right :global(img) {
+      height: 10em;
+      object-fit: cover;
+      object-position: top;
+      border-radius: 16px;
+    }
+  }
+
+  .hero__bottom {
+    display: flex;
+    height: 26em;
+    justify-content: space-between;
+    overflow-x: clip;
+
+    @media (max-width: 782px) {
+      display: none;
+    }
+  }
+
+  .hero__float--bottom-left {
+    width: 30em;
+    left: -4rem;
+
+    :global(img) {
+      animation-duration: 7000ms;
+      animation-delay: 0ms;
+    }
+  }
+
+  .hero__float--bottom-right {
+    width: 34em;
+    top: 3rem;
+    left: 6rem;
+
+    :global(img) {
+      animation-delay: 540ms;
+    }
+  }
+
+  @keyframes float {
+    0% {
+      transform: translate(-3%, -5%);
+    }
+    50% {
+      transform: translate(0, 0);
+    }
+    100% {
+      transform: translate(3%, -6%);
+    }
+  }
+</style>

@@ -1,0 +1,46 @@
+---
+import { Image } from 'astro:assets';
+import avatar from '@assets/images/authors/hannah-ogunyinka.png';
+---
+
+<aside class="author" aria-label="About the author">
+  <Image src={avatar} alt="" width={64} height={64} class="author__avatar" />
+  <div>
+    <p class="author__label">Article written by</p>
+    <p class="author__name">Hannah Ogunyinka</p>
+    <p class="author__bio">
+      Freelance developer and photographer from London. An ex Primary school teacher of 15 years, Hannah is still
+      passionate about education and loves to share how to build effective spaces on the web with small businesses.
+    </p>
+  </div>
+</aside>
+
+<style>
+  .author {
+    display: flex;
+    max-width: 22rem;
+    margin: var(--space-lg) auto 0;
+    padding: 1.2rem;
+    gap: 1rem;
+    border-radius: 8px;
+    background-color: var(--color-grey-950);
+    font-size: 0.7rem;
+  }
+
+  .author p {
+    margin: 0 0 0.4em;
+    color: var(--color-white);
+  }
+
+  .author__avatar {
+    width: 48px;
+    height: 48px;
+    flex: none;
+    border-radius: 50%;
+  }
+
+  .author__name {
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+</style>
