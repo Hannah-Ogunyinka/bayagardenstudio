@@ -26,4 +26,4 @@ export async function getProjects(): Promise<Project[]> {
 }
 
 export const formatDate = (date: Date): string =>
-  date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });

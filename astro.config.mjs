@@ -19,6 +19,8 @@ export default defineConfig({
   // Every live URL ends in a slash; keep them identical for SEO.
   trailingSlash: 'always',
   build: { format: 'directory' },
+  // Code blocks use the same Shiki theme as the live articles.
+  markdown: { shikiConfig: { theme: 'nord' } },
 
   // Pages are prerendered by default. Only forms and the gallery gate opt into on-demand rendering.
   adapter: cloudflare({

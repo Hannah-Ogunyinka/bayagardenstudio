@@ -8,6 +8,7 @@ categories: ["Productivity and Systems"]
 image:
   src: "../../assets/images/posts/important-questions-to-ask-before-building-a-website/Smiling-lady-with-computer-1.jpg"
   alt: ""  # TODO: describe this image
+toc: false  # the live article has no table of contents
 ---
 Building a website is a crucial step in establishing your online presence. However, before you start building your website, it’s important to ask yourself some key questions to ensure that your website meets your business needs and goals.
 

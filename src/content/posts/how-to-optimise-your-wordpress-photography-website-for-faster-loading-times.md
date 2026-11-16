@@ -8,23 +8,8 @@ categories: ["Web Development"]
 image:
   src: "../../assets/images/posts/how-to-optimise-your-wordpress-photography-website-for-faster-loading-times/how-to-optimise-images-img.webp"
   alt: ""  # TODO: describe this image
+template: text  # the theme's "single post without featured image" template
 ---
-## Table of Contents
-
-## [Importance of optimising images for web performance](#Importance-of-optimising-images-for-web-performance)
-
-## [Use the default image block](#Use-the-default-image-block)
-
-## [Take control of image compression](#Take-control-of-image-compression)
-
-## [Scale your images](#Scale-your-images)
-
-## [Use photo editing software](#Use-photo-editing-software)
-
-## [Convert your images to Webp](#Convert-your-images-to-Webp)
-
-## [You can have sharp images and a snappy website](#You-can-have-sharp-images-and-a-snappy-website)
-
 If you’re a photographer and looking to boost the speed of your Wordpress website, optimising your images is the first and most effective step you can take to achieve this.  As a photographer, you want to showcase your best work online. It is important that when potential clients encounter your portfolio for the first time, that you impress with sharp, high-quality images, but large images can slow down your website significantly. Images are one of the most resource-intensive elements on a web page, so optimising them is crucial for your site speed.
 
 ## Importance of optimising images for web performance

@@ -45,6 +45,7 @@ TYPE_ROLES = {
     "services-h1": (54.8, 112),  # "Services" in the tiled hero
     "section-h2": (48.6, 96),    # "What's Included", "Optional Add Ons"
     "card-h3": (21.6, 35.2),     # bento and add-on card headings
+    "post-summary": (16.57, 25.6),  # article subtitle beside the title ("1.6rem" fluid)
     # Insights title ("10em" in the theme): grows from 550px and keeps growing
     # past 1920px, so it gives its own (min, max, from vw, to vw).
     "insights-h1": (82.08, 208, 550.4, 2924),

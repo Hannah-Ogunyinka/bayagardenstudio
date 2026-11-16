@@ -22,6 +22,14 @@ const posts = defineCollection({
       categories: z.array(z.enum(CATEGORIES)).min(1),
       image: z.object({ src: image(), alt: z.string() }),
       focusKeyword: z.string().optional(),
+      /**
+       * 'featured': grey header and full-width featured image (theme single.html).
+       * 'text': white page, no featured image, boxed contents list
+       * (theme "single post without featured image").
+       */
+      template: z.enum(['featured', 'text']).default('featured'),
+      /** Show the table of contents beside the article. */
+      toc: z.boolean().default(true),
       draft: z.boolean().default(false),
     }),
 });

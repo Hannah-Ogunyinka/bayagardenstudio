@@ -64,6 +64,13 @@ const [category] = post.data.categories;
     text-transform: none;
   }
 
+  /* As an h2 (category archives) the theme's heading defaults apply. */
+  h2.post-card__title {
+    margin: 0.83em 0;
+    line-height: var(--leading-heading);
+    text-transform: capitalize;
+  }
+
   .post-card__title a {
     color: var(--color-text);
     text-decoration: none;

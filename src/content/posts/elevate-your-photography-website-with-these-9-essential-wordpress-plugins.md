@@ -8,29 +8,8 @@ categories: ["Productivity and Systems"]
 image:
   src: "../../assets/images/posts/elevate-your-photography-website-with-these-9-essential-wordpress-plugins/top-9-plugins-article-thumbnail-1.jpg"
   alt: ""  # TODO: describe this image
+template: text  # the theme's "single post without featured image" template
 ---
-## Table of Contents
-
-## [1. Rank Math SEO Plugin](#toc-1-Rank-Math-SEO-Plugin)
-
-## [2. The SEO Framework Plugin](#toc-2-The-SEO-Framework-Plugin)
-
-## [3. Pico Plugin for Proofing](#toc-3-Pico-Plugin-For-Proofing)
-
-## [4. Fluent Booking Plugin](#toc-4-Fluent-Booking-Plugin)
-
-## [5. Imagify - Optimising Images Plugin](#toc-5-Imagify-Optimising-Images-Plugin)
-
-## [6. Fluent CRM Plugin for Email Integration](#toc-6-Fluent-CRM-Plugin-For-Email-Integration)
-
-## [7. Imagely Plugin](#toc-7-Imagely-Plugin)
-
-## [8. Integrate Google Drive Plugin - Secure Content Protection](#toc-8-Integrate-Google-Drive-Plugin-Secure-Content-Protection)
-
-## [9. Secure Copy Content Protection Plugin](#toc-9-Secure-Copy-Content-Protection-Plugin)
-
-## [Supercharge your photography website with these essential plugins](#toc-Supercharge-Your-Photography-Website-With-These-Essential-Plugins)
-
 In the dynamic world of photography, having a stunning website is only half the battle. To truly stand out and make your mark, you need to harness the power of WordPress plugins that can enhance your website's functionality and provide the best user experience. Here, we'll explore nine must-have plugins for photographers, covering everything from SEO optimisation to proofing, image optimisation, email integration, and content protection.
 
 ## 1. Rank Math SEO Plugin

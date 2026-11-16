@@ -15,9 +15,11 @@ import '@styles/base.css';
 type Props = SeoInput & {
   /** Hide the floating nav (e.g. on gallery or utility pages). */
   floatingNav?: boolean;
+  /** Page background: the grey default, or white (as the theme's white-header templates). */
+  surface?: 'default' | 'raised';
 };
 
-const { floatingNav = true, ...seo } = Astro.props;
+const { floatingNav = true, surface = 'default', ...seo } = Astro.props;
 ---
 
 <!doctype html>
@@ -31,7 +33,7 @@ const { floatingNav = true, ...seo } = Astro.props;
     <Font cssVariable="--font-montserrat" />
     <Seo {...seo} />
   </head>
-  <body>
+  <body class:list={{ 'surface-raised': surface === 'raised' }}>
     <a class="skip-link" href="#main">Skip to content</a>
     <SiteHeader />
     <main id="main" tabindex="-1" data-inert-when-menu-open>

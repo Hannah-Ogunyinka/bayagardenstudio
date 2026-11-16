@@ -298,3 +298,8 @@ textarea {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Pages built on the theme's white templates (text-only posts). */
+body.surface-raised {
+  background-color: var(--color-surface-raised);
+}

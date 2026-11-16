@@ -43,7 +43,9 @@
   --color-grey-200: #dbdbdb;      /* custom-medium-grey: cards */
   --color-grey-300: #d2d2d2;      /* menu dividers */
   --color-grey-400: #969696;      /* custom-dark-grey: rules */
+  --color-grey-500: #707070;      /* post back link */
   --color-grey-600: #646464;
+  --color-grey-700: #494949;      /* table of contents label */
   --color-grey-800: #373737;      /* custom-light-grey: text, dark bands */
   --color-grey-950: #101014;      /* custom-dark-grey-alt */
   --color-black: #000;
@@ -91,6 +93,7 @@
   --step-services-h1: clamp(3.425rem, 3.58vw + 2.71rem, 7rem); /* 54.8px -> 112px */
   --step-section-h2: clamp(3.0375rem, 2.96vw + 2.445rem, 6rem); /* 48.6px -> 96px */
   --step-card-h3: clamp(1.35rem, 0.85vw + 1.18rem, 2.2rem); /* 21.6px -> 35.2px */
+  --step-post-summary: clamp(1.0356rem, 0.56vw + 0.923rem, 1.6rem); /* 16.57px -> 25.6px */
   --step-insights-h1: clamp(5.13rem, 5.31vw + 3.305rem, 13rem); /* 82.08px -> 208px */
 
   /* Space steps: generated. Matched to the live theme's spacing presets. */
@@ -108,12 +111,14 @@
   /* ---------------------------------------------------------------- Type */
   --font-heading: var(--font-poppins);
   --font-body: var(--font-montserrat);
+  --font-mono: ui-monospace, sfmono-regular, menlo, monaco, consolas, monospace;
 
   --weight-light: 300;
   --weight-regular: 400;
   --weight-medium: 500;
   --weight-semibold: 600;
   --weight-bold: 700;
+  --weight-extrabold: 800;         /* category archive titles */
 
   /* Role-based sizes. Use these in components, not the raw steps. */
   --text-small: var(--step-xs);         /* card copy, captions, buttons */
@@ -135,8 +140,12 @@
   --text-insights-title: var(--step-insights-h1);
   --text-logo: var(--step-logo);
   --text-eyebrow: var(--step-logo);     /* small caps labels above headings */
+  --text-byline: 0.7rem;                /* 11.2px: "Article written by:" */
   --text-micro: 0.75rem;                /* 12px: tags and field notes only */
   --text-field: 1rem;                   /* 16px: form inputs, as on the live site */
+  --text-code: 0.875rem;                /* 14px: code blocks */
+  --text-toc: 1rem;                     /* 16px: table of contents, as the plugin sets */
+  --text-post-summary: var(--step-post-summary); /* article subtitle */
   --text-large-min: 1.5rem;             /* 24px: smallest size where the bright purple passes contrast */
 
   --leading-none: 1;
@@ -194,6 +203,7 @@
   --container-cards: 78.75rem;          /* 1260px: package cards */
   --container-about: 63.75rem;          /* 1020px: about page text columns */
   --container-split: 67.5rem;           /* 1080px: two-column copy on service pages */
+  --container-post: 90rem;              /* 1440px: article body (the theme's content wrapper) */
   --container-wide: 120rem;             /* 1920px: full-bleed bands */
   /* Side gap for panels: the page gutter, growing past 1920px so the panel stays 1920px wide and centred. */
   --inset-band: max(var(--space-md), (100% - var(--container-wide)) / 2);
@@ -217,6 +227,8 @@
   --ratio-banner: 16 / 7;               /* edge-to-edge case study photos */
   --logo-size: 3.125rem;                /* 50px */
   --avatar-size: 3rem;                  /* 48px */
+  --avatar-author: 6rem;                /* 96px: article author box */
+  --icon-back: 1.5625rem;               /* 25px: back-link arrow */
   --icon-feature: 2rem;                 /* 32px service icons */
   --icon-social: 1.25rem;               /* 20px */
   --icon-offer: 3.75rem;                /* 60px home offer icons */
