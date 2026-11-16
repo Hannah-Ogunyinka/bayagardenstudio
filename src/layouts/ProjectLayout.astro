@@ -14,7 +14,7 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const { title, description, tagline, services, hero, quote, video, published, updated } = project.data;
+const { title, description, tagline, services, hero, quote, imageLayout, published, updated } = project.data;
 ---
 
 <BaseLayout title={title} description={description} image={hero.src.src} article={{ published, modified: updated }}>
@@ -33,21 +33,24 @@ const { title, description, tagline, services, hero, quote, video, published, up
 
     <Image src={hero.src} alt={hero.alt} widths={[640, 960, 1440, 1920]} sizes="(max-width: 1440px) 100vw, 1440px" loading="eager" fetchpriority="high" class="project__hero" />
 
-    <div class:list={['project__body', 'prose', { 'project__body--quote': quote }]}>
+    <div class:list={['project__body', 'prose', `project__body--${imageLayout}`]}>
       {quote && <blockquote class="project__quote"><p>{quote}</p></blockquote>}
       <slot />
     </div>
-
-    {
-      video && (
-        <figure class="project__video">
-          <video src={video} controls muted playsinline preload="metadata" aria-label={`Screen recording of the ${title} website`} />
-        </figure>
-      )
-    }
   </article>
   <CtaBanner title="Ready to start your own project?" />
 </BaseLayout>
+
+<script>
+  // The showcase videos loop silently. Visitors who prefer reduced motion get them paused;
+  // everyone else can pause them with the native controls.
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll<HTMLVideoElement>('.project-video video').forEach((video) => {
+      video.removeAttribute('autoplay');
+      video.pause();
+    });
+  }
+</script>
 
 <style>
   .project {
@@ -133,16 +136,68 @@ const { title, description, tagline, services, hero, quote, video, published, up
     font-size: var(--text-xl);
   }
 
-  .project__body > :global(p:has(> img:only-child)) {
+  /* Image rows span both columns. */
+  .project__body > :global(p:has(> img)),
+  .project__body > :global(.project-video) {
     grid-column: 1 / -1;
+    margin-block: var(--space-lg);
   }
 
   .project__body :global(img) {
+    display: block;
+    width: 100%;
+    margin: 0;
+    border-radius: 0.7em;
+  }
+
+  /* A lone image sits centred at a comfortable width. */
+  .project__body > :global(p:has(> img:only-child)) {
+    max-width: 48rem;
+    justify-self: center;
+  }
+
+  /* Lone images on 'bleed' case studies run edge to edge as a banner. */
+  .project__body--bleed > :global(p:has(> img:only-child)) {
+    width: 100vw;
+    max-width: none;
+    margin-inline: calc(50% - 50vw);
+  }
+
+  .project__body--bleed > :global(p > img:only-child) {
+    height: clamp(16rem, 35vw, 32rem);
+    object-fit: cover;
     border-radius: 0;
   }
 
+  /* Two images side by side: narrow and wide. */
+  .project__body > :global(p:has(> img + img):not(:has(> img ~ img ~ img))) {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--space-md);
+  }
+
+  .project__body > :global(p:has(> img + img):not(:has(> img ~ img ~ img)) > img) {
+    height: clamp(12rem, 36vw, 32rem);
+    object-fit: cover;
+    border-radius: 0;
+  }
+
+  /* Three or more images make a two-column showcase grid. */
+  .project__body > :global(p:has(> img ~ img ~ img)) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-sm);
+  }
+
+  /* The client quote sits beside the whole introduction, as on the live site. */
   .project__quote {
+    grid-row: span 4;
+    align-self: center;
     margin: 0;
+
+    @media (max-width: 782px) {
+      grid-row: auto;
+    }
   }
 
   .project__quote p {
@@ -153,12 +208,14 @@ const { title, description, tagline, services, hero, quote, video, published, up
     text-transform: capitalize;
   }
 
-  .project__video video {
-    width: 100%;
-    border: 8px solid var(--color-white);
+  .project__body :global(.project-video) {
+    margin-inline: 0;
   }
 
-  .project__video {
-    margin: 0;
+  .project__body :global(.project-video video) {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 0.7em;
   }
 </style>

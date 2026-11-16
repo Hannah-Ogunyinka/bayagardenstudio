@@ -9,8 +9,8 @@ hero:
   src: "../../assets/images/projects/tayos-mixing-bowl/Tayo-mixing-bowl-portrait.jpg"
   alt: ""  # TODO: describe this image
 thumbnail: "../../assets/images/projects/thumbnails/tayos-mixing-bowl.jpeg"
-video: "/videos/tayos-mixing-bowl.mp4"
 order: 2
+imageLayout: bleed
 quote: "“Baya Garden studio went over and beyond to create an amazing website for my online bakery business.”"
 ---
 
@@ -33,7 +33,6 @@ She favoured a clean, modern look and emphasised that the shop area needed to be
 The website also needed enquiry forms that led each customer through a series of questions, depending on whether they were after a custom or a cake from the signature cake collection.
 
 ![](../../assets/images/projects/tayos-mixing-bowl/stacked-brownies.jpg)
-
 ![](../../assets/images/projects/tayos-mixing-bowl/mixing-brownie-mix.jpg)
 
 ## The Strategy and Design
@@ -58,3 +57,7 @@ Here’s what Tayo had to say of her experience with Baya Garden Studio:
 I had lengthy discussions with Hannah about my company’s vision, product, image and brand and Hannah produced a website that conveyed my brand message. Several friends and acquaintances have also commented on how lovely my website is, has a very clean look and very easy to use.
 
 Hannah is very thorough in her work and I felt that she addressed any concerns I had and came up with solutions that I was happy with. I would definitely recommend Baya Garden Studios to business owners/ start ups that need a website or want to revamp their website.”
+
+<figure class="project-video">
+  <video src="/videos/tayos-mixing-bowl.mp4" autoplay muted loop playsinline controls preload="metadata" aria-label="Screen recording of the Tayo’s Mixing Bowl website"></video>
+</figure>

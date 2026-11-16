@@ -40,8 +40,8 @@ const projects = defineCollection({
       services: z.array(z.string()).min(1),
       hero: z.object({ src: image(), alt: z.string() }),
       thumbnail: image(),
-      /** Showcase video in /public/videos (played muted, no audio track needed). */
-      video: z.string().startsWith('/videos/').optional(),
+      /** 'bleed' runs single body images edge to edge; 'inset' keeps them centred and rounded. */
+      imageLayout: z.enum(['bleed', 'inset']).default('inset'),
       quote: z.string().optional(),
       /** Position on the Projects page (1 = first). */
       order: z.number().int().positive(),

@@ -94,6 +94,7 @@ main {
   position: relative;
   z-index: 2;
   background-color: var(--color-bg);
+  overflow-x: clip; /* lets edge-to-edge images use 100vw without a sideways scrollbar */
 }
 
 main:focus {

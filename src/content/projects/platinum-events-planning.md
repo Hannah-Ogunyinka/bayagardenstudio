@@ -10,7 +10,6 @@ hero:
   src: "../../assets/images/projects/platinum-events-planning/IMG_1939-scaled-1.jpg"
   alt: ""  # TODO: describe this image
 thumbnail: "../../assets/images/projects/thumbnails/platinum-events-planning.jpeg"
-video: "/videos/platinum-events-planning.mp4"
 order: 3
 ---
 
@@ -20,6 +19,9 @@ Platinum Events Planning are an award winning wedding planning company that deli
 
 Their extensive knowledge of planning events means they are best positioned to foresee possible complications and prepare for them, resulting in a stress-free, happy day. Platinum Event Planning consistently exceeds their clients’ expectations, delivering service to a high, professional standard.
 
+<figure class="project-video">
+  <video src="/videos/platinum-events-planning.mp4" autoplay muted loop playsinline controls preload="metadata" aria-label="Screen recording of the Platinum Events Planning website"></video>
+</figure>
 
 ## The Brief
 
