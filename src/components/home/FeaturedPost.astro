@@ -42,10 +42,12 @@ const [post] = await getPosts();
     display: grid;
     grid-template-columns: 2fr 3fr;
     gap: var(--space-md);
-    margin-bottom: var(--space-lg);
+    /* The theme's columns block adds 1.75em below itself on wider screens. */
+    margin-bottom: calc(var(--space-lg) + 1.75em);
 
     @media (--md-down) {
       grid-template-columns: 1fr;
+      margin-bottom: var(--space-lg);
     }
   }
 

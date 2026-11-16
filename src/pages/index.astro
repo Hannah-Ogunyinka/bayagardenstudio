@@ -17,5 +17,16 @@ import CtaBanner from '@components/ui/CtaBanner.astro';
   <BrandPhotography />
   <FeaturedPost />
   <Mission />
-  <CtaBanner />
+  <div class="home__cta">
+    <CtaBanner />
+  </div>
 </BaseLayout>
+
+<style>
+  /* The theme's closing section adds its own medium padding above the banner on wider screens. */
+  .home__cta {
+    @media (--md-up) {
+      padding-top: var(--space-md);
+    }
+  }
+</style>
