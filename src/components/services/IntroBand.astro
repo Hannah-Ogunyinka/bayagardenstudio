@@ -35,8 +35,10 @@ const { image, paragraphGap = 'block' } = Astro.props;
     align-items: center;
     gap: var(--space-md);
 
+    /* Stacked, the theme's columns sit edge to edge. */
     @media (--md-down) {
       grid-template-columns: 1fr;
+      gap: 0;
     }
   }
 

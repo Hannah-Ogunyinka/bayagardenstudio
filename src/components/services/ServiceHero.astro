@@ -95,6 +95,13 @@ const hasAction = Astro.slots.has('action');
     }
   }
 
+  /* Stacked, the theme keeps an empty, padded action cell under the intro. */
+  .service-hero__foot:not(.service-hero__foot--action) {
+    @media (--md-down) {
+      padding-bottom: calc(2 * var(--space-sm));
+    }
+  }
+
   .service-hero__foot--action .service-hero__intro {
     padding-block: var(--space-sm);
   }

@@ -174,6 +174,8 @@ const addOns = [
     padding: var(--space-xl) 0 var(--space-md);
     list-style: none;
 
+    /* Theme below 1231px: one 600px column for the first group, then the
+       two short cards beside the lightweight card. */
     @media (--xl-down) {
       max-width: var(--container-narrow);
       grid-template-rows: none;
@@ -181,14 +183,15 @@ const addOns = [
       grid-template-areas:
         'theme     theme'
         'images    images'
-        'seo       domain'
-        'templates templates'
-        'support   support'
-        'light     light';
+        'seo       seo'
+        'domain    domain'
+        'templates light'
+        'support   light';
     }
 
-    @media (--sm-down) {
-      grid-template-columns: 1fr;
+    /* Below 782px the theme's columns stack. */
+    @media (--md-down) {
+      grid-template-columns: minmax(0, 1fr);
       grid-template-areas: 'theme' 'images' 'seo' 'domain' 'templates' 'support' 'light';
     }
   }
@@ -247,6 +250,11 @@ const addOns = [
 
   .card--domain {
     grid-area: domain;
+
+    /* Stacked, the theme sets the SEO and domain cards edge to edge. */
+    @media (--xl-down) {
+      margin-top: calc(-1 * var(--space-md));
+    }
   }
 
   /* Theme: the two left cards in the second row are at least 280px tall,
@@ -268,6 +276,10 @@ const addOns = [
     grid-area: light;
     max-height: calc(var(--card-light-max-h) + var(--space-md));
     overflow: hidden;
+
+    @media (--xl-down) {
+      max-height: none;
+    }
   }
 
   /* Bleeds to the card's edges, as the theme's full-width image block does. */
@@ -293,18 +305,14 @@ const addOns = [
 
   .add-ons__list {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--space-md);
     margin-block: var(--space-md) 0;
     padding: 0;
     list-style: none;
 
-    @media (--lg-down) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    @media (--sm-down) {
-      grid-template-columns: 1fr;
+    @media (--md-down) {
+      grid-template-columns: minmax(0, 1fr);
     }
   }
 
