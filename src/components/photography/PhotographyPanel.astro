@@ -1,0 +1,65 @@
+---
+/**
+ * Purple Brand Photography panel. It is the page heading on /brand-photography/
+ * and a section on /services/, so the heading level is a prop.
+ */
+import Button from '@components/ui/Button.astro';
+
+interface Props {
+  as?: 'h1' | 'h2';
+  packagesHref?: string;
+}
+
+const { as: Heading = 'h2', packagesHref = '/brand-photography-packages/' } = Astro.props;
+---
+
+<section class="photography" aria-labelledby="photography-title">
+  <Heading id="photography-title">Brand Photography</Heading>
+  <p>
+    First impressions matter. Our professional brand photography will elevate your brand and convey to your audience that
+    the details matter and are crafted meticulously. Whether it’s for your website, social media, or marketing materials,
+    stand out from the crowd and show you mean business.
+  </p>
+  <div class="photography__actions">
+    <Button href="/contact/" variant="dark">Book a session today</Button>
+    <Button href={packagesHref} variant="light">View packages</Button>
+  </div>
+</section>
+
+<style>
+  .photography {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-md) var(--space-md) var(--space-lg);
+    border-radius: 32px;
+    background-color: var(--color-purple);
+    color: var(--color-white);
+    text-align: center;
+  }
+
+  h1,
+  h2 {
+    margin: 0 0 var(--space-sm);
+    color: inherit;
+    font-family: var(--font-heading);
+    font-size: var(--text-xl);
+    font-weight: 700;
+    line-height: 1.2;
+    text-transform: none;
+  }
+
+  p {
+    max-width: 40rem;
+    margin-block: 0 var(--space-md);
+    color: inherit;
+    font-size: var(--text-sm);
+  }
+
+  .photography__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-sm);
+  }
+</style>

@@ -8,6 +8,7 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import Button from '@components/ui/Button.astro';
 import CtaBanner from '@components/ui/CtaBanner.astro';
 import ScrollDown from '@components/ui/ScrollDown.astro';
+import PhotographyPanel from '@components/photography/PhotographyPanel.astro';
 import leftTop from '@assets/images/services/left-photography-container.webp';
 import leftBottom from '@assets/images/services/left-mobile-container.webp';
 import centreTop from '@assets/images/services/centre-mobile-container.webp';
@@ -88,18 +89,7 @@ const services = [
       }
     </ul>
 
-    <div class="photography">
-      <h2>Brand Photography</h2>
-      <p>
-        First impressions matter. Our professional brand photography will elevate your brand and convey to your audience
-        that the details matter and are crafted meticulously. Whether it’s for your website, social media, or marketing
-        materials, stand out from the crowd and show you mean business.
-      </p>
-      <div class="photography__actions">
-        <Button href="/contact/" variant="dark">Book a session today</Button>
-        <Button href="/brand-photography/" variant="light">View packages</Button>
-      </div>
-    </div>
+    <PhotographyPanel packagesHref="/brand-photography/" />
   </section>
 
   <CtaBanner />
@@ -270,18 +260,13 @@ const services = [
     text-align: center;
   }
 
-  .service-card h2,
-  .photography h2 {
+  .service-card h2 {
     margin: 0 0 var(--space-sm);
     font-family: var(--font-heading);
     font-size: var(--text-xl);
     font-weight: 700;
   }
 
-  .photography h2,
-  .photography p {
-    color: inherit;
-  }
 
   /* Darker purple than the live site so the small text passes contrast on grey. */
   .service-card__subtitle {
@@ -298,27 +283,4 @@ const services = [
     font-size: var(--text-xs);
   }
 
-  .photography {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: var(--space-md) var(--space-md) var(--space-lg);
-    border-radius: 32px;
-    background-color: var(--color-purple);
-    color: var(--color-white);
-    text-align: center;
-  }
-
-  .photography p {
-    max-width: 36rem;
-    margin-block: 0 var(--space-md);
-    font-size: var(--text-xs);
-  }
-
-  .photography__actions {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: var(--space-sm);
-  }
 </style>

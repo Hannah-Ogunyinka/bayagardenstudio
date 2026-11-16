@@ -1,0 +1,188 @@
+---
+/**
+ * Filterable masonry gallery with a lightbox.
+ * - Without JavaScript every photo shows and each links to a large version.
+ * - With JavaScript, the filter buttons show one category (Portraits first, as on
+ *   the live site) and photos open in a <dialog> with previous/next and Escape.
+ */
+import { Image, getImage } from 'astro:assets';
+import { GALLERY, PHOTO_CATEGORIES } from '@data/photography';
+
+const photos = await Promise.all(
+  GALLERY.map(async (photo, index) => ({
+    ...photo,
+    index,
+    large: await getImage({ src: photo.image, width: 1200, format: 'webp', quality: 85 }),
+  })),
+);
+const defaultCategory = PHOTO_CATEGORIES[0];
+---
+
+<section class="gallery" aria-label="Photography portfolio" data-gallery data-default={defaultCategory}>
+  <div class="gallery__filters" role="group" aria-label="Filter photos" hidden data-filters>
+    {
+      PHOTO_CATEGORIES.map((category) => (
+        <button type="button" data-filter={category} aria-pressed={category === defaultCategory ? 'true' : 'false'}>
+          {category}
+        </button>
+      ))
+    }
+  </div>
+  <p class="sr-only" role="status" data-gallery-status></p>
+
+  <ul class="gallery__grid" role="list">
+    {
+      photos.map(({ image, alt, category, index, large }) => (
+        <li data-category={category}>
+          <a href={large.src} data-index={index} aria-label={alt ? `View larger: ${alt}` : `View photo ${index + 1} larger`}>
+            <Image src={image} alt={alt} widths={[300, 480, 640]} sizes="(max-width: 600px) 50vw, 33vw" />
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+
+  <dialog class="lightbox" aria-label="Photo viewer" data-lightbox>
+    <img class="lightbox__image" alt="" data-lightbox-image />
+    <button type="button" class="lightbox__btn lightbox__close" data-close aria-label="Close">×</button>
+    <button type="button" class="lightbox__btn lightbox__prev" data-step="-1" aria-label="Previous photo">‹</button>
+    <button type="button" class="lightbox__btn lightbox__next" data-step="1" aria-label="Next photo">›</button>
+  </dialog>
+</section>
+
+<script>
+  import { initGallery } from '../../scripts/gallery';
+
+  document.querySelectorAll<HTMLElement>('[data-gallery]').forEach(initGallery);
+</script>
+
+<style>
+  .gallery {
+    max-width: 1340px;
+    margin: var(--space-xl) auto;
+    padding-inline: var(--space-sm);
+  }
+
+  .gallery__filters {
+    display: flex;
+    justify-content: center;
+    gap: 0.4rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .gallery__filters[hidden] {
+    display: none;
+  }
+
+  .gallery__filters button {
+    padding: 0.5em 0.9em;
+    border: 0;
+    border-radius: 2px;
+    background: none;
+    color: var(--color-grey-600);
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .gallery__filters button[aria-pressed='true'] {
+    background-color: var(--color-purple);
+    color: var(--color-white);
+  }
+
+  /* CSS columns give the masonry look and reflow when a filter hides photos. */
+  .gallery__grid {
+    margin: 0;
+    padding: 0;
+    columns: 3;
+    column-gap: 0.6rem;
+    list-style: none;
+
+    @media (max-width: 600px) {
+      columns: 2;
+    }
+  }
+
+  .gallery__grid li {
+    margin-bottom: 0.6rem;
+    break-inside: avoid;
+  }
+
+  .gallery__grid li[hidden] {
+    display: none;
+  }
+
+  .gallery__grid a {
+    display: block;
+  }
+
+  .gallery__grid img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .lightbox {
+    width: 100vw;
+    max-width: none;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: rgb(16 16 20 / 94%);
+  }
+
+  .lightbox::backdrop {
+    background: transparent;
+  }
+
+  .lightbox[open] {
+    display: grid;
+    place-items: center;
+  }
+
+  .lightbox__image {
+    max-width: calc(100vw - 7rem);
+    max-height: calc(100dvh - 4rem);
+    object-fit: contain;
+  }
+
+  .lightbox__btn {
+    position: absolute;
+    width: 3rem;
+    height: 3rem;
+    border: 0;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 12%);
+    color: var(--color-white);
+    cursor: pointer;
+    font-size: 2rem;
+    line-height: 1;
+  }
+
+  .lightbox__btn:hover {
+    background: rgb(255 255 255 / 25%);
+  }
+
+  .lightbox__close {
+    top: 1rem;
+    right: 1rem;
+  }
+
+  .lightbox__prev,
+  .lightbox__next {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .lightbox__prev {
+    left: 0.5rem;
+  }
+
+  .lightbox__next {
+    right: 0.5rem;
+  }
+</style>

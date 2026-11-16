@@ -1,0 +1,241 @@
+---
+/**
+ * Brand Photography Packages: dark intro with the hero photo overlapping
+ * into the page, then the three package cards.
+ */
+import { Image } from 'astro:assets';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Button from '@components/ui/Button.astro';
+import hero from '@assets/images/packages/hero.jpg';
+
+interface Package {
+  name: string;
+  note?: string;
+  price: number;
+  wasPrice?: number;
+  features: string[];
+}
+
+const packages: Package[] = [
+  {
+    name: 'Brand Start-Up & Brand Refresh',
+    note: 'May discounted price',
+    price: 145,
+    wasPrice: 245,
+    features: [
+      'Up to 2 hours brand photography mini session',
+      'Initial consultation to discuss your ideas, brand and the person/team behind the business',
+      '25 digital images beautifully edited and provided in many sizes ready for both web, print and social use',
+      '1 Location',
+      'A private online gallery to view and download your images',
+    ],
+  },
+  {
+    name: 'Brand Growth',
+    price: 495,
+    features: [
+      'Half a day’s photography session',
+      '100+ images to cover a full website update and social media posts',
+      '2–3 Locations and 2–4 outfit changes',
+      'Initial consultation to discuss your ideas, brand and the person/team behind the business',
+      'Fully custom photoshoot plan with mood board and shoot list',
+      'A private online gallery to view and download your images',
+    ],
+  },
+  {
+    name: 'Brand Deluxe',
+    note: 'For those that love to batch',
+    price: 895,
+    features: [
+      'Full day’s photoshoot',
+      '200+ digital images beautifully edited and provided in many sizes ready for both web, print and social use',
+      '2–4 Locations and 2–6 outfit changes',
+      'Fully custom photoshoot plan with mood board and shoot list',
+      'Initial consultation to discuss your ideas, brand and the person/team behind the business',
+      'A private online gallery to view and download your images',
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Brand Photography Packages"
+  description="Brand photography packages for new and established businesses, from a two hour mini session to a full day shoot, with clear, transparent pricing."
+>
+  <section class="intro" aria-labelledby="packages-title">
+    <p class="intro__eyebrow">Brand photography</p>
+    <h1 id="packages-title">Brand Photography Packages</h1>
+    <p class="intro__text">
+      Whether you’re starting a new venture or have an established brand, Baya Garden Studio offers a full suite of brand
+      photography packages. Our transparent pricing model helps you plan and take your business to the next level.
+    </p>
+    <div class="intro__actions">
+      <Button href="/contact/" variant="light">Book a session today</Button>
+      <Button href="/brand-photography/" variant="ghost">View portfolio</Button>
+    </div>
+  </section>
+
+  <Image
+    src={hero}
+    alt=""
+    widths={[640, 960, 1200, 1600]}
+    sizes="(max-width: 1440px) 90vw, 1300px"
+    loading="eager"
+    fetchpriority="high"
+    class="hero"
+  />
+
+  <ul class="packages" role="list">
+    {
+      packages.map(({ name, note, price, wasPrice, features }, i) => (
+        <li class="package" aria-labelledby={`package-${i}`}>
+          <h2 id={`package-${i}`}>{name}</h2>
+          {note && <p class="package__note">{note}</p>}
+          <p class="package__price">
+            {wasPrice ? (
+              <>
+                <del>
+                  <span class="sr-only">Was </span>£{wasPrice}
+                </del>{' '}
+                <span class="sr-only">now </span>£{price}
+              </>
+            ) : (
+              <>£{price}</>
+            )}
+          </p>
+          <Button href="/contact/" variant="purple" class="package__cta" aria-describedby={`package-${i}`}>
+            Book a session
+          </Button>
+          <ul class="package__features">
+            {features.map((feature) => (
+              <li>{feature}</li>
+            ))}
+          </ul>
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>
+
+<style>
+  .intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-md) var(--space-md) clamp(10rem, 22vw, 20rem);
+    background-color: var(--color-grey-800);
+    color: var(--color-white);
+    text-align: center;
+  }
+
+  .intro__eyebrow {
+    margin: 0 0 var(--space-sm);
+    color: var(--color-purple-light);
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+  }
+
+  h1 {
+    max-width: 12em;
+    margin: 0 0 var(--space-md);
+    color: inherit;
+    font-family: var(--font-body);
+    font-size: var(--text-2xl-alt);
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .intro__text {
+    max-width: 30rem;
+    margin: 0 0 var(--space-md);
+    color: inherit;
+    font-size: var(--text-xs);
+  }
+
+  .intro__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-sm);
+  }
+
+  /* The photo straddles the dark intro and the page below it. */
+  .hero {
+    display: block;
+    width: min(100% - 2 * var(--space-md), 1200px);
+    height: auto;
+    max-height: 640px;
+    margin: calc(-1 * clamp(9rem, 20vw, 18rem)) auto 0;
+    border-radius: 1.2rem;
+    box-shadow: 0 6px 16px rgb(0 0 0 / 30%);
+    object-fit: cover;
+  }
+
+  .packages {
+    display: grid;
+    max-width: 1260px;
+    margin: var(--space-lg) auto var(--space-xl);
+    padding: 0 var(--space-md);
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-sm);
+    list-style: none;
+
+    @media (max-width: 960px) {
+      max-width: 34rem;
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .package {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    padding: var(--space-md);
+    border: 1px solid var(--color-purple);
+    border-radius: 6px;
+  }
+
+  .package h2 {
+    margin: 0 0 var(--space-sm);
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    font-weight: 500;
+    line-height: 1.2;
+    text-transform: capitalize;
+  }
+
+  .package__note {
+    margin: 0;
+    color: var(--color-grey-600);
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+  }
+
+  /* Bold and 24px or more, so the purple passes large-text contrast. */
+  .package__price {
+    margin: var(--space-sm) 0;
+    color: var(--color-purple);
+    font-size: max(1.5rem, var(--text-md));
+    font-weight: 700;
+  }
+
+  .package__price del {
+    text-decoration-thickness: 2px;
+  }
+
+  .package :global(.package__cta) {
+    justify-content: center;
+  }
+
+  .package__features {
+    margin: var(--space-sm) 0 0;
+    padding-left: 1.2em;
+    font-size: var(--text-xs);
+  }
+
+  .package__features li {
+    margin-bottom: 0.8em;
+  }
+</style>

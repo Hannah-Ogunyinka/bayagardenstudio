@@ -1,0 +1,66 @@
+---
+/**
+ * Book a Meeting: Cal.com booking calendar. Not in the sitemap and noindex,
+ * as on the live site. Without JavaScript a link opens the booking page.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+
+const CAL_LINK = 'bayagardenstudio/business-chat';
+---
+
+<BaseLayout title="Book a Meeting" description="Book a business chat with Baya Garden Studio." noindex>
+  <section class="booking" aria-labelledby="booking-title">
+    <h1 id="booking-title">Book a Meeting</h1>
+    <div id="cal-inline" class="booking__calendar" data-cal-link={CAL_LINK}>
+      <p>
+        <a href={`https://cal.com/${CAL_LINK}`}>Choose a time on Cal.com</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  // Cal.com's documented inline embed, loaded only on this page.
+  type CalApi = ((...args: unknown[]) => void) & { q?: unknown[][]; ns?: Record<string, unknown>; loaded?: boolean };
+  const w = window as unknown as { Cal?: CalApi };
+  const target = document.getElementById('cal-inline');
+
+  if (target) {
+    const cal: CalApi =
+      w.Cal ??
+      Object.assign((...args: unknown[]) => {
+        (cal.q ??= []).push(args);
+      }, {});
+    w.Cal = cal;
+    if (!cal.loaded) {
+      cal.ns = {};
+      const script = document.createElement('script');
+      script.src = 'https://app.cal.com/embed/embed.js';
+      document.head.append(script);
+      cal.loaded = true;
+    }
+    target.replaceChildren();
+    cal('init', { origin: 'https://cal.com' });
+    cal('inline', { elementOrSelector: '#cal-inline', calLink: target.dataset['calLink'], layout: 'month_view' });
+    cal('ui', { styles: { branding: { brandColor: '#000000' } }, hideEventTypeDetails: false, layout: 'month_view' });
+  }
+</script>
+
+<style>
+  .booking {
+    max-width: 1100px;
+    margin: var(--space-xl) auto;
+    padding-inline: var(--space-md);
+  }
+
+  h1 {
+    margin-bottom: var(--space-md);
+    font-size: var(--text-2xl);
+    text-align: center;
+  }
+
+  .booking__calendar {
+    min-height: 40rem;
+    text-align: center;
+  }
+</style>
