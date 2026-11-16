@@ -7,7 +7,7 @@ updated: 2024-03-14
 categories: ["Productivity and Systems"]
 image:
   src: "../../assets/images/posts/elevate-your-photography-website-with-these-9-essential-wordpress-plugins/top-9-plugins-article-thumbnail-1.jpg"
-  alt: ""  # TODO: describe this image
+  alt: "Illustration of a website window surrounded by WordPress plugin icons"
 template: text  # the theme's "single post without featured image" template
 ---
 In the dynamic world of photography, having a stunning website is only half the battle. To truly stand out and make your mark, you need to harness the power of WordPress plugins that can enhance your website's functionality and provide the best user experience. Here, we'll explore nine must-have plugins for photographers, covering everything from SEO optimisation to proofing, image optimisation, email integration, and content protection.

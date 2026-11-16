@@ -7,7 +7,7 @@ updated: 2024-03-14
 categories: ["Web Development"]
 image:
   src: "../../assets/images/posts/how-to-optimise-your-wordpress-photography-website-for-faster-loading-times/how-to-optimise-images-img.webp"
-  alt: ""  # TODO: describe this image
+  alt: "A photo in an image editor, with a bar showing the file reduced from 155MB to 200KB"
 template: text  # the theme's "single post without featured image" template
 ---
 If you’re a photographer and looking to boost the speed of your Wordpress website, optimising your images is the first and most effective step you can take to achieve this.  As a photographer, you want to showcase your best work online. It is important that when potential clients encounter your portfolio for the first time, that you impress with sharp, high-quality images, but large images can slow down your website significantly. Images are one of the most resource-intensive elements on a web page, so optimising them is crucial for your site speed.

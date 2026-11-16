@@ -8,7 +8,7 @@ tagline: "Not just events but experiences"
 services: ["Strategy", "Custom Design", "Bespoke templates"]
 hero:
   src: "../../assets/images/projects/platinum-events-planning/IMG_1939-scaled-1.jpg"
-  alt: ""  # TODO: describe this image
+  alt: "A smiling bride in a tiara and full white gown walks down a grand white staircase holding a bouquet"
 thumbnail: "../../assets/images/projects/thumbnails/platinum-events-planning.jpeg"
 order: 3
 ---

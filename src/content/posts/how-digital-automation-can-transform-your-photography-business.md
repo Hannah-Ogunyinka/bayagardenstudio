@@ -7,7 +7,7 @@ updated: 2024-04-09
 categories: ["Productivity and Systems"]
 image:
   src: "../../assets/images/posts/how-digital-automation-can-transform-your-photography-business/Woman-with-camera-sat-at-coffee-shop-table1-1.jpg"
-  alt: ""  # TODO: describe this image
+  alt: "A smiling photographer holds her camera at a café table"
 focusKeyword: "digital automation"
 ---
 As a photographer, you're no stranger to the hustle. From capturing the perfect shot to managing client relationships, your days are packed. But what if I told you there's a way to streamline your business, improve efficiencies, and free up precious time? Enter digital automation—the secret sauce that can revolutionise your photography journey.

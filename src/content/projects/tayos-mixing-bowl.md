@@ -7,7 +7,7 @@ tagline: "Decadent brownies made to order from our kitchen to your door"
 services: ["Strategy", "Custom Design", "Professional photography", "Professional videography", "Custom checkout", "Conditional enquiry forms"]
 hero:
   src: "../../assets/images/projects/tayos-mixing-bowl/Tayo-mixing-bowl-portrait.jpg"
-  alt: ""  # TODO: describe this image
+  alt: "Tayo stirs a mixing bowl beside a layered celebration cake topped with brownies"
 thumbnail: "../../assets/images/projects/thumbnails/tayos-mixing-bowl.jpeg"
 order: 2
 imageLayout: bleed

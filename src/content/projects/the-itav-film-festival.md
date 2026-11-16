@@ -9,7 +9,7 @@ taglineWidth: wide
 services: ["Strategy", "Custom Design", "Website development", "Photography"]
 hero:
   src: "../../assets/images/projects/the-itav-film-festival/the-itav-photoshoot-1.jpeg"
-  alt: ""  # TODO: describe this image
+  alt: "Studio portraits of the iTAV creatives, arranged in a grid"
 thumbnail: "../../assets/images/projects/thumbnails/the-itav-film-festival.jpeg"
 order: 1
 ---
