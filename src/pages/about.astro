@@ -28,9 +28,11 @@ import { MQ } from '@config/breakpoints';
       class="about__hero"
     />
 
-    <section class="about__story" aria-labelledby="began">
+    <div class="about__band">
+    <section aria-labelledby="began">
+      <h2 id="began" class="about__began-title">How it all began.</h2>
+      <div class="about__story">
       <div class="about__began">
-        <h2 id="began">How it all began.</h2>
         <p>I’ll never forget the first time I built a website.</p>
         <p>
           Back in 2015, I started an engineering workshop for children and with limited capital to fund the business, I
@@ -40,6 +42,7 @@ import { MQ } from '@config/breakpoints';
       </div>
       <Image src={workshop} alt="A child building a robot at a laptop in the engineering workshop" widths={[320, 480, 640]} sizes={`${MQ.mdDown} 50vw, 25vw`} class="about__photo about__photo--offset" />
       <Image src={hannahCamera} alt="Hannah smiling and holding a camera with a flash" widths={[320, 480, 640]} sizes={`${MQ.mdDown} 50vw, 25vw`} class="about__photo" />
+      </div>
     </section>
 
     <div class="about__columns">
@@ -89,20 +92,15 @@ import { MQ } from '@config/breakpoints';
         <Image src={signature} alt="Signed, Hannah Ogunyinka" width={300} class="about__signature" />
       </div>
     </div>
+    </div>
   </div>
 </BaseLayout>
 
 <style>
-  .about {
-    padding-bottom: var(--space-xl);
-  }
-
   .about__intro {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-lg);
-    max-width: var(--container-wide);
-    margin-inline: auto;
+    grid-template-columns: 50% 15% 35%;
+    row-gap: var(--stack-s);
     padding: var(--space-md);
 
     @media (--md-down) {
@@ -111,10 +109,10 @@ import { MQ } from '@config/breakpoints';
   }
 
   h1 {
-    max-width: 16em;
-    font-size: var(--text-h2-alt);
-    line-height: 1.25;
-    font-weight: 700;
+    margin: 0 0 var(--stack-s);
+    font-size: var(--text-h2);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-snug);
     text-transform: capitalize;
   }
 
@@ -123,99 +121,132 @@ import { MQ } from '@config/breakpoints';
   }
 
   .about__lede {
-    max-width: var(--measure-xs);
-    padding-top: var(--space-2xs);
+    grid-column: 3;
+    margin: 0;
+    font-family: var(--font-body);
     font-size: var(--text-lead);
-    line-height: 1.4;
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-snug);
+
+    @media (--md-down) {
+      grid-column: auto;
+    }
   }
 
   .about__hero {
+    display: block;
     width: 100%;
-    max-height: 80vh;
+    height: auto;
     aspect-ratio: 16 / 9;
     object-fit: cover;
   }
 
-  .about p {
-    font-size: var(--text-small);
+  /* Padding and gaps scale with the page width, as on the live site. */
+  .about__band {
+    display: flex;
+    padding: 6%;
+    flex-direction: column;
+    gap: 3vw; /* token-exempt: scales with the page, as on the live site */
   }
 
-  .about__story,
-  .about__columns,
-  .about__lean {
-    max-width: var(--container-max);
-    margin-inline: auto;
-    padding: var(--space-xl) var(--space-lg) 0;
+  .about p {
+    margin: 0;
+  }
+
+  .about p + p {
+    margin-top: var(--stack-s);
+  }
+
+  /* Paragraphs that are columns side by side take no stacking gap. */
+  .about__columns > p + p {
+    margin-top: 0;
+  }
+
+  h2 {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: var(--text-h2);
+    font-weight: var(--weight-bold);
+    line-height: 1.4;
+    text-transform: none;
   }
 
   .about__story {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: var(--space-md);
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 3.4%;
     align-items: start;
 
     @media (--md-down) {
-      grid-template-columns: 1fr 1fr;
-
-      .about__began {
-        grid-column: 1 / -1;
-      }
+      grid-template-columns: 1fr;
+      row-gap: var(--stack-s);
     }
   }
 
-  h2 {
-    font-family: var(--font-heading);
-    font-size: var(--text-h2-sm);
-    font-weight: 700;
-    text-transform: none;
+  .about__began-title {
+    margin-bottom: calc(var(--space-lg) * 0.6);
   }
 
   .about__photo {
     width: 100%;
+    height: auto;
     aspect-ratio: 3 / 4;
     object-fit: cover;
-    border-radius: var(--radius-m);
+    border-radius: var(--radius-panel);
   }
 
   .about__photo--offset {
-    margin-top: var(--space-lg);
-    aspect-ratio: 7 / 10;
+    margin-top: calc(var(--space-lg) + var(--border-hairline));
+
+    @media (--md-down) {
+      margin-top: 0;
+    }
   }
 
   .about__columns {
     display: grid;
+    width: 100%;
+    max-width: var(--container-about);
+    margin-inline: auto;
+    padding-block: var(--space-xl);
     grid-template-columns: 1fr 1fr;
     gap: var(--space-md);
-    max-width: var(--container-text);
 
-    @media (--sm-down) {
+    @media (--md-down) {
       grid-template-columns: 1fr;
+      gap: 0;
     }
   }
 
   .about__lean {
     display: grid;
-    grid-template-columns: 1.6fr 1fr;
-    gap: var(--space-md);
-    align-items: start;
+    grid-template-columns: 2fr 1fr;
+    column-gap: 3.4%;
+    align-items: center;
 
     @media (--md-down) {
       grid-template-columns: 1fr;
     }
 
     :global(img) {
+      display: block;
       width: 100%;
-      border-radius: var(--radius-m);
+      height: auto;
+      aspect-ratio: 3 / 2;
+      object-fit: cover;
+      border-radius: var(--radius-panel);
     }
 
     h2 {
-      font-size: var(--text-h2-alt);
-      line-height: 1.1;
+      margin-bottom: calc(var(--stack-s) + var(--space-lg) * 0.6);
+      line-height: var(--leading-heading);
     }
   }
 
   .about__signature {
-    width: min(100%, var(--grid-min-m));
+    display: block;
+    width: min(100%, 25.4rem); /* token-exempt: signature artwork width */
+    height: auto;
     margin: var(--space-md) auto 0;
   }
 </style>

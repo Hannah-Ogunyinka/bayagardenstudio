@@ -160,6 +160,7 @@
   --container-max: 81.25rem;            /* 1300px: most content */
   --container-content: 80rem;           /* 1280px: home page sections */
   --container-cards: 78.75rem;          /* 1260px: package cards */
+  --container-about: 63.75rem;          /* 1020px: about page text columns */
   --container-split: 67.5rem;           /* 1080px: two-column copy on service pages */
   --container-wide: 120rem;             /* 1920px: full-bleed bands */
   /* Side gap for panels: the page gutter, growing past 1920px so the panel stays 1920px wide and centred. */
