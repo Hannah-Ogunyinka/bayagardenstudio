@@ -2,7 +2,8 @@
 /**
  * Newsletter sign-up (first name, last name, email).
  * Posts to the on-demand /api/newsletter/ endpoint, which validates the input,
- * checks Turnstile and adds the contact to Brevo. Works without JavaScript.
+ * checks Turnstile and adds the contact to Brevo. src/scripts/forms.ts submits it
+ * in place and loads Turnstile only once someone focuses the form.
  *
  * Every field has a real label (visually hidden to keep the original design),
  * and the status region announces the result to screen readers.
@@ -14,6 +15,8 @@ interface Props {
   layout?: 'stacked' | 'inline';
 }
 
+import { TURNSTILE_SITE_KEY } from '@config/site';
+
 const { id, layout = 'stacked' } = Astro.props;
 const field = (name: string) => `${id}-${name}`;
 ---
@@ -22,7 +25,9 @@ const field = (name: string) => `${id}-${name}`;
   class:list={['newsletter-form', `newsletter-form--${layout}`]}
   method="post"
   action="/api/newsletter/"
-  data-newsletter-form
+  data-enhanced-form
+  data-sitekey={TURNSTILE_SITE_KEY}
+  data-invalid-message="Please enter your email address."
   aria-describedby={field('status')}
 >
   <div class="newsletter-form__names">
@@ -47,9 +52,15 @@ const field = (name: string) => `${id}-${name}`;
       aria-required="true"
     />
   </div>
+  <div class="newsletter-form__turnstile" data-turnstile></div>
   <button type="submit">Sign up today</button>
-  <p id={field('status')} class="newsletter-form__status" role="status" aria-live="polite"></p>
+  <p id={field('status')} class="newsletter-form__status" role="status" aria-live="polite" data-form-status></p>
 </form>
+
+<script>
+  import { initForms } from '../../scripts/forms';
+  initForms();
+</script>
 
 <style>
   .newsletter-form {
@@ -90,6 +101,14 @@ const field = (name: string) => `${id}-${name}`;
   button:hover {
     background-color: var(--color-grey-950);
     box-shadow: var(--shadow-float);
+  }
+
+  .newsletter-form__turnstile:empty {
+    display: none;
+  }
+
+  input[aria-invalid='true'] {
+    outline: var(--border-thin) solid var(--color-purple-dark);
   }
 
   .newsletter-form__status:empty {
