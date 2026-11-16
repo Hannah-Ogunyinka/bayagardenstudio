@@ -3,14 +3,16 @@ title: "Platinum Events Planning"
 description: "Platinum Events Planning are an award winning wedding planning company that deliver unique and memorable occasions for their clients. Although crafting an"
 published: 2024-03-11
 updated: 2024-10-09
+summary: "Bringing you expertly crafted experiences, not just events"
+tagline: "Not just events but experiences"
+services: ["Strategy", "Custom Design", "Bespoke templates"]
+hero:
+  src: "../../assets/images/projects/platinum-events-planning/IMG_1939-scaled-1.jpg"
+  alt: ""  # TODO: describe this image
+thumbnail: "../../assets/images/projects/thumbnails/platinum-events-planning.jpeg"
+video: "/videos/platinum-events-planning.mp4"
+order: 3
 ---
-## Not just events but experiences
-
-- Strategy
-- Custom Design
-- Bespoke templates
-
-![](../../assets/images/projects/platinum-events-planning/IMG_1939-scaled-1.jpg)
 
 ## The company
 
@@ -18,7 +20,6 @@ Platinum Events Planning are an award winning wedding planning company that deli
 
 Their extensive knowledge of planning events means they are best positioned to foresee possible complications and prepare for them, resulting in a stress-free, happy day. Platinum Event Planning consistently exceeds their clients’ expectations, delivering service to a high, professional standard.
 
-[](/wp-content/uploads/2024/03/Platinum-events-planning-video3.mp4)
 
 ## The Brief
 

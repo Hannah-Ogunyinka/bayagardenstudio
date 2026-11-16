@@ -3,19 +3,16 @@ title: "Tayo’s Mixing Bowl"
 description: "Tayo’s Mixing Bowl is a custom handmade brownies and cakes business creating high-end treats for special occasions."
 published: 2024-03-14
 updated: 2024-10-09
+tagline: "Decadent brownies made to order from our kitchen to your door"
+services: ["Strategy", "Custom Design", "Professional photography", "Professional videography", "Custom checkout", "Conditional enquiry forms"]
+hero:
+  src: "../../assets/images/projects/tayos-mixing-bowl/Tayo-mixing-bowl-portrait.jpg"
+  alt: ""  # TODO: describe this image
+thumbnail: "../../assets/images/projects/thumbnails/tayos-mixing-bowl.jpeg"
+video: "/videos/tayos-mixing-bowl.mp4"
+order: 2
+quote: "“Baya Garden studio went over and beyond to create an amazing website for my online bakery business.”"
 ---
-## Decadent brownies made to order from our kitchen to your door
-
-- Strategy
-- Custom Design
-- Professional photography
-- Professional videography
-- Custom checkout
-- Conditional enquiry forms
-
-![](../../assets/images/projects/tayos-mixing-bowl/Tayo-mixing-bowl-portrait.jpg)
-
-## “Baya Garden studio went over and beyond to create an amazing website for my online bakery business.”
 
 Tayo’s Mixing Bowl is a custom handmade brownies and cakes business creating high-end treats for special occasions.
 
@@ -61,5 +58,3 @@ Here’s what Tayo had to say of her experience with Baya Garden Studio:
 I had lengthy discussions with Hannah about my company’s vision, product, image and brand and Hannah produced a website that conveyed my brand message. Several friends and acquaintances have also commented on how lovely my website is, has a very clean look and very easy to use.
 
 Hannah is very thorough in her work and I felt that she addressed any concerns I had and came up with solutions that I was happy with. I would definitely recommend Baya Garden Studios to business owners/ start ups that need a website or want to revamp their website.”
-
-[](/wp-content/uploads/2024/03/tayo-project-video4.mp4)

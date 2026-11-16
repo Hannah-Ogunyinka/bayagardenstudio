@@ -6,13 +6,20 @@ interface Props {
   title?: string;
   href?: string;
   label?: string;
+  /** "small" for a sentence-length message. */
+  size?: 'large' | 'small';
 }
 
-const { title = 'Start building your digital home today', href = '/contact/', label = 'Start your project' } = Astro.props;
+const {
+  title = 'Start building your digital home today',
+  href = '/contact/',
+  label = 'Start your project',
+  size = 'large',
+} = Astro.props;
 ---
 
 <section class="cta" aria-labelledby="cta-title">
-  <h2 id="cta-title">{title}</h2>
+  <h2 id="cta-title" class:list={[`cta__title--${size}`]}>{title}</h2>
   <Button href={href} variant="fill">{label}</Button>
 </section>
 
@@ -34,7 +41,7 @@ const { title = 'Start building your digital home today', href = '/contact/', la
   }
 
   h2 {
-    max-width: 14em;
+    max-width: 18em;
     margin: 0;
     color: var(--color-white);
     font-family: var(--font-heading);
@@ -42,5 +49,13 @@ const { title = 'Start building your digital home today', href = '/contact/', la
     font-weight: 600;
     line-height: 1.2;
     text-transform: none;
+  }
+
+  .cta__title--small {
+    max-width: 32em;
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 400;
+    line-height: 1.6;
   }
 </style>

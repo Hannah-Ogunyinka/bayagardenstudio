@@ -22,7 +22,7 @@ export async function getPosts(): Promise<Post[]> {
 
 export async function getProjects(): Promise<Project[]> {
   const projects = await getCollection('projects', ({ data }) => !data.draft);
-  return projects.sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf());
+  return projects.sort((a, b) => a.data.order - b.data.order);
 }
 
 export const formatDate = (date: Date): string =>

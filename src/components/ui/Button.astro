@@ -10,7 +10,7 @@ import type { HTMLAttributes } from 'astro/types';
 
 type Props = HTMLAttributes<'a'> & {
   href: string;
-  variant?: 'fill' | 'outline' | 'purple' | 'light' | 'ghost';
+  variant?: 'fill' | 'outline' | 'purple' | 'light' | 'ghost' | 'dark';
   arrow?: boolean;
 };
 
@@ -92,6 +92,17 @@ const { href, variant = 'fill', arrow = false, class: className, ...rest } = Ast
   .button--ghost:hover {
     background-color: var(--color-grey-100);
     color: var(--color-text);
+  }
+
+  .button--dark {
+    padding: 0.9em 1.4em;
+    border-color: var(--color-text);
+    background-color: var(--color-text);
+    color: var(--color-white);
+  }
+
+  .button--dark:hover {
+    background-color: var(--color-grey-950);
   }
 
   .button__icon {
