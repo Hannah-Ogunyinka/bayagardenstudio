@@ -59,16 +59,17 @@ const defaultCategory = PHOTO_CATEGORIES[0];
 
 <style>
   .gallery {
-    max-width: var(--container-max);
-    margin: var(--space-xl) auto;
-    padding-inline: var(--space-sm);
+    --gutter: 1rem; /* token-exempt: live gallery gutter (16px) */
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    padding: calc(2 * var(--space-md)) calc(var(--space-md) + var(--gutter) / 2) var(--space-md);
   }
 
   .gallery__filters {
     display: flex;
     justify-content: center;
-    gap: var(--space-2xs);
-    margin-bottom: var(--space-sm);
+    gap: 0.625rem; /* token-exempt: live filter spacing (10px) */
+    margin-bottom: calc(1.25rem + var(--gutter) / 2); /* token-exempt: live 20px plus the tile inset */
   }
 
   .gallery__filters[hidden] {
@@ -76,20 +77,21 @@ const defaultCategory = PHOTO_CATEGORIES[0];
   }
 
   .gallery__filters button {
-    padding: 0.5em 0.9em;
+    padding: 0.3125rem 0.625rem; /* token-exempt: live filter padding (5px 10px) */
     border: 0;
     border-radius: var(--radius-xs);
-    background: none;
+    background-color: var(--color-grey-75);
     color: var(--color-grey-600);
     cursor: pointer;
     font-family: var(--font-body);
-    font-size: var(--text-micro);
-    letter-spacing: 0.05em;
+    font-size: 0.8125rem; /* token-exempt: live filter size (13px) */
+    line-height: 1.8;
+    letter-spacing: 0.0625rem; /* token-exempt: live 1px tracking */
     text-transform: uppercase;
   }
 
   .gallery__filters button[aria-pressed='true'] {
-    background-color: var(--color-purple);
+    background-color: var(--color-violet);
     color: var(--color-white);
   }
 
@@ -98,7 +100,7 @@ const defaultCategory = PHOTO_CATEGORIES[0];
     margin: 0;
     padding: 0;
     columns: 3;
-    column-gap: var(--space-2xs);
+    column-gap: var(--gutter);
     list-style: none;
 
     @media (--sm-down) {
@@ -106,8 +108,25 @@ const defaultCategory = PHOTO_CATEGORIES[0];
     }
   }
 
+  /* With JavaScript the photos fill row by row, like the live masonry; each tile spans rows to its height. */
+  .gallery__grid.is-masonry {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 1px; /* token-exempt: masonry row unit */
+    column-gap: var(--gutter);
+    columns: auto;
+
+    @media (--sm-down) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .gallery__grid.is-masonry li {
+    margin-bottom: 0;
+  }
+
   .gallery__grid li {
-    margin-bottom: var(--space-2xs);
+    margin-bottom: var(--gutter);
     break-inside: avoid;
   }
 

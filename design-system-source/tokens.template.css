@@ -33,10 +33,12 @@
   --color-purple-dark: #7b11a8;   /* custom-dark-purple */
   --color-purple: #9747ff;        /* custom-light-purple: the brand accent */
   --color-purple-light: #b58cff;  /* accent on dark grey (4.6:1) */
+  --color-violet: #6a55f5;        /* gallery filter: live #7967ff, deepened to pass 4.5:1 with white */
   --color-lilac-100: #f0ebf6;     /* add-on cards */
   --color-lilac-300: #d3c1e9;     /* Support illustration band */
   --color-green: #098485;         /* custom-green: primary buttons */
   --color-grey-50: #f5f5f5;
+  --color-grey-75: #eeedf0;       /* gallery filter buttons */
   --color-grey-100: #eaeaea;      /* custom-very-light-grey: page background */
   --color-grey-200: #dbdbdb;      /* custom-medium-grey: cards */
   --color-grey-300: #d2d2d2;      /* menu dividers */

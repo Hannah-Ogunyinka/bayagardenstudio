@@ -13,6 +13,20 @@ export function initGallery(root: HTMLElement): void {
   let current = 0;
   let opener: HTMLElement | null = null;
 
+  const grid = root.querySelector<HTMLUListElement>('ul');
+
+  // Row-by-row masonry: each tile spans as many 1px rows as its height plus the gutter.
+  function layout(): void {
+    if (!grid) return;
+    const gutter = parseFloat(getComputedStyle(grid).columnGap) || 0;
+    for (const item of items) {
+      if (item.hidden) continue;
+      const img = item.querySelector('img');
+      const ratio = img ? Number(img.getAttribute('height')) / Number(img.getAttribute('width')) : 1;
+      item.style.gridRowEnd = `span ${Math.round(item.clientWidth * ratio + gutter)}`;
+    }
+  }
+
   const visibleLinks = (): HTMLAnchorElement[] =>
     items.filter((item) => !item.hidden).map((item) => item.querySelector('a') as HTMLAnchorElement);
 
@@ -21,6 +35,7 @@ export function initGallery(root: HTMLElement): void {
       button.setAttribute('aria-pressed', String(button.dataset['filter'] === category));
     }
     for (const item of items) item.hidden = item.dataset['category'] !== category;
+    layout();
     if (status) status.textContent = `Showing ${visibleLinks().length} ${category} photos`;
   }
 
@@ -33,6 +48,8 @@ export function initGallery(root: HTMLElement): void {
   }
 
   filters.hidden = false;
+  grid?.classList.add('is-masonry');
+  if (grid) new ResizeObserver(layout).observe(grid);
   applyFilter(root.dataset['default'] ?? '');
   if (status) status.textContent = '';
 
