@@ -201,6 +201,7 @@
   --container-max: 81.25rem;            /* 1300px: most content */
   --container-content: 80rem;           /* 1280px: home page sections */
   --container-cards: 78.75rem;          /* 1260px: package cards */
+  --container-policy: 70rem;            /* 1120px: privacy and cookie policies */
   --container-about: 63.75rem;          /* 1020px: about page text columns */
   --container-split: 67.5rem;           /* 1080px: two-column copy on service pages */
   --container-post: 90rem;              /* 1440px: article body (the theme's content wrapper) */

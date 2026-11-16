@@ -144,6 +144,10 @@ for name, (a, b, lo, hi) in SPACE.items():
 
 with open(os.path.join(HERE, "tokens.template.css")) as f:
     template = f.read()
+# A token declared twice silently overrides the first; fail instead.
+declared = re.findall(r"^\s*(--[a-z0-9-]+)\s*:", template, flags=re.M)
+dupes = sorted({name for name in declared if declared.count(name) > 1})
+assert not dupes, f"tokens declared twice in tokens.template.css: {', '.join(dupes)}"
 with open(CSS_OUT, "w") as f:
     f.write(template.replace("  /*@GENERATED@*/", "\n".join(lines)))
 
