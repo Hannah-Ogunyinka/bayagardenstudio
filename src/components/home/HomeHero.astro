@@ -58,6 +58,8 @@ const purpleMobile = await getImage({ src: tabletPurpleMobile, widths: [400, 800
     max-width: var(--container-wide);
     max-height: var(--hero-max-height);
     margin-inline: auto;
+    /* As in the original theme, artwork is clipped at the 1920px row, not the screen. */
+    overflow-x: clip;
     padding-bottom: var(--space-lg);
 
     @media (--2xl-up) {
@@ -69,7 +71,9 @@ const purpleMobile = await getImage({ src: tabletPurpleMobile, widths: [400, 800
     }
   }
 
+  /* The theme centres the heading column vertically between the artwork. */
   .hero__heading {
+    align-self: center;
     padding: var(--space-md) var(--space-sm);
     text-align: center;
 
@@ -163,6 +167,7 @@ const purpleMobile = await getImage({ src: tabletPurpleMobile, widths: [400, 800
     max-width: var(--container-wide);
     height: 26em;
     margin-inline: auto;
+    overflow-x: clip;
 
     @media (--lg-down) {
       display: none;
