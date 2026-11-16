@@ -61,21 +61,21 @@ const { title, description, summary, published, updated, categories, image } = p
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--space-md);
-    max-width: var(--content-max);
+    max-width: var(--container-wide);
     margin-inline: auto;
     padding: var(--space-md);
 
-    @media (max-width: 782px) {
+    @media (--md-down) {
       grid-template-columns: minmax(0, 1fr);
     }
   }
 
   .back-link {
     display: inline-block;
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--space-2xs);
     color: var(--color-text);
     font-family: var(--font-body);
-    font-size: var(--text-xs);
+    font-size: var(--text-small);
     text-decoration: none;
     text-transform: uppercase;
   }
@@ -89,20 +89,20 @@ const { title, description, summary, published, updated, categories, image } = p
   }
 
   h1 {
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--space-2xs);
     font-weight: 700;
     line-height: 1.2;
   }
 
   .post__meta p {
-    margin: 0.5rem 0 0;
-    font-size: var(--text-xs);
+    margin: var(--space-2xs) 0 0;
+    font-size: var(--text-small);
   }
 
   .post__summary {
-    max-width: 30rem;
-    padding-top: 1.5rem;
-    font-size: var(--text-base);
+    max-width: var(--measure-m);
+    padding-top: 1.25em;
+    font-size: var(--text-body);
   }
 
   .post__image {
@@ -112,18 +112,18 @@ const { title, description, summary, published, updated, categories, image } = p
     object-fit: cover;
     object-position: top;
 
-    @media (max-width: 768px) {
+    @media (--md-down) {
       aspect-ratio: 4 / 3;
     }
   }
 
   .post__body {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 32rem) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, var(--measure-prose)) minmax(0, 1fr);
     gap: var(--space-md);
     padding: var(--space-md) var(--space-md) var(--space-xl);
 
-    @media (max-width: 960px) {
+    @media (--lg-down) {
       grid-template-columns: minmax(0, 1fr);
     }
   }

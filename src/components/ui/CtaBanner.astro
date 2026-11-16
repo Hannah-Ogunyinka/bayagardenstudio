@@ -26,7 +26,7 @@ const {
 <style>
   .cta {
     display: grid;
-    max-width: calc(var(--content-max) - 2 * var(--space-md));
+    max-width: calc(var(--container-wide) - 2 * var(--space-md));
     margin: var(--space-xl) var(--space-md) var(--space-lg);
     padding: var(--space-lg) var(--space-md);
     justify-items: center;
@@ -35,7 +35,7 @@ const {
     background-color: var(--color-text);
     text-align: center;
 
-    @media (min-width: 1921px) {
+    @media (--3xl-up) {
       margin-inline: auto;
     }
   }
@@ -45,7 +45,7 @@ const {
     margin: 0;
     color: var(--color-white);
     font-family: var(--font-heading);
-    font-size: var(--text-2xl-alt);
+    font-size: var(--text-h2-alt);
     font-weight: 600;
     line-height: 1.2;
     text-transform: none;
@@ -54,7 +54,7 @@ const {
   .cta__title--small {
     max-width: 32em;
     font-family: var(--font-body);
-    font-size: var(--text-sm);
+    font-size: var(--text-ui);
     font-weight: 400;
     line-height: 1.6;
   }

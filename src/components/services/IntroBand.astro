@@ -2,6 +2,7 @@
 /** Dark full-width band with a framed product image beside the service introduction. */
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
+import { MQ } from '@config/breakpoints';
 
 interface Props {
   image: ImageMetadata;
@@ -12,7 +13,7 @@ const { image } = Astro.props;
 
 <section class="intro-band" aria-label="Introduction">
   <div class="intro-band__inner">
-    <Image src={image} alt="" widths={[480, 768, 1024]} sizes="(max-width: 782px) 100vw, 45vw" loading="eager" />
+    <Image src={image} alt="" widths={[480, 768, 1024]} sizes={`${MQ.mdDown} 100vw, 45vw`} loading="eager" />
     <div class="intro-band__text"><slot /></div>
   </div>
 </section>
@@ -26,13 +27,13 @@ const { image } = Astro.props;
 
   .intro-band__inner {
     display: grid;
-    max-width: var(--content-max);
+    max-width: var(--container-wide);
     margin-inline: auto;
     grid-template-columns: 1fr 1fr;
     align-items: center;
     gap: var(--space-xl);
 
-    @media (max-width: 782px) {
+    @media (--md-down) {
       grid-template-columns: 1fr;
     }
   }
@@ -44,8 +45,8 @@ const { image } = Astro.props;
   }
 
   .intro-band__text {
-    max-width: 30rem;
-    font-size: var(--text-sm);
+    max-width: var(--measure-m);
+    font-size: var(--text-ui);
   }
 
   .intro-band__text :global(p) {

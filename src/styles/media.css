@@ -1,0 +1,34 @@
+/*
+ * Breakpoints: the only place screen widths are set.
+ * PostCSS (postcss.config.mjs) makes these names available in every
+ * stylesheet and component, so nobody types a width again:
+ *
+ *   @media (--md-up)   { … }   tablet and wider
+ *   @media (--md-down) { … }   narrower than a tablet
+ *   @media (--md-up) and (--xl-down) { … }   tablet to small laptop
+ *
+ * em in @media is the browser's default font size, so a reader with large
+ * text gets the roomier small-screen layout sooner. Values match the live
+ * WordPress theme's own breakpoints.
+ *
+ *   xs   26.25em   420px   small phones (full-height menu)
+ *   sm   37.5em    600px   large phones
+ *   md   48.875em  782px   tablets (WordPress's column breakpoint)
+ *   lg   60em      960px   small laptops (floating nav appears)
+ *   xl   77em     1232px   laptops (full bento grid)
+ *   2xl  90em     1440px   desktops
+ *   3xl  120em    1920px   very wide screens
+ */
+@custom-media --xs-up (width >= 26.25em);
+@custom-media --xs-down (width < 26.25em);
+@custom-media --sm-up (width >= 37.5em);
+@custom-media --sm-down (width < 37.5em);
+@custom-media --md-up (width >= 48.875em);
+@custom-media --md-down (width < 48.875em);
+@custom-media --lg-up (width >= 60em);
+@custom-media --lg-down (width < 60em);
+@custom-media --xl-up (width >= 77em);
+@custom-media --xl-down (width < 77em);
+@custom-media --2xl-up (width > 90em);
+@custom-media --2xl-down (width <= 90em);
+@custom-media --3xl-up (width >= 120em);

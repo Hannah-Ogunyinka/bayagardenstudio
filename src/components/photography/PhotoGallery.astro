@@ -7,6 +7,7 @@
  */
 import { Image, getImage } from 'astro:assets';
 import { GALLERY, PHOTO_CATEGORIES } from '@data/photography';
+import { MQ } from '@config/breakpoints';
 
 const photos = await Promise.all(
   GALLERY.map(async (photo, index) => ({
@@ -35,7 +36,7 @@ const defaultCategory = PHOTO_CATEGORIES[0];
       photos.map(({ image, alt, category, index, large }) => (
         <li data-category={category}>
           <a href={large.src} data-index={index} aria-label={alt ? `View larger: ${alt}` : `View photo ${index + 1} larger`}>
-            <Image src={image} alt={alt} widths={[300, 480, 640]} sizes="(max-width: 600px) 50vw, 33vw" />
+            <Image src={image} alt={alt} widths={[300, 480, 640]} sizes={`${MQ.smDown} 50vw, 33vw`} />
           </a>
         </li>
       ))
@@ -58,7 +59,7 @@ const defaultCategory = PHOTO_CATEGORIES[0];
 
 <style>
   .gallery {
-    max-width: 1340px;
+    max-width: var(--container-max);
     margin: var(--space-xl) auto;
     padding-inline: var(--space-sm);
   }
@@ -66,7 +67,7 @@ const defaultCategory = PHOTO_CATEGORIES[0];
   .gallery__filters {
     display: flex;
     justify-content: center;
-    gap: 0.4rem;
+    gap: var(--space-2xs);
     margin-bottom: var(--space-sm);
   }
 
@@ -77,12 +78,12 @@ const defaultCategory = PHOTO_CATEGORIES[0];
   .gallery__filters button {
     padding: 0.5em 0.9em;
     border: 0;
-    border-radius: 2px;
+    border-radius: var(--radius-xs);
     background: none;
     color: var(--color-grey-600);
     cursor: pointer;
     font-family: var(--font-body);
-    font-size: 0.75rem;
+    font-size: var(--text-micro);
     letter-spacing: 0.05em;
     text-transform: uppercase;
   }
@@ -97,16 +98,16 @@ const defaultCategory = PHOTO_CATEGORIES[0];
     margin: 0;
     padding: 0;
     columns: 3;
-    column-gap: 0.6rem;
+    column-gap: var(--space-2xs);
     list-style: none;
 
-    @media (max-width: 600px) {
+    @media (--sm-down) {
       columns: 2;
     }
   }
 
   .gallery__grid li {
-    margin-bottom: 0.6rem;
+    margin-bottom: var(--space-2xs);
     break-inside: avoid;
   }
 
@@ -132,7 +133,7 @@ const defaultCategory = PHOTO_CATEGORIES[0];
     margin: 0;
     padding: 0;
     border: 0;
-    background: rgb(16 16 20 / 94%);
+    background: var(--color-scrim-strong);
   }
 
   .lightbox::backdrop {
@@ -145,31 +146,31 @@ const defaultCategory = PHOTO_CATEGORIES[0];
   }
 
   .lightbox__image {
-    max-width: calc(100vw - 7rem);
-    max-height: calc(100dvh - 4rem);
+    max-width: calc(100vw - 2 * var(--tap-min) - var(--space-md));
+    max-height: calc(100dvh - 2 * var(--space-lg));
     object-fit: contain;
   }
 
   .lightbox__btn {
     position: absolute;
-    width: 3rem;
-    height: 3rem;
+    width: var(--tap-min);
+    height: var(--tap-min);
     border: 0;
     border-radius: 50%;
-    background: rgb(255 255 255 / 12%);
+    background: var(--color-on-scrim);
     color: var(--color-white);
     cursor: pointer;
-    font-size: 2rem;
+    font-size: var(--text-h3);
     line-height: 1;
   }
 
   .lightbox__btn:hover {
-    background: rgb(255 255 255 / 25%);
+    background: var(--color-on-scrim-hover);
   }
 
   .lightbox__close {
-    top: 1rem;
-    right: 1rem;
+    top: var(--space-xs);
+    right: var(--space-sm);
   }
 
   .lightbox__prev,
@@ -179,10 +180,10 @@ const defaultCategory = PHOTO_CATEGORIES[0];
   }
 
   .lightbox__prev {
-    left: 0.5rem;
+    left: var(--space-2xs);
   }
 
   .lightbox__next {
-    right: 0.5rem;
+    right: var(--space-2xs);
   }
 </style>

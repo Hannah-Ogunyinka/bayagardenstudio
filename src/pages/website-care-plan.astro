@@ -10,6 +10,7 @@ import Tick from '@assets/icons/tick-in-circle.svg';
 import heroLarge from '@assets/images/services/Support-Image-desktop.svg';
 import heroMedium from '@assets/images/services/Support-hero-image-md.svg';
 import heroSmall from '@assets/images/services/Support-hero-image-sm.svg';
+import { MQ } from '@config/breakpoints';
 
 const shared = [
   'Monthly maintenance report',
@@ -69,8 +70,8 @@ const plans = [
 
   <!-- Decorative illustration of a tidy desk; art-directed for each screen size. -->
   <picture class="illustration">
-    <source media="(max-width: 600px)" srcset={heroSmall.src} width={604} height={464} />
-    <source media="(max-width: 960px)" srcset={heroMedium.src} width={1200} height={463} />
+    <source media={`${MQ.smDown}`} srcset={heroSmall.src} width={604} height={464} />
+    <source media={`${MQ.lgDown}`} srcset={heroMedium.src} width={1200} height={463} />
     <img src={heroLarge.src} alt="" width={1440} height={463} decoding="async" />
   </picture>
 
@@ -138,21 +139,21 @@ const plans = [
 
   .why {
     display: grid;
-    max-width: 780px;
+    max-width: var(--container-text);
     margin: var(--space-xl) auto var(--space-2xl);
     padding-inline: var(--space-md);
     grid-template-columns: 1fr 1fr;
     gap: var(--space-md);
-    font-size: var(--text-xs);
+    font-size: var(--text-small);
 
-    @media (max-width: 782px) {
+    @media (--md-down) {
       grid-template-columns: 1fr;
       gap: 0;
     }
   }
 
   .pricing {
-    max-width: var(--content-max);
+    max-width: var(--container-wide);
     margin-inline: auto;
     padding: var(--space-md) var(--space-md) var(--space-2xl);
   }
@@ -160,9 +161,9 @@ const plans = [
   .pricing h2 {
     margin: 0 0 var(--space-md);
     padding-top: var(--space-md);
-    border-top: 1px solid var(--color-grey-400);
+    border-top: var(--border-hairline) solid var(--color-grey-400);
     font-family: var(--font-heading);
-    font-size: var(--text-2xl);
+    font-size: var(--text-h2);
     font-weight: 700;
     text-align: center;
   }
@@ -176,10 +177,10 @@ const plans = [
   }
 
   .plan {
-    width: min(100%, 21rem);
+    width: min(100%, var(--grid-min-l));
     padding: var(--space-sm);
-    border: 1px solid var(--color-grey-200);
-    border-radius: 40px;
+    border: var(--border-hairline) solid var(--color-grey-200);
+    border-radius: var(--radius-panel-l);
     background-color: var(--color-grey-200);
   }
 
@@ -188,7 +189,7 @@ const plans = [
     flex-direction: column;
     align-items: center;
     padding: var(--space-md);
-    border-radius: 32px;
+    border-radius: var(--radius-panel);
     background-color: var(--color-grey-100);
     text-align: center;
   }
@@ -196,7 +197,7 @@ const plans = [
   .plan h3 {
     margin: 0;
     font-family: var(--font-heading);
-    font-size: var(--text-md);
+    font-size: var(--text-lead);
     font-weight: 600;
     line-height: 1;
     text-transform: capitalize;
@@ -204,21 +205,21 @@ const plans = [
 
   .plan__price {
     margin-block: var(--space-sm);
-    font-size: var(--text-lg);
+    font-size: var(--text-h3);
     font-weight: 700;
   }
 
   /* Brighter purple kept at 24px or more for large-text contrast. */
   .plan__unit {
     color: var(--color-purple);
-    font-size: max(1.5rem, var(--text-md));
+    font-size: max(var(--text-large-min), var(--text-lead));
     font-weight: 600;
   }
 
   .plan__features {
     margin: 0;
     padding: var(--space-sm) var(--space-sm) var(--space-md);
-    font-size: var(--text-xs);
+    font-size: var(--text-small);
     font-weight: 500;
     list-style: none;
   }

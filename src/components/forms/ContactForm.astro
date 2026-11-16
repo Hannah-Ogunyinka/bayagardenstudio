@@ -63,16 +63,16 @@ const services = [
 <style>
   .contact-form {
     display: grid;
-    gap: 0.8rem;
+    gap: var(--space-xs);
     font-family: var(--font-body);
   }
 
   .contact-form__row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 0.8rem;
+    gap: var(--space-xs);
 
-    @media (max-width: 600px) {
+    @media (--sm-down) {
       grid-template-columns: 1fr;
     }
   }
@@ -86,8 +86,8 @@ const services = [
     position: absolute;
     top: 0.6em;
     left: 1.6em;
-    font-size: 0.7rem;
-    letter-spacing: 0.04rem;
+    font-size: var(--text-micro);
+    letter-spacing: var(--tracking-caps);
     text-transform: uppercase;
     pointer-events: none;
   }
@@ -95,7 +95,7 @@ const services = [
   .field input,
   .field textarea {
     padding: 1.8em 1.6em 0.8em;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
   }
 
   .field input {
@@ -106,9 +106,9 @@ const services = [
     margin: 0;
     padding: 1.6em 1em;
     border: 0;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     background-color: var(--color-white);
-    font-size: var(--text-xs);
+    font-size: var(--text-small);
   }
 
   legend {
@@ -144,8 +144,8 @@ const services = [
     background-color: var(--color-text);
     color: var(--color-white);
     font-family: var(--font-body);
-    font-size: var(--text-xs);
-    letter-spacing: 0.04rem;
+    font-size: var(--text-small);
+    letter-spacing: var(--tracking-caps);
     text-transform: uppercase;
     cursor: pointer;
   }
@@ -161,12 +161,12 @@ const services = [
   .contact-form__status {
     margin: 0;
     padding: 0.8em 1em;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     background-color: var(--color-white);
   }
 
   .contact-form__note {
     margin: 0;
-    font-size: 0.75rem;
+    font-size: var(--text-micro);
   }
 </style>

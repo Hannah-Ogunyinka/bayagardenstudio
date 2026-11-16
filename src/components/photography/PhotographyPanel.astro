@@ -32,7 +32,7 @@ const { as: Heading = 'h2', packagesHref = '/brand-photography-packages/' } = As
     flex-direction: column;
     align-items: center;
     padding: var(--space-md) var(--space-md) var(--space-lg);
-    border-radius: 32px;
+    border-radius: var(--radius-panel);
     background-color: var(--color-purple);
     color: var(--color-white);
     text-align: center;
@@ -43,17 +43,17 @@ const { as: Heading = 'h2', packagesHref = '/brand-photography-packages/' } = As
     margin: 0 0 var(--space-sm);
     color: inherit;
     font-family: var(--font-heading);
-    font-size: var(--text-xl);
+    font-size: var(--text-h2-sm);
     font-weight: 700;
     line-height: 1.2;
     text-transform: none;
   }
 
   p {
-    max-width: 40rem;
+    max-width: var(--measure-l);
     margin-block: 0 var(--space-md);
     color: inherit;
-    font-size: var(--text-sm);
+    font-size: var(--text-ui);
   }
 
   .photography__actions {

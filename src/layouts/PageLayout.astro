@@ -23,12 +23,12 @@ const { title, seoTitle, description } = Astro.props;
 
 <style>
   .page {
-    max-width: 52rem;
+    max-width: var(--measure-2xl);
     margin-inline: auto;
     padding: var(--space-md) var(--space-md) var(--space-xl);
   }
 
   .page :global(.prose) {
-    font-size: var(--text-sm);
+    font-size: var(--text-ui);
   }
 </style>

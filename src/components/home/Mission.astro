@@ -23,12 +23,12 @@ const background = await getImage({ src: desk, width: 1920, format: 'webp', qual
 
 <style>
   .mission {
-    max-width: calc(var(--content-max) - 2 * var(--space-md));
+    max-width: calc(var(--container-wide) - 2 * var(--space-md));
     margin: 0 var(--space-md);
     border-radius: 1em;
     background: var(--mission-bg) center / cover;
 
-    @media (min-width: 1921px) {
+    @media (--3xl-up) {
       margin-inline: auto;
     }
   }
@@ -37,14 +37,14 @@ const background = await getImage({ src: desk, width: 1920, format: 'webp', qual
     position: relative;
     display: flex;
     min-height: 75vh;
-    max-height: 1080px;
+    max-height: var(--hero-max-height);
     align-items: center;
     justify-content: flex-end;
     padding: var(--space-md);
     border-radius: 1em;
-    background-color: rgb(30 30 30 / 55%);
+    background-color: var(--color-tint-dark);
 
-    @media (max-width: 782px) {
+    @media (--md-down) {
       flex-direction: column;
       justify-content: center;
     }
@@ -54,11 +54,11 @@ const background = await getImage({ src: desk, width: 1920, format: 'webp', qual
     position: absolute;
     bottom: 10%;
     left: 4%;
-    width: clamp(6rem, 12vw, 10rem);
+    width: clamp(6rem, 12vw, 10rem); /* token-exempt: artwork position from the live theme */
     color: var(--color-white);
     animation: rotate 7s linear infinite;
 
-    @media (max-width: 782px) {
+    @media (--md-down) {
       position: static;
       margin-bottom: var(--space-md);
     }
@@ -71,10 +71,10 @@ const background = await getImage({ src: desk, width: 1920, format: 'webp', qual
   }
 
   .mission__text {
-    max-width: 34rem;
+    max-width: var(--measure-l);
     text-align: right;
 
-    @media (max-width: 782px) {
+    @media (--md-down) {
       text-align: center;
     }
   }
@@ -86,7 +86,7 @@ const background = await getImage({ src: desk, width: 1920, format: 'webp', qual
 
   .mission__eyebrow {
     font-family: var(--font-body);
-    font-size: var(--text-sm);
+    font-size: var(--text-ui);
     font-weight: 500;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -94,12 +94,12 @@ const background = await getImage({ src: desk, width: 1920, format: 'webp', qual
 
   h2 {
     font-family: var(--font-heading);
-    font-size: var(--text-xl);
+    font-size: var(--text-h2-sm);
     font-weight: 700;
     line-height: 1.3;
   }
 
   .mission__text > p:not(.mission__eyebrow) {
-    font-size: var(--text-sm);
+    font-size: var(--text-ui);
   }
 </style>

@@ -76,16 +76,16 @@ const columns = [
   }
 
   .site-footer__inner {
-    max-width: var(--content-max);
+    max-width: var(--container-wide);
     margin-inline: auto;
   }
 
   .site-footer__strap {
     display: flex;
-    gap: 2rem;
+    gap: var(--space-lg);
     margin: 0 0 var(--space-md);
     padding-block: 0.3em;
-    border-block: 1px solid var(--color-text);
+    border-block: var(--border-hairline) solid var(--color-text);
     text-transform: uppercase;
   }
 
@@ -95,23 +95,23 @@ const columns = [
     align-items: center;
     margin-bottom: var(--space-md);
 
-    @media (max-width: 960px) {
+    @media (--lg-down) {
       grid-template-columns: repeat(3, 1fr);
       row-gap: var(--space-md);
     }
 
-    @media (max-width: 600px) {
+    @media (--sm-down) {
       grid-template-columns: 1fr;
     }
   }
 
   .site-footer__badge {
     :global(svg) {
-      width: 200px;
+      width: var(--badge-size);
       height: auto;
     }
 
-    @media (max-width: 960px) {
+    @media (--lg-down) {
       display: flex;
       grid-column: 1 / -1;
       justify-content: center;
@@ -126,7 +126,7 @@ const columns = [
   .site-footer__column h2 {
     margin-bottom: 0.8em;
     font-family: var(--font-body);
-    font-size: var(--text-sm);
+    font-size: var(--text-ui);
     font-weight: 600;
     text-transform: uppercase;
   }
@@ -143,7 +143,7 @@ const columns = [
 
   .site-footer__column a {
     color: var(--color-text);
-    font-size: var(--text-sm);
+    font-size: var(--text-ui);
     font-weight: 300;
   }
 
@@ -154,7 +154,7 @@ const columns = [
   .site-footer__legal {
     margin: 0;
     padding-block: 0.3em;
-    border-block: 1px solid var(--color-text);
+    border-block: var(--border-hairline) solid var(--color-text);
     text-transform: uppercase;
   }
 
@@ -169,13 +169,13 @@ const columns = [
 
   .newsletter-band__inner {
     display: flex;
-    max-width: 1200px;
-    max-height: 280px;
+    max-width: var(--container-l);
+    max-height: var(--thumb-max-height);
     margin-inline: auto;
     gap: var(--space-md);
     overflow-y: clip;
 
-    @media (max-width: 782px) {
+    @media (--md-down) {
       flex-direction: column;
       max-height: none;
     }
@@ -194,7 +194,7 @@ const columns = [
     margin-bottom: var(--space-sm);
     color: var(--color-white);
     font-family: var(--font-body);
-    font-size: var(--text-base);
+    font-size: var(--text-body);
     font-weight: 400;
     line-height: 1.7;
     text-transform: none;

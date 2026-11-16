@@ -54,18 +54,18 @@ const field = (name: string) => `${id}-${name}`;
 <style>
   .newsletter-form {
     display: grid;
-    gap: 0.8rem;
+    gap: var(--space-xs);
     font-family: var(--font-body);
   }
 
   .newsletter-form__names {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 0.6rem;
+    gap: var(--space-2xs);
   }
 
   .newsletter-form--stacked .newsletter-form__names {
-    @media (max-width: 960px) {
+    @media (--lg-down) {
       grid-template-columns: 1fr;
     }
   }
@@ -78,8 +78,8 @@ const field = (name: string) => `${id}-${name}`;
     background-color: var(--color-purple);
     color: var(--color-white);
     font-family: var(--font-body);
-    font-size: var(--text-xs);
-    letter-spacing: 0.04rem;
+    font-size: var(--text-small);
+    letter-spacing: var(--tracking-caps);
     text-transform: uppercase;
     cursor: pointer;
     transition:
@@ -99,7 +99,7 @@ const field = (name: string) => `${id}-${name}`;
   .newsletter-form__status {
     margin: 0;
     padding: 0.8em 1em;
-    border-radius: 16px;
+    border-radius: var(--radius-m);
     background-color: var(--color-grey-100);
     color: var(--color-text);
   }

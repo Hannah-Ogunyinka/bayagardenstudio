@@ -68,7 +68,7 @@ const outcomes = [
 <style>
   .outcomes {
     display: grid;
-    max-width: var(--content-max);
+    max-width: var(--container-wide);
     margin: var(--space-xl) auto 0;
     padding: 0 var(--space-md);
     gap: var(--space-lg);
@@ -81,10 +81,10 @@ const outcomes = [
     align-items: start;
     gap: var(--space-md);
     padding: var(--space-md) var(--space-lg);
-    border: 1px solid var(--color-grey-400);
-    border-radius: 1.2rem;
+    border: var(--border-hairline) solid var(--color-grey-400);
+    border-radius: var(--radius-media);
 
-    @media (max-width: 782px) {
+    @media (--md-down) {
       grid-template-columns: 1fr;
       gap: var(--space-sm);
     }
@@ -93,7 +93,7 @@ const outcomes = [
   .outcome h2 {
     margin: 0;
     font-family: var(--font-heading);
-    font-size: var(--text-2xl);
+    font-size: var(--text-h2);
     font-weight: 700;
     line-height: 1.1;
     text-transform: none;
@@ -101,18 +101,18 @@ const outcomes = [
 
   .outcome p {
     margin: 0;
-    font-size: var(--text-xs);
+    font-size: var(--text-small);
   }
 
   .closing {
     display: flex;
-    max-width: 36rem;
+    max-width: var(--measure-l);
     margin: var(--space-2xl) auto var(--space-2xl);
     padding-inline: var(--space-md);
     flex-direction: column;
     align-items: center;
     gap: var(--space-sm);
-    font-size: var(--text-xs);
+    font-size: var(--text-small);
     text-align: center;
   }
 </style>

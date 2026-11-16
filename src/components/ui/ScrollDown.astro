@@ -28,18 +28,18 @@ const { href, variant = 'fill' } = Astro.props;
   .scroll-down {
     display: inline-flex;
     align-items: center;
-    gap: 1rem;
+    gap: var(--space-xs);
     color: var(--color-text);
     font-family: var(--font-heading);
-    font-size: var(--text-sm);
+    font-size: var(--text-ui);
     text-decoration: none;
     text-transform: uppercase;
   }
 
   .scroll-down svg {
     flex-shrink: 0;
-    width: 55px;
-    height: 101px;
+    width: 55px; /* token-exempt: size of the scroll-down artwork */
+    height: 101px; /* token-exempt: size of the scroll-down artwork */
   }
 
   .scroll-down__pill {

@@ -1,0 +1,543 @@
+---
+/**
+ * Design system reference. Lists every token straight from tokens.css, so it
+ * can never fall out of date, and shows each one at the current window size.
+ * Not in the sitemap and noindex: it is a tool for whoever edits the site.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Button from '@components/ui/Button.astro';
+import ScrollDown from '@components/ui/ScrollDown.astro';
+import CtaBanner from '@components/ui/CtaBanner.astro';
+import tokensCss from '@styles/tokens.css?raw';
+import mediaCss from '@styles/media.css?raw';
+
+interface Token {
+  name: string;
+  value: string;
+  note: string;
+}
+
+// Read "--name: value; /* note */" lines from tokens.css.
+const tokens: Token[] = [...tokensCss.matchAll(/^[ \t]*(--[\w-]+):[ \t]*([^;]+);[ \t]*(?:\/\*[ \t]*(.*?)[ \t]*\*\/)?/gm)].map(
+  ([, name = '', value = '', note = '']) => ({ name, value: value.trim(), note }),
+);
+
+const pick = (re: RegExp) => tokens.filter((t) => re.test(t.name));
+
+const palette = pick(/^--color-(?!bg$|text|surface|rule|accent|action|focus|glass|scrim|tint|on-)/);
+const colorRoles = pick(/^--color-(bg$|text|surface|rule|accent|action|focus|glass|scrim|tint|on-)/);
+const textSteps = pick(/^--step-/);
+const textRoles = pick(/^--text-(?!large-min)/);
+const spaceSteps = pick(/^--space-/);
+const spaceRoles = pick(/^--(gutter|section-space|stack-|gap-|inset-|flow-space)/);
+const measures = pick(/^--measure/);
+const containers = pick(/^--container-/);
+const radii = pick(/^--radius-/);
+const shadows = pick(/^--shadow-/);
+const misc = pick(/^--(weight|leading|tracking|border|tap|focus|underline|btn|icon|duration|ease|z)-|^--glass-blur/);
+
+const breakpoints = [...mediaCss.matchAll(/@custom-media\s+(--[\w-]+)\s+\(([^)]+)\);/g)].map(([, name = '', query = '']) => ({
+  name,
+  query,
+}));
+---
+
+<BaseLayout
+  title="Design system"
+  description="Tokens, layout helpers and components used to build bayagardenstudio.com."
+  noindex
+  floatingNav={false}
+>
+  <div class="ds container">
+    <header class="ds__intro stack">
+      <p class="ds__eyebrow">Baya Garden Studio</p>
+      <h1>Design system</h1>
+      <p>
+        Every page is built from these tokens. Change a value in <code>design-system-source/</code>, run <code>npm run tokens</code>, and the whole site follows. Components read the role tokens, never raw numbers: <code>npm run check:tokens</code> fails the build if one slips in.
+      </p>
+      <p class="ds__live">Live values below are for this window: <strong data-ds-width>…</strong> wide. Resize to watch the fluid tokens change.</p>
+      <nav aria-label="Sections" class="cluster">
+        <a href="#colour">Colour</a>
+        <a href="#type">Type</a>
+        <a href="#space">Space</a>
+        <a href="#layout">Layout</a>
+        <a href="#shape">Shape</a>
+        <a href="#breakpoints">Breakpoints</a>
+        <a href="#components">Components</a>
+        <a href="#rules">Rules</a>
+      </nav>
+    </header>
+
+    <section id="colour" class="ds__section stack" aria-labelledby="colour-title">
+      <h2 id="colour-title">Colour</h2>
+      <p>The palette is the only place hex codes appear. Components use the roles.</p>
+      <h3>Palette</h3>
+      <ul class="ds__swatches auto-grid" role="list">
+        {
+          palette.map((t) => (
+            <li class="ds__swatch">
+              <span class="ds__chip" style={`background: var(${t.name})`} />
+              <code>{t.name}</code>
+              <span class="ds__meta">{t.value}</span>
+              {t.note && <span class="ds__meta">{t.note}</span>}
+            </li>
+          ))
+        }
+      </ul>
+      <h3>Roles</h3>
+      <ul class="ds__swatches auto-grid" role="list">
+        {
+          colorRoles.map((t) => (
+            <li class="ds__swatch">
+              <span class="ds__chip ds__chip--check" style={`background: var(${t.name})`} />
+              <code>{t.name}</code>
+              <span class="ds__meta">{t.value.replace(/var\((--[\w-]+)\)/, '$1')}</span>
+              {t.note && <span class="ds__meta">{t.note}</span>}
+            </li>
+          ))
+        }
+      </ul>
+      <p class="ds__note">
+        Contrast: the bright purple (<code>--color-accent</code>) passes only at 24px and above, so small purple text uses <code>--color-accent-strong</code> on light backgrounds and <code>--color-accent-on-dark</code> on dark grey.
+      </p>
+    </section>
+
+    <section id="type" class="ds__section stack" aria-labelledby="type-title">
+      <h2 id="type-title">Type</h2>
+      <p>
+        Headings use Poppins (<code>--font-heading</code>), running text Montserrat (<code>--font-body</code>). Sizes are fluid
+        between 320px and 1920px wide and always pair <code>vw</code> with <code>rem</code>, so browser zoom still works.
+      </p>
+      <h3>Roles</h3>
+      <table class="ds__table">
+        <thead>
+          <tr><th scope="col">Token</th><th scope="col">Uses</th><th scope="col">Now</th><th scope="col">Sample</th></tr>
+        </thead>
+        <tbody>
+          {
+            textRoles.map((t) => (
+              <tr>
+                <th scope="row"><code>{t.name}</code></th>
+                <td>{t.note || t.value.replace(/var\((--[\w-]+)\)/, '$1')}</td>
+                <td class="ds__now" data-ds-measure={`font-size: var(${t.name})`} />
+                <td>
+                  <span class="ds__sample" style={`font-size: var(${t.name})`}>Aa</span>
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+      <details>
+        <summary>Generated steps</summary>
+        <table class="ds__table">
+          <tbody>
+            {
+              textSteps.map((t) => (
+                <tr>
+                  <th scope="row"><code>{t.name}</code></th>
+                  <td>{t.note}</td>
+                  <td class="ds__now" data-ds-measure={`font-size: var(${t.name})`} />
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </details>
+    </section>
+
+    <section id="space" class="ds__section stack" aria-labelledby="space-title">
+      <h2 id="space-title">Space</h2>
+      <p>Roles say what the space is for. Use them in components; the steps are what they are built from.</p>
+      <h3>Roles</h3>
+      <ul class="ds__bars" role="list">
+        {
+          spaceRoles.map((t) => (
+            <li>
+              <code>{t.name}</code>
+              <span class="ds__bar" style={`width: var(${t.name})`} />
+              <span class="ds__now" data-ds-measure={`width: var(${t.name})`} />
+              <span class="ds__meta">{t.note}</span>
+            </li>
+          ))
+        }
+      </ul>
+      <h3>Steps</h3>
+      <ul class="ds__bars" role="list">
+        {
+          spaceSteps.map((t) => (
+            <li>
+              <code>{t.name}</code>
+              <span class="ds__bar" style={`width: var(${t.name})`} />
+              <span class="ds__now" data-ds-measure={`width: var(${t.name})`} />
+              <span class="ds__meta">{t.note}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section id="layout" class="ds__section stack" aria-labelledby="layout-title">
+      <h2 id="layout-title">Layout</h2>
+      <h3>Helpers in base.css</h3>
+      <dl class="ds__defs">
+        <dt><code>.container</code> (<code>.wide</code>, <code>.text</code>, <code>.narrow</code>)</dt>
+        <dd>Centred column with page gutters.</dd>
+        <dt><code>.section</code></dt>
+        <dd>Vertical rhythm above and below a section.</dd>
+        <dt><code>.stack</code></dt>
+        <dd>Even space between children. Change it with <code>--stack</code>.</dd>
+        <dt><code>.flow</code></dt>
+        <dd>Running text, spaced in em.</dd>
+        <dt><code>.cluster</code></dt>
+        <dd>Wrapping row of buttons, tags or links.</dd>
+        <dt><code>.auto-grid</code></dt>
+        <dd>As many columns as fit, never narrower than <code>--grid-min</code>.</dd>
+        <dt><code>.switcher</code></dt>
+        <dd>Side by side when there is room, stacked when not, with no media query.</dd>
+      </dl>
+      <div class="auto-grid ds__demo" style="--grid-min: var(--grid-min-s)">
+        <div>auto-grid</div><div>auto-grid</div><div>auto-grid</div><div>auto-grid</div>
+      </div>
+      <h3>Widths</h3>
+      <table class="ds__table">
+        <tbody>
+          {
+            [...containers, ...measures].map((t) => (
+              <tr>
+                <th scope="row"><code>{t.name}</code></th>
+                <td>{t.value}</td>
+                <td>{t.note}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </section>
+
+    <section id="shape" class="ds__section stack" aria-labelledby="shape-title">
+      <h2 id="shape-title">Shape and depth</h2>
+      <h3>Radii</h3>
+      <ul class="ds__shapes auto-grid" role="list">
+        {
+          radii.map((t) => (
+            <li>
+              <span class="ds__shape" style={`border-radius: var(${t.name})`} />
+              <code>{t.name}</code>
+              <span class="ds__meta">{t.note || t.value}</span>
+            </li>
+          ))
+        }
+      </ul>
+      <h3>Shadows</h3>
+      <ul class="ds__shapes auto-grid" role="list">
+        {
+          shadows.map((t) => (
+            <li>
+              <span class="ds__shape ds__shape--raised" style={`box-shadow: var(${t.name})`} />
+              <code>{t.name}</code>
+            </li>
+          ))
+        }
+      </ul>
+      <details>
+        <summary>Weights, leading, borders, motion, stacking</summary>
+        <table class="ds__table">
+          <tbody>
+            {
+              misc.map((t) => (
+                <tr>
+                  <th scope="row"><code>{t.name}</code></th>
+                  <td>{t.value}</td>
+                  <td>{t.note}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </details>
+    </section>
+
+    <section id="breakpoints" class="ds__section stack" aria-labelledby="bp-title">
+      <h2 id="bp-title">Breakpoints</h2>
+      <p>
+        Written in em so they follow text zoom. In CSS use <code>@media (--md-down)</code>; in an image's <code>sizes</code> attribute use <code>MQ.mdDown</code> from <code>src/config/breakpoints.ts</code>.
+      </p>
+      <table class="ds__table">
+        <tbody>
+          {
+            breakpoints.map((b) => (
+              <tr data-ds-query={b.query}>
+                <th scope="row"><code>{b.name}</code></th>
+                <td>{b.query}</td>
+                <td class="ds__match" />
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </section>
+
+    <section id="components" class="ds__section stack" aria-labelledby="components-title">
+      <h2 id="components-title">Components</h2>
+      <h3>Button</h3>
+      <div class="cluster">
+        <Button href="#components" variant="fill" arrow>Fill</Button>
+        <Button href="#components" variant="outline">Outline</Button>
+        <Button href="#components" variant="purple">Purple</Button>
+        <Button href="#components" variant="dark">Dark</Button>
+      </div>
+      <div class="cluster ds__dark">
+        <Button href="#components" variant="light">Light</Button>
+        <Button href="#components" variant="ghost">Ghost</Button>
+      </div>
+      <h3>Scroll down</h3>
+      <div class="cluster">
+        <ScrollDown href="#components" variant="fill" />
+        <ScrollDown href="#components" variant="outline" />
+      </div>
+      <h3>Call to action</h3>
+      <CtaBanner />
+    </section>
+
+    <section id="rules" class="ds__section stack" aria-labelledby="rules-title">
+      <h2 id="rules-title">Rules</h2>
+      <ul class="flow">
+        <li><strong>rem</strong> for type, space, radii and widths, so they follow the reader's text size.</li>
+        <li><strong>em</strong> for things that belong to their text: button padding, icon size, letter spacing.</li>
+        <li><strong>ch</strong> for line length, unitless for line height.</li>
+        <li><strong>px</strong> only for borders, focus rings and the 44px tap-target floor.</li>
+        <li>
+          A one-off value from the live design can stay, marked <code>/* token-exempt: reason */</code> so it is a choice,
+          not an accident.
+        </li>
+        <li>Every link and button shows a focus ring; animation stops when the reader asks for reduced motion.</li>
+      </ul>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  // Show each fluid token's current px value and which breakpoints match.
+  const probe = document.createElement('div');
+  probe.style.cssText = 'position:absolute;visibility:hidden;pointer-events:none';
+  document.body.append(probe);
+
+  const update = () => {
+    const width = document.querySelector('[data-ds-width]');
+    if (width) width.textContent = `${window.innerWidth}px`;
+
+    document.querySelectorAll<HTMLElement>('[data-ds-measure]').forEach((cell) => {
+      probe.style.cssText = `position:absolute;visibility:hidden;pointer-events:none;${cell.dataset.dsMeasure}`;
+      const style = getComputedStyle(probe);
+      const value = cell.dataset.dsMeasure?.startsWith('font') ? style.fontSize : style.width;
+      cell.textContent = `${Math.round(parseFloat(value) * 10) / 10}px`;
+    });
+
+    document.querySelectorAll<HTMLElement>('[data-ds-query]').forEach((row) => {
+      const cell = row.querySelector('.ds__match');
+      if (cell) cell.textContent = matchMedia(`(${row.dataset.dsQuery})`).matches ? 'matches now' : '';
+    });
+  };
+
+  update();
+  window.addEventListener('resize', update);
+</script>
+
+<style>
+  .ds {
+    padding-block: var(--space-md) var(--section-space);
+  }
+
+  .ds__intro {
+    max-width: var(--measure);
+  }
+
+  .ds__eyebrow {
+    color: var(--color-accent-strong);
+    font-size: var(--text-ui);
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+  }
+
+  .ds__live {
+    color: var(--color-text-muted);
+  }
+
+  .ds__section {
+    --stack: var(--stack-m);
+
+    padding-block-start: var(--section-space);
+    border-block-start: var(--border-hairline) solid var(--color-rule);
+    margin-block-start: var(--section-space);
+  }
+
+  .ds__section h2 {
+    font-size: var(--text-h2-sm);
+    text-transform: none;
+  }
+
+  .ds__section > p,
+  .ds__note {
+    max-width: var(--measure);
+  }
+
+  .ds__note {
+    padding: var(--inset-s);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-accent);
+  }
+
+  code {
+    font-size: 0.9em;
+    overflow-wrap: anywhere;
+  }
+
+  .ds__swatches,
+  .ds__shapes {
+    --grid-min: var(--grid-min-s);
+
+    padding: 0;
+    list-style: none;
+  }
+
+  .ds__swatch,
+  .ds__shapes li {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xs);
+    font-size: var(--text-small);
+  }
+
+  .ds__chip {
+    display: block;
+    height: 4em;
+    border: var(--border-hairline) solid var(--color-rule-soft);
+    border-radius: var(--radius-sm);
+  }
+
+  /* Checkerboard behind translucent roles so the transparency shows. */
+  .ds__chip--check {
+    background-image: conic-gradient(var(--color-grey-300) 25%, var(--color-white) 0 50%, var(--color-grey-300) 0 75%, var(--color-white) 0);
+    background-size: 1em 1em;
+  }
+
+  .ds__meta {
+    color: var(--color-text-muted);
+  }
+
+  .ds__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-small);
+  }
+
+  .ds__table th,
+  .ds__table td {
+    padding: var(--space-2xs) var(--space-xs) var(--space-2xs) 0;
+    border-block-end: var(--border-hairline) solid var(--color-rule-soft);
+    font-weight: var(--weight-regular);
+    text-align: start;
+    vertical-align: middle;
+  }
+
+  .ds__table thead th {
+    color: var(--color-text-muted);
+  }
+
+  .ds__now {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .ds__sample {
+    font-family: var(--font-heading);
+    line-height: var(--leading-none);
+  }
+
+  .ds__match {
+    color: var(--color-accent-strong);
+  }
+
+  .ds__bars {
+    display: grid;
+    gap: var(--space-2xs);
+    padding: 0;
+    list-style: none;
+    font-size: var(--text-small);
+  }
+
+  .ds__bars li {
+    display: grid;
+    grid-template-columns: 12em 14em 4.5em minmax(0, 1fr);
+    gap: var(--space-xs);
+    align-items: center;
+  }
+
+  @media (--sm-down) {
+    .ds__bars li {
+      grid-template-columns: 1fr auto;
+    }
+
+    .ds__bars .ds__bar,
+    .ds__bars .ds__meta {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .ds__bar {
+    display: block;
+    max-width: 100%;
+    height: 1em;
+    border-radius: var(--radius-xs);
+    background: var(--color-accent);
+  }
+
+  .ds__defs {
+    display: grid;
+    gap: var(--space-2xs) var(--space-md);
+    grid-template-columns: max-content 1fr;
+    margin: 0;
+  }
+
+  @media (--sm-down) {
+    .ds__defs {
+      grid-template-columns: 1fr;
+    }
+
+    .ds__defs dd {
+      margin-block-end: var(--space-xs);
+    }
+  }
+
+  .ds__defs dd {
+    margin: 0;
+  }
+
+  .ds__demo > div {
+    padding: var(--inset-s);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    font-size: var(--text-small);
+    text-align: center;
+  }
+
+  .ds__shape {
+    display: block;
+    height: 5em;
+    border: var(--border-thin) solid var(--color-accent);
+    background: var(--color-surface-accent);
+  }
+
+  .ds__shape--raised {
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-raised);
+  }
+
+  .ds__dark {
+    padding: var(--inset-card);
+    border-radius: var(--radius-panel);
+    background: var(--color-surface-inverse);
+  }
+</style>

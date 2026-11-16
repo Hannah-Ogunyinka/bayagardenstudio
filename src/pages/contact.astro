@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import ContactForm from '@components/forms/ContactForm.astro';
 import grid from '@assets/images/contact/contact-grid.png';
+import { MQ } from '@config/breakpoints';
 ---
 
 <BaseLayout
@@ -12,7 +13,7 @@ import grid from '@assets/images/contact/contact-grid.png';
   <div class="contact">
     <h1>Solutions <span class="accent">crafted</span> for Businesses</h1>
     <div class="contact__columns">
-      <Image src={grid} alt="" widths={[320, 480, 640]} sizes="(max-width: 782px) 100vw, 40vw" class="contact__image" />
+      <Image src={grid} alt="" widths={[320, 480, 640]} sizes={`${MQ.mdDown} 100vw, 40vw`} class="contact__image" />
       <div class="contact__form">
         <h2 class="sr-only">Start your project</h2>
         <ContactForm />
@@ -23,7 +24,7 @@ import grid from '@assets/images/contact/contact-grid.png';
 
 <style>
   .contact {
-    max-width: var(--content-max);
+    max-width: var(--container-wide);
     margin-inline: auto;
     padding: var(--space-md) var(--space-md) var(--space-xl);
   }
@@ -31,7 +32,7 @@ import grid from '@assets/images/contact/contact-grid.png';
   h1 {
     max-width: 7em;
     margin-left: auto;
-    font-size: var(--text-3xl);
+    font-size: var(--text-display-sm);
     font-weight: 700;
     line-height: 1.1;
     text-align: right;
@@ -51,7 +52,7 @@ import grid from '@assets/images/contact/contact-grid.png';
       width: 50%;
     }
 
-    @media (max-width: 782px) {
+    @media (--md-down) {
       flex-direction: column;
 
       > * {
@@ -61,11 +62,11 @@ import grid from '@assets/images/contact/contact-grid.png';
   }
 
   .contact__image {
-    max-width: 420px;
+    max-width: var(--measure-s);
   }
 
   .contact__form {
-    max-width: 480px;
+    max-width: var(--measure-m);
     margin-left: auto;
   }
 </style>

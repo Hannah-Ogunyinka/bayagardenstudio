@@ -36,7 +36,7 @@ const currentPath = Astro.url.pathname;
 <style>
   .floating-nav-wrapper {
     position: fixed;
-    bottom: 2rem;
+    bottom: var(--space-lg);
     left: 0;
     z-index: var(--z-floating-nav);
     display: flex;
@@ -48,11 +48,11 @@ const currentPath = Astro.url.pathname;
   .floating-nav {
     display: flex;
     align-items: center;
-    padding: 0.8rem var(--space-lg);
+    padding: var(--space-xs) var(--space-lg);
     border-radius: var(--radius-pill);
-    background-color: rgb(255 255 255 / 60%);
+    background-color: var(--color-glass-strong);
     box-shadow: var(--shadow-float);
-    backdrop-filter: blur(5px);
+    backdrop-filter: var(--glass-blur);
     opacity: 0;
     visibility: hidden;
     transition:
@@ -69,7 +69,7 @@ const currentPath = Astro.url.pathname;
   .floating-nav__home {
     display: flex;
     padding-right: var(--space-sm);
-    border-right: 2px solid var(--color-text);
+    border-right: var(--border-thin) solid var(--color-text);
     color: var(--color-text);
     transition: transform 0.2s ease-in;
 

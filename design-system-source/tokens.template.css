@@ -1,0 +1,226 @@
+/* ==========================================================================
+   Baya Garden Studio design tokens
+   GENERATED FILE: edit design-system-source/tokens.template.css (colours,
+   roles, layout) or design-system-source/generate.py (type and space
+   scales), then run `npm run tokens`. Do not edit src/styles/tokens.css.
+
+   Three layers
+   1. Primitives: the raw palette (--color-grey-800) and the fluid scales
+      (--step-md, --space-md). Generated scales match the live WordPress
+      theme so pages keep their look.
+   2. Roles: what a value is for (--color-surface, --text-body, --gutter,
+      --inset-card, --radius-card). Components use these.
+   3. Components: read roles only. `npm run check:tokens` fails the build if a
+      component sets a raw colour, px or rem value of its own.
+
+   How the units are chosen (same rules as the PHSL system)
+   - rem   Type, space, radii, container widths. Follows the reader's default
+           font size and browser zoom (WCAG 1.4.4 Resize text).
+   - clamp(rem, vw + rem, rem)
+           Fluid tokens. Text sizes always pair vw with rem so zoom still works;
+           every text step is checked by generate.py.
+   - em    Things that belong to their own text: button padding, icon size,
+           letter-spacing, space between paragraphs.
+   - ch    Line length (measure).
+   - unitless  Line heights.
+   - px    Borders, focus rings and the tap-target floor: physical minimums.
+   - em in @media  Breakpoints, in src/styles/media.css.
+   ========================================================================== */
+
+:root {
+  /* ------------------------------------------------------------- Colour */
+  /* Palette. The only place hex codes appear. WordPress slugs in comments. */
+  --color-purple-dark: #7b11a8;   /* custom-dark-purple */
+  --color-purple: #9747ff;        /* custom-light-purple: the brand accent */
+  --color-purple-light: #b58cff;  /* accent on dark grey (4.6:1) */
+  --color-lilac-100: #f0ebf6;     /* add-on cards */
+  --color-lilac-300: #d3c1e9;     /* Support illustration band */
+  --color-green: #098485;         /* custom-green: primary buttons */
+  --color-grey-50: #f5f5f5;
+  --color-grey-100: #eaeaea;      /* custom-very-light-grey: page background */
+  --color-grey-200: #dbdbdb;      /* custom-medium-grey: cards */
+  --color-grey-300: #d2d2d2;      /* menu dividers */
+  --color-grey-400: #969696;      /* custom-dark-grey: rules */
+  --color-grey-600: #646464;
+  --color-grey-800: #373737;      /* custom-light-grey: text, dark bands */
+  --color-grey-950: #101014;      /* custom-dark-grey-alt */
+  --color-black: #000;
+  --color-white: #fff;
+
+  /* Roles. Components use these, never the palette directly where a role fits. */
+  --color-bg: var(--color-grey-100);
+  --color-text: var(--color-grey-800);
+  --color-text-muted: var(--color-grey-600);       /* 5:1 on the page background */
+  --color-text-inverse: var(--color-white);
+  --color-surface: var(--color-grey-200);          /* grey cards and tiles */
+  --color-surface-raised: var(--color-white);      /* white cards */
+  --color-surface-inverse: var(--color-grey-800);  /* dark bands and cards */
+  --color-surface-accent: var(--color-lilac-100);
+  --color-rule: var(--color-grey-400);
+  --color-rule-soft: var(--color-grey-300);
+  --color-accent: var(--color-purple);             /* large text, fills, borders */
+  --color-accent-strong: var(--color-purple-dark); /* small purple text on light */
+  --color-accent-on-dark: var(--color-purple-light);
+  --color-action: var(--color-green);
+  --color-focus: var(--color-purple-dark);
+  /* Translucent layers (the palette colours with transparency). */
+  --color-glass: rgb(235 235 235 / 44%);           /* header and outline buttons */
+  --color-glass-strong: rgb(255 255 255 / 60%);    /* floating nav */
+  --color-scrim: rgb(0 0 0 / 33%);                 /* behind the open menu */
+  --color-scrim-strong: rgb(16 16 20 / 94%);       /* photo lightbox */
+  --color-tint-dark: rgb(30 30 30 / 55%);          /* text panel over a photo */
+  --color-on-scrim: rgb(255 255 255 / 12%);        /* lightbox buttons */
+  --color-on-scrim-hover: rgb(255 255 255 / 25%);
+
+  /*@GENERATED@*/
+
+  /* ---------------------------------------------------------------- Type */
+  --font-heading: var(--font-poppins);
+  --font-body: var(--font-montserrat);
+
+  --weight-light: 300;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* Role-based sizes. Use these in components, not the raw steps. */
+  --text-small: var(--step-xs);         /* card copy, captions, buttons */
+  --text-ui: var(--step-sm);            /* eyebrows, intros, nav */
+  --text-body: var(--step-base);        /* running text */
+  --text-lead: var(--step-md);          /* lead paragraphs, h4 */
+  --text-h4: var(--step-md);
+  --text-h3: var(--step-lg);
+  --text-h2-sm: var(--step-xl);         /* headings inside panels and cards */
+  --text-h2: var(--step-2xl);           /* section headings */
+  --text-h2-alt: var(--step-2xl-alt);
+  --text-h1: var(--step-2xl);
+  --text-section-title: var(--step-section-h2);
+  --text-card-title: var(--step-card-h3);
+  --text-display-sm: var(--step-3xl);
+  --text-display: var(--step-4xl);      /* Build, Support, Grow */
+  --text-hero: var(--step-home-h1);
+  --text-services-title: var(--step-services-h1);
+  --text-logo: var(--step-logo);
+  --text-micro: 0.75rem;                /* 12px: tags and field notes only */
+  --text-large-min: 1.5rem;             /* 24px: smallest size where the bright purple passes contrast */
+
+  --leading-none: 1;
+  --leading-tight: 1.1;
+  --leading-heading: 1.2;
+  --leading-snug: 1.3;
+  --leading-relaxed: 1.5;
+  --leading-body: 1.7;
+
+  --tracking-caps: 0.05em;
+  --tracking-wide: 0.08em;
+
+  --measure: 62ch;
+  --measure-narrow: 40ch;
+  /* Widths for short text blocks beside images (intros, captions, panels). */
+  --measure-xs: 22rem;
+  --measure-s: 26rem;
+  --measure-m: 30rem;
+  --measure-l: 36rem;
+  --measure-xl: 48rem;
+  --measure-2xl: 52rem;
+  --measure-prose: 32rem;               /* post body column, as on the live site */
+
+  /* --------------------------------------------------------------- Space */
+  --gutter: var(--space-md);            /* page edges: 24 -> 48px */
+  --section-space: var(--space-xl);     /* above and below sections */
+  --section-space-l: var(--space-4xl);  /* generous bands (service pages) */
+  --stack-xs: var(--space-2xs);         /* label to value */
+  --stack-s: var(--space-sm);           /* related items, heading to text */
+  --stack-m: var(--space-md);           /* groups within a section */
+  --stack-l: var(--space-lg);
+  --stack-xl: var(--space-xl);          /* sub-sections */
+  --gap-inline: var(--space-sm);        /* between buttons, tags, links */
+  --gap-grid: var(--space-md);          /* between cards */
+  --gap-tight: var(--space-xs);         /* photo grids */
+  --gap-columns: var(--space-xl);       /* between big layout columns */
+  --inset-s: var(--space-sm);           /* small boxes */
+  --inset-m: 1.5rem;                    /* 24px: compact cards at every size */
+  --inset-card: var(--space-md);        /* card padding */
+  --inset-l: var(--space-lg);           /* panel padding */
+  --flow-space: 1em;                    /* between paragraphs */
+
+  /* -------------------------------------------------------------- Layout */
+  --container-max: 81.25rem;            /* 1300px: most content */
+  --container-wide: 120rem;             /* 1920px: full-bleed bands */
+  --container-l: 75rem;                 /* 1200px: featured images */
+  --container-m: 68.75rem;              /* 1100px: card grids, embeds */
+  --container-s: 60rem;                 /* 960px: archives */
+  --container-text: 48.75rem;           /* 780px: two-column text blocks */
+  --container-narrow: 37.5rem;          /* 600px: single cards, forms */
+  --container: min(100% - 2 * var(--gutter), var(--container-max));
+
+  --grid-min-s: 11rem;
+  --grid-min-m: 15rem;
+  --grid-min-l: 20rem;
+
+  --header-height: 5.625rem;            /* 90px */
+  --hero-max-height: 67.5rem;           /* 1080px: tallest a hero band grows */
+  --media-max-height: 40rem;            /* 640px: featured photos */
+  --embed-min-height: 40rem;            /* booking calendar */
+  --banner-height: clamp(16rem, 35vw, 32rem);   /* edge-to-edge case study photos */
+  --pair-height: clamp(12rem, 36vw, 32rem);     /* side-by-side case study photos */
+  --logo-size: 3.125rem;                /* 50px */
+  --avatar-size: 3rem;                  /* 48px */
+  --icon-feature: 2rem;                 /* 32px service icons */
+  --icon-social: 1.25rem;               /* 20px */
+  --badge-size: 12.5rem;                /* 200px footer badge */
+  --thumb-max-height: 17.5rem;          /* 280px footer thumbnails */
+
+  /* ------------------------------------------------------ Borders, radii */
+  --border-hairline: 1px;
+  --border-thin: 2px;
+  --border-frame: 8px;                  /* white frame around showcase media */
+
+  --radius-xs: 0.25rem;                 /* inputs, focus rings */
+  --radius-s: 0.375rem;                 /* package cards */
+  --radius-sm: 0.5rem;                  /* tags, author box, form fields */
+  --radius-ms: 0.75rem;                 /* project thumbnails */
+  --radius-m: 1rem;                     /* small rounded images */
+  --radius-media: 1.2rem;               /* photos and outcome panels */
+  --radius-card: 1.5rem;                /* post cards */
+  --radius-panel: 2rem;                 /* grey and purple panels (32px) */
+  --radius-panel-l: 2.5rem;             /* plan cards (40px) */
+  --radius-button: 2rem;
+  --radius-pill: 4rem;
+  --radius-round: 50%;
+
+  /* ------------------------------------------- Interaction, accessibility */
+  --tap-min: max(44px, 2.75rem);        /* WCAG 2.5.5 AAA target size */
+  --focus-width: 3px;
+  --focus-offset: 3px;
+  --underline-thickness: 1px;
+
+  --btn-pad-block: 1.2em;
+  --btn-pad-inline: 1.6em;
+  --icon-s: 1em;
+  --icon-button: 1.15em;                /* arrow in buttons */
+  --icon-m: 1.5em;
+  --glass-blur: blur(5px);              /* behind the header and floating nav */
+
+  /* ----------------------------------------------------------- Elevation */
+  --shadow-natural: 6px 6px 9px rgb(0 0 0 / 20%);
+  --shadow-deep: 12px 12px 50px rgb(0 0 0 / 40%);
+  --shadow-float: -6px 6px 10px 0 rgb(0 0 0 / 25%);
+  --shadow-lift: -6px 10px 12px rgb(0 0 0 / 25%);
+  --shadow-photo: 0 6px 16px rgb(0 0 0 / 30%);
+  --shadow-footer: -6px 15px 12px 0 rgb(0 0 0 / 25%);
+
+  /* -------------------------------------------------------------- Motion */
+  --ease-menu: cubic-bezier(0.41, -0.06, 0.67, 1.04);
+  --duration-fast: 200ms;
+  --duration-menu: 400ms;
+
+  /* ------------------------------------------------------ Stacking order */
+  --z-base: 1;
+  --z-content: 2;
+  --z-header: 10;
+  --z-floating-nav: 50;
+  --z-menu-shim: 900;
+  --z-menu: 1000;
+}

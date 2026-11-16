@@ -18,13 +18,13 @@ import avatar from '@assets/images/authors/hannah-ogunyinka.png';
 <style>
   .author {
     display: flex;
-    max-width: 22rem;
+    max-width: var(--measure-xs);
     margin: var(--space-lg) auto 0;
-    padding: 1.2rem;
-    gap: 1rem;
-    border-radius: 8px;
+    padding: 1.6em; /* 19px at the 12px box text */
+    gap: 1.33em;
+    border-radius: var(--radius-sm);
     background-color: var(--color-grey-950);
-    font-size: 0.7rem;
+    font-size: var(--text-micro);
   }
 
   .author p {
@@ -33,14 +33,14 @@ import avatar from '@assets/images/authors/hannah-ogunyinka.png';
   }
 
   .author__avatar {
-    width: 48px;
-    height: 48px;
+    width: var(--avatar-size);
+    height: var(--avatar-size);
     flex: none;
     border-radius: 50%;
   }
 
   .author__name {
-    font-size: var(--text-sm);
+    font-size: var(--text-ui);
     font-weight: 600;
   }
 </style>

@@ -47,14 +47,14 @@ import tabletGreen from '@assets/images/home/hero-tablet-green.webp';
     display: grid;
     /* minmax(0, …) lets the floating images overflow (and be clipped) without widening the grid. */
     grid-template-columns: 17.5% minmax(0, 1fr) 17.5%;
-    max-height: 1080px;
+    max-height: var(--hero-max-height);
     padding-bottom: var(--space-lg);
 
-    @media (min-width: 1441px) {
+    @media (--2xl-up) {
       height: 75vh;
     }
 
-    @media (max-width: 782px) {
+    @media (--md-down) {
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     }
   }
@@ -63,7 +63,7 @@ import tabletGreen from '@assets/images/home/hero-tablet-green.webp';
     padding-top: var(--space-md);
     text-align: center;
 
-    @media (max-width: 782px) {
+    @media (--md-down) {
       grid-column: 1 / -1;
       grid-row: 2;
     }
@@ -71,7 +71,7 @@ import tabletGreen from '@assets/images/home/hero-tablet-green.webp';
 
   h1 {
     margin: 0;
-    font-size: var(--text-home-h1);
+    font-size: var(--text-hero);
     font-weight: 700;
     line-height: 1;
     text-transform: capitalize;
@@ -84,7 +84,7 @@ import tabletGreen from '@assets/images/home/hero-tablet-green.webp';
   .hero__strap {
     margin-top: var(--space-sm);
     font-family: var(--font-body);
-    font-size: var(--text-sm);
+    font-size: var(--text-ui);
     letter-spacing: 0.05em;
     text-transform: uppercase;
   }
@@ -100,8 +100,8 @@ import tabletGreen from '@assets/images/home/hero-tablet-green.webp';
   }
 
   .hero__float--left {
-    width: clamp(20rem, 14rem + 28.6vw, 40rem);
-    right: clamp(9rem, 4rem + 24vw, 26rem);
+    width: clamp(20rem, 14rem + 28.6vw, 40rem); /* token-exempt: artwork position from the live theme */
+    right: clamp(9rem, 4rem + 24vw, 26rem); /* token-exempt: artwork position from the live theme */
     padding-top: var(--space-sm);
 
     :global(img) {
@@ -110,8 +110,8 @@ import tabletGreen from '@assets/images/home/hero-tablet-green.webp';
   }
 
   .hero__float--right {
-    width: clamp(20rem, 12.6rem + 37vw, 50rem);
-    left: clamp(2rem, 13rem - 14vw, 12rem);
+    width: clamp(20rem, 12.6rem + 37vw, 50rem); /* token-exempt: artwork position from the live theme */
+    left: clamp(2rem, 13rem - 14vw, 12rem); /* token-exempt: artwork position from the live theme */
     padding-top: var(--space-md);
 
     :global(img) {
@@ -119,28 +119,28 @@ import tabletGreen from '@assets/images/home/hero-tablet-green.webp';
       animation-delay: 640ms;
     }
 
-    @media (max-width: 782px) {
+    @media (--md-down) {
       grid-row: 3;
       grid-column: 1 / -1;
     }
 
-    @media (min-width: 467px) and (max-width: 782px) {
-      left: clamp(20rem, 17rem + 14vw, 30rem);
+    @media (--xs-up) and (--md-down) {
+      left: clamp(20rem, 17rem + 14vw, 30rem); /* token-exempt: artwork position from the live theme */
     }
   }
 
-  @media (max-width: 782px) {
+  @media (--md-down) {
     .hero__float--left :global(img) {
       height: 8em;
       object-fit: cover;
-      border-radius: 16px;
+      border-radius: var(--radius-m);
     }
 
     .hero__float--right :global(img) {
       height: 10em;
       object-fit: cover;
       object-position: top;
-      border-radius: 16px;
+      border-radius: var(--radius-m);
     }
   }
 
@@ -150,7 +150,7 @@ import tabletGreen from '@assets/images/home/hero-tablet-green.webp';
     justify-content: space-between;
     overflow-x: clip;
 
-    @media (max-width: 782px) {
+    @media (--md-down) {
       display: none;
     }
   }
@@ -167,8 +167,8 @@ import tabletGreen from '@assets/images/home/hero-tablet-green.webp';
 
   .hero__float--bottom-right {
     width: 34em;
-    top: 3rem;
-    left: 6rem;
+    top: 3rem; /* token-exempt: artwork position from the live theme */
+    left: 6rem; /* token-exempt: artwork position from the live theme */
 
     :global(img) {
       animation-delay: 540ms;
