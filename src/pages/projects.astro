@@ -53,7 +53,9 @@ const cards: Card[] = [
       {
         cards.map((card) => (
           <li class="card">
-            <Image src={card.image} alt="" widths={[400, 640, 900]} sizes={`${MQ.mdDown} 100vw, 50vw`} class="card__image" />
+            <div class="card__media">
+              <Image src={card.image} alt="" widths={[400, 640, 900]} sizes={`${MQ.mdDown} 100vw, 50vw`} class="card__image" />
+            </div>
             <div class="card__text">
               <h2>{card.title}</h2>
               <p>{card.summary}</p>
@@ -79,7 +81,7 @@ const cards: Card[] = [
   .projects {
     max-width: var(--container-wide);
     margin-inline: auto;
-    padding: var(--space-md) var(--space-md) var(--space-xl);
+    padding-inline: var(--space-md);
   }
 
   .projects__list {
@@ -90,30 +92,40 @@ const cards: Card[] = [
     list-style: none;
   }
 
-  /* Thick dark frame, as on the live site; the image fills the left half. */
+  /* Thick dark frame, as on the live site; the image fills the left half.
+     WordPress columns stack below 782px with a medium gap between them. */
   .card {
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
     border: var(--border-showcase) solid var(--color-text);
-    border-radius: 1.8em;
+    border-radius: var(--radius-showcase);
     box-shadow: var(--shadow-photo);
 
     @media (--md-down) {
       grid-template-columns: 1fr;
+      row-gap: var(--space-md);
     }
   }
 
+  /* Theme .projects-pg-thumbnail-img-column: tall screenshots are clipped
+     at 420px; the image keeps its own proportions. */
+  .card__media {
+    max-height: var(--thumb-project-max-h);
+    overflow-y: clip;
+    border-radius: var(--radius-ms);
+  }
+
+  /* Theme .projects-pg-thumbnail-wrapper: 1.8em above the image on wide
+     screens, an even 1em inset at 1350px and below. */
   .card__image {
     display: block;
     width: 100%;
     height: auto;
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
-    border-radius: 1.2em;
+    margin-top: 1.8em;
+    border-radius: var(--radius-showcase-media);
 
-    /* Stacked on phones, the image sits inset in its own panel. */
-    @media (--md-down) {
+    @media (--thumb-compact) {
       width: calc(100% - 2em);
       margin: 1em;
     }
@@ -133,7 +145,8 @@ const cards: Card[] = [
   }
 
   .card__text p {
-    max-width: 19em;
+    max-width: var(--measure-project);
+    color: var(--color-text-muted);
     margin: var(--stack-s) 0 var(--space-sm);
   }
 </style>

@@ -36,3 +36,6 @@
 
 /* The theme's services hero rises less and has a smaller spacer below 1421px. */
 @custom-media --hero-compact (width < 88.8125em);
+
+/* The theme's project thumbnails get an even 1em inset at 1350px and below. */
+@custom-media --thumb-compact (width <= 84.375em);

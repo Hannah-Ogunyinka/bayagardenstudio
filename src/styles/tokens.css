@@ -177,6 +177,7 @@
   --measure-intro: 37.5rem;             /* 600px: centred page intros */
   --measure-cta: 40.625rem;             /* 650px: call-to-action headings */
   --measure-plan: 25rem;                /* 400px: pricing plan cards */
+  --measure-project: 23.75rem;          /* 380px: project card summaries */
   --measure-photo: 43.75rem;            /* 700px: photography panel */
 
   /* --------------------------------------------------------------- Space */
@@ -205,6 +206,7 @@
   --container-cards: 78.75rem;          /* 1260px: package cards */
   --card-min-h: 17.5rem;                /* 280px: Build page second-row cards */
   --card-light-max-h: 35rem;            /* 560px: Build page lightweight card */
+  --thumb-project-max-h: 26.25rem;      /* 420px: project page thumbnails are clipped to this */
   --hero-max-h: 67.5rem;                /* 1080px: tallest the services hero gets */
   --space-hero-after: 16rem;            /* theme spacer under the services hero */
   --space-hero-after-fluid: clamp(1rem, 49.455vw - 26.509rem, 16rem); /* the same spacer from 890px to 1420px */
@@ -248,14 +250,16 @@
   --border-hairline: 1px;
   --border-thin: 2px;
   --border-frame: 8px;                  /* white frame around showcase media */
-  --border-showcase: 19px;              /* dark frame around project cards */
+  --border-showcase: 1em;               /* dark frame around project cards (theme: 1em) */
 
   --radius-xs: 0.25rem;                 /* inputs, focus rings */
   --radius-s: 0.625rem;                 /* package cards (10px) */
   --radius-sm: 0.5rem;                  /* tags, author box, form fields */
-  --radius-ms: 0.75rem;                 /* project thumbnails */
+  --radius-ms: 0.75em;                  /* project thumbnail column (scales with its text) */
   --radius-m: 1rem;                     /* small rounded images */
   --radius-media: 1.2rem;               /* photos and outcome panels */
+  --radius-showcase: 1.8em;             /* thick dark showcase frames (projects, home offer) */
+  --radius-showcase-media: 1.2em;       /* images inside a showcase frame */
   --radius-card: 1.5rem;                /* post cards */
   --radius-panel: 2rem;                 /* grey and purple panels (32px) */
   --radius-panel-l: 2.5rem;             /* plan cards (40px) */
