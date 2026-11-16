@@ -1,0 +1,54 @@
+---
+/** Dark full-width band with a framed product image beside the service introduction. */
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  image: ImageMetadata;
+}
+
+const { image } = Astro.props;
+---
+
+<section class="intro-band" aria-label="Introduction">
+  <div class="intro-band__inner">
+    <Image src={image} alt="" widths={[480, 768, 1024]} sizes="(max-width: 782px) 100vw, 45vw" loading="eager" />
+    <div class="intro-band__text"><slot /></div>
+  </div>
+</section>
+
+<style>
+  .intro-band {
+    padding: var(--space-4xl) var(--space-md);
+    background-color: var(--color-grey-800);
+    color: var(--color-white);
+  }
+
+  .intro-band__inner {
+    display: grid;
+    max-width: var(--content-max);
+    margin-inline: auto;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: var(--space-xl);
+
+    @media (max-width: 782px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .intro-band img {
+    width: 100%;
+    height: auto;
+    border-radius: 0;
+  }
+
+  .intro-band__text {
+    max-width: 30rem;
+    font-size: var(--text-sm);
+  }
+
+  .intro-band__text :global(p) {
+    color: inherit;
+  }
+</style>

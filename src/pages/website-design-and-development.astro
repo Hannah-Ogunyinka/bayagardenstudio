@@ -1,0 +1,298 @@
+---
+/**
+ * Build: website design and development. Service hero, dark intro band,
+ * a bento grid of what's included, then the optional add-ons.
+ */
+import { Image } from 'astro:assets';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import CtaBanner from '@components/ui/CtaBanner.astro';
+import ServiceHero from '@components/services/ServiceHero.astro';
+import IntroBand from '@components/services/IntroBand.astro';
+import Bird from '@assets/icons/bird-outline.svg';
+import tablet from '@assets/images/services/tablet-wide-on-green-background.webp';
+import yogaTablet from '@assets/images/services/yoga-tablet-1.webp';
+import analytics from '@assets/images/services/analytics-graphic.svg';
+
+const addOns = [
+  ['Custom Post Templates', 'Looking for a unique look to match your brand? Stand out from the crowd with custom designed post templates'],
+  ['Comprehensive SEO Set Up', 'Elevate your online presence with comprehensive SEO, a strategic solution designed to optimise every facet of your website to increase visibility and traffic'],
+  ['E-Commerce Store', 'Unlock untethered success with WooCommerce, our tool of choice. Utilise WooCommerce’s robust features for a user-friendly, efficient, and profitable online store experience'],
+  ['Members Only Section', 'Create an exclusive online space and nurture your community with a seamlessly integrated members only section'],
+  ['E Learning Platform Integration', 'Share your knowledge online and create digital courses with a fully integrated E learning platform'],
+  ['Booking Integration', 'Allow clients to book appointments and events from directly in your website with automated notifications and follow up messages'],
+  ['Custom Landing Page Design', 'Communicate with your audience using on brand custom landing pages and banners'],
+  ['Interactive Quizzes', 'Learn more about your clients and engage with your audience with a fun interactive quiz'],
+  ['Pop Up Modals', 'Need to notify your clients of an offer? Use a pop up modal to get their attention'],
+] as const;
+---
+
+<BaseLayout
+  title="Website design and development"
+  description="Custom website design and development for creative businesses: a polished, strategically crafted website that shows you mean business, built in 5 weeks."
+>
+  <ServiceHero
+    eyebrow="Website design and development"
+    title="Build"
+    intro="For the high flyer that wants to turn up looking their best online, greet prospective clients with a polished, strategically crafted website that shows you mean business."
+  />
+
+  <IntroBand image={tablet}>
+    <p>
+      From initial design concept to final production, Baya Garden Studio offers a package where you’ll walk away with an
+      expertly crafted, custom website, optimised for growth – all in just 5 weeks.
+    </p>
+    <p>
+      Run your business with the peace of knowing that with all the responsibilities you shoulder, wasting precious time
+      building a professional website won’t be one of them – we’ve got you covered.
+    </p>
+  </IntroBand>
+
+  <section class="included" aria-labelledby="included-title">
+    <div class="section-head">
+      <h2 id="included-title">What’s Included</h2>
+      <p class="section-head__note">Timeline: 5 weeks</p>
+    </div>
+
+    <ul class="bento" role="list">
+      <li class="card card--dark card--theme">
+        <h3>Custom Theme</h3>
+        <p>All websites are built with a custom WordPress theme personalised for your business needs</p>
+        <Image src={yogaTablet} alt="" widths={[400, 640, 1098]} sizes="(max-width: 1230px) 90vw, 40vw" class="card__image" />
+      </li>
+      <li class="card card--images">
+        <h3>Optimised Images</h3>
+        <p>
+          As part of the Baya Garden Studio package, your images and videos are optimised, protecting your website from poor
+          speed performance
+        </p>
+      </li>
+      <li class="card card--seo">
+        <h3>SEO Set Up</h3>
+        <p>Help search engines discover your content quickly with basic technical SEO installation</p>
+      </li>
+      <li class="card card--dark card--domain">
+        <h3>Domain and SSL Set Up</h3>
+        <p>Securely show up on the internet with your unique domain name and SSL Certificate</p>
+      </li>
+      <li class="card card--templates">
+        <h3>Beautiful Post Templates</h3>
+        <p>
+          Have a collection to showcase? Whether recipes or holidays or blog posts, present them with style using Baya Garden
+          Studio’s beautiful post templates
+        </p>
+      </li>
+      <li class="card card--dark card--support">
+        <h3>Support &amp; Maintenance Guide</h3>
+        <p>
+          With Baya Garden Studio, you’re never on your own. Rest easy knowing that even after the build is complete, you’ll
+          have access to support for two weeks
+        </p>
+      </li>
+      <li class="card card--light">
+        <h3>Lightweight, Sustainable &amp; Built to Scale</h3>
+        <p>Enjoy a performant website with lightweight code, free from bloat, ready to scale with you when it’s time to take the next step</p>
+        <img src={analytics.src} alt="" width={671} height={446} loading="lazy" decoding="async" class="card__graphic" />
+      </li>
+    </ul>
+  </section>
+
+  <section class="add-ons" aria-labelledby="add-ons-title">
+    <div class="section-head">
+      <h2 id="add-ons-title">Optional Add Ons</h2>
+      <p class="section-head__note">Boost your business with these optional add ons</p>
+    </div>
+    <ul class="add-ons__list" role="list">
+      {
+        addOns.map(([name, text]) => (
+          <li class="add-on">
+            <Bird aria-hidden="true" width={24} height={33} class="add-on__icon" />
+            <h3>{name}</h3>
+            <p>{text}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <CtaBanner />
+</BaseLayout>
+
+<style>
+  .included,
+  .add-ons {
+    padding: var(--space-4xl) var(--space-md) var(--space-md);
+  }
+
+  .included {
+    background-color: var(--color-white);
+  }
+
+  .section-head,
+  .bento,
+  .add-ons__list {
+    max-width: 1300px;
+    margin-inline: auto;
+  }
+
+  .section-head h2 {
+    margin-bottom: var(--space-sm);
+    font-family: var(--font-heading);
+    font-size: clamp(3.037rem, 3.037rem + ((1vw - 0.2rem) * 2.963), 6rem);
+    font-weight: 600;
+    line-height: 1.1;
+  }
+
+  .section-head__note {
+    font-family: var(--font-body);
+    font-size: var(--text-logo);
+    line-height: 1.3;
+    text-transform: uppercase;
+  }
+
+  /* What's included: a bento grid that collapses to a single column. */
+  .bento {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-areas:
+      'theme     theme     images  images'
+      'theme     theme     seo     domain'
+      'templates templates light   light'
+      'support   support   light   light';
+    gap: var(--space-md);
+    padding: var(--space-xl) 0 var(--space-md);
+    list-style: none;
+
+    @media (max-width: 1230px) {
+      max-width: 600px;
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas:
+        'theme     theme'
+        'images    images'
+        'seo       domain'
+        'templates templates'
+        'support   support'
+        'light     light';
+    }
+
+    @media (max-width: 600px) {
+      grid-template-columns: 1fr;
+      grid-template-areas: 'theme' 'images' 'seo' 'domain' 'templates' 'support' 'light';
+    }
+  }
+
+  .card {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    padding: 1.5rem;
+    border: 1px solid var(--color-grey-200);
+    border-radius: 32px;
+    background-color: var(--color-white);
+    font-size: var(--text-xs);
+  }
+
+  .card h3 {
+    margin-bottom: var(--space-sm);
+    font-family: var(--font-heading);
+    font-size: clamp(1.352rem, 1.352rem + ((1vw - 0.2rem) * 0.848), 2.2rem);
+    font-weight: 600;
+    line-height: 1.3;
+    text-transform: none;
+  }
+
+  .card--dark {
+    border-color: var(--color-grey-800);
+    background-color: var(--color-grey-800);
+  }
+
+  .card--dark h3,
+  .card--dark p {
+    color: var(--color-white);
+  }
+
+  .card--theme {
+    grid-area: theme;
+  }
+
+  .card--images {
+    grid-area: images;
+  }
+
+  .card--seo {
+    grid-area: seo;
+  }
+
+  .card--domain {
+    grid-area: domain;
+  }
+
+  .card--templates {
+    grid-area: templates;
+  }
+
+  .card--support {
+    grid-area: support;
+  }
+
+  .card--light {
+    grid-area: light;
+    overflow: hidden;
+  }
+
+  .card__image {
+    width: 100%;
+    height: auto;
+    margin-top: auto;
+  }
+
+  .card__graphic {
+    width: 110%;
+    max-width: none;
+    height: auto;
+    margin: auto -1.5rem -1.5rem 0;
+  }
+
+  /* Optional add-ons */
+  .add-ons h2 {
+    color: var(--color-purple);
+  }
+
+  .add-ons__list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+    margin-block: var(--space-md) var(--space-xl);
+    padding: 0;
+    list-style: none;
+
+    @media (max-width: 960px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 600px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .add-on {
+    padding: var(--space-md);
+    border-radius: 32px;
+    background-color: #f0ebf6;
+    font-size: var(--text-xs);
+  }
+
+  .add-on__icon {
+    display: block;
+  }
+
+  /* At least 24px so the purple passes large-text contrast on the lilac card. */
+  .add-on h3 {
+    margin-block: var(--space-sm);
+    color: var(--color-purple);
+    font-family: var(--font-heading);
+    font-size: max(1.5rem, clamp(1.352rem, 1.352rem + ((1vw - 0.2rem) * 0.848), 2.2rem));
+    font-weight: 600;
+    line-height: 1.2;
+    text-transform: capitalize;
+  }
+</style>

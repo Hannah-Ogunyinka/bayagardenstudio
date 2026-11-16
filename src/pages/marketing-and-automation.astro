@@ -1,0 +1,118 @@
+---
+/**
+ * Grow: marketing and automation. Service hero, dark intro band,
+ * three outcome panels, then a closing line and call to action.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Button from '@components/ui/Button.astro';
+import ServiceHero from '@components/services/ServiceHero.astro';
+import IntroBand from '@components/services/IntroBand.astro';
+import phone from '@assets/images/services/mobile-on-red-background.webp';
+
+const outcomes = [
+  {
+    title: 'Build an engaged audience',
+    text: 'Baya Garden’s Grow strategy offers a comprehensive approach to audience engagement, leveraging email, content marketing and technical SEO to connect with and retain your target audience. We’ll come up with a personalised plan for your business that ensures that your audience aren’t just spectators, but active participants in your brand’s journey.',
+  },
+  {
+    title: 'Build credibility and become a thought leader',
+    text: 'Nurture your audience and build trust by adopting a Baya Garden growth strategy that is tailored to your business and specific industry. The growth strategy provides you with a plan to empower your community with valuable content, while efficiently collecting success stories and reviews to strengthen your position as a thought leader in your industry.',
+  },
+  {
+    title: 'Build efficient workflows',
+    text: 'Remove barriers to growth and inefficient workflows by establishing standard operating procedures to speed up repetitive tasks. Baya Garden Studio will help you to identify repetitive and time consuming tasks and build automations and guides that will free up time and accelerate growth.',
+  },
+] as const;
+---
+
+<BaseLayout
+  title="Marketing and Automation"
+  description="Marketing and automation for creative businesses: build an engaged audience, earn credibility and set up efficient workflows that free up time to grow."
+>
+  <ServiceHero
+    eyebrow="Marketing and automation"
+    title="Grow"
+    intro="End the frustration that comes with slow sales and an ineffective growth strategy and start building an audience ready to purchase by working with Baya Garden Studio."
+  />
+
+  <IntroBand image={phone}>
+    <p>
+      It can be frustrating to see the business you’ve worked hard to build struggling with slow growth. You want to see
+      your expertise serve a wider audience but you’re not sure how to get the reach you need or how to convert your
+      audience from curious spectators to happy customers.
+    </p>
+    <p>Propel your business forward and gain clarity with a comprehensive growth strategy.</p>
+    <p>Baya Garden Studio can help you to:</p>
+  </IntroBand>
+
+  <ul class="outcomes" role="list">
+    {
+      outcomes.map(({ title, text }) => (
+        <li class="outcome">
+          <h2>{title}</h2>
+          <p>{text}</p>
+        </li>
+      ))
+    }
+  </ul>
+
+  <section class="closing" aria-label="Get started">
+    <p>
+      Baya Garden Studio will support you every step of the way and give you peace of mind knowing that your business is
+      primed for growth.
+    </p>
+    <Button href="/contact/">Start your project</Button>
+  </section>
+</BaseLayout>
+
+<style>
+  .outcomes {
+    display: grid;
+    max-width: var(--content-max);
+    margin: var(--space-xl) auto 0;
+    padding: 0 var(--space-md);
+    gap: var(--space-lg);
+    list-style: none;
+  }
+
+  .outcome {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    align-items: start;
+    gap: var(--space-md);
+    padding: var(--space-md) var(--space-lg);
+    border: 1px solid var(--color-grey-400);
+    border-radius: 1.2rem;
+
+    @media (max-width: 782px) {
+      grid-template-columns: 1fr;
+      gap: var(--space-sm);
+    }
+  }
+
+  .outcome h2 {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    line-height: 1.1;
+    text-transform: none;
+  }
+
+  .outcome p {
+    margin: 0;
+    font-size: var(--text-xs);
+  }
+
+  .closing {
+    display: flex;
+    max-width: 36rem;
+    margin: var(--space-2xl) auto var(--space-2xl);
+    padding-inline: var(--space-md);
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: var(--text-xs);
+    text-align: center;
+  }
+</style>

@@ -1,0 +1,237 @@
+---
+/**
+ * Support: website care plans. Service hero with a jump link to prices,
+ * an illustration band, the case for maintenance, then the two plans.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Button from '@components/ui/Button.astro';
+import ServiceHero from '@components/services/ServiceHero.astro';
+import Tick from '@assets/icons/tick-in-circle.svg';
+import heroLarge from '@assets/images/services/Support-Image-desktop.svg';
+import heroMedium from '@assets/images/services/Support-hero-image-md.svg';
+import heroSmall from '@assets/images/services/Support-hero-image-sm.svg';
+
+const shared = [
+  'Monthly maintenance report',
+  'No long term contract – can cancel at any time',
+  'Uptime monitoring',
+];
+
+const plans = [
+  {
+    name: 'Foundation plan',
+    price: 75,
+    features: [
+      ...shared,
+      'Weekly cloud back ups',
+      'WordPress core updates',
+      'Plugin updates',
+      'Theme updates',
+      'Optimise WordPress database',
+      'Optimise images on WordPress site',
+      'Review WordPress security logs',
+    ],
+  },
+  {
+    name: 'Comprehensive plan',
+    price: 125,
+    features: [
+      ...shared,
+      'Daily cloud back ups',
+      'WordPress core updates',
+      'Plugin updates',
+      'Theme updates',
+      'Optimise WordPress database',
+      'Optimise images on WordPress site',
+      'Review WordPress security logs',
+      'Test all WordPress forms',
+      'Check and update spam comments',
+      'Run performance tests',
+      'Performance optimisation',
+      'Find and fix 404 errors',
+      'Find and fix broken links',
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Website care plan"
+  description="Keep your website up to date, backed up and running smoothly with a Set and Forget website care plan."
+>
+  <ServiceHero
+    eyebrow="Website care plans"
+    title="Support"
+    intro="Keep your website up to date, backed up and running smoothly with a Set and Forget website care plan."
+  >
+    <Button slot="action" href="#pricing" variant="dark" arrow>View prices</Button>
+  </ServiceHero>
+
+  <!-- Decorative illustration of a tidy desk; art-directed for each screen size. -->
+  <picture class="illustration">
+    <source media="(max-width: 600px)" srcset={heroSmall.src} width={604} height={464} />
+    <source media="(max-width: 960px)" srcset={heroMedium.src} width={1200} height={463} />
+    <img src={heroLarge.src} alt="" width={1440} height={463} decoding="async" />
+  </picture>
+
+  <section class="why" aria-label="Why your website needs care">
+    <div>
+      <p>
+        Websites are no longer a “set and forget” part of your business. As technology evolves, website software is
+        constantly being updated to make it more secure, faster and more visible to search engines.
+      </p>
+      <p>
+        Just like your smartphone and your computer, websites need to be updated too. Let us take that burden off your
+        shoulders with our website care plans.
+      </p>
+      <p>Baya Garden Studio will handle all the technical details, so you can focus on running your business.</p>
+    </div>
+    <div>
+      <p>
+        We’ll keep your website software up-to-date, perform regular backups to prevent data loss, and optimise the
+        backend codebase and assets to keep your site responsive and performant.
+      </p>
+      <p>
+        Don’t let the maintenance and management of your website consume valuable time and resources. Sign up for our
+        website care plan and enjoy the peace of mind that comes with knowing your site is in good hands.
+      </p>
+    </div>
+  </section>
+
+  <section id="pricing" class="pricing" aria-labelledby="pricing-title">
+    <h2 id="pricing-title">Website Care Plans</h2>
+    <div class="plans">
+      {
+        plans.map(({ name, price, features }) => (
+          <article class="plan" aria-labelledby={`plan-${price}`}>
+            <div class="plan__head">
+              <h3 id={`plan-${price}`}>{name}</h3>
+              <p class="plan__price">
+                <span class="plan__unit">from</span> £{price} <span class="plan__unit">Monthly</span>
+              </p>
+              <Button href="/contact/" variant="outline" aria-describedby={`plan-${price}`}>
+                Book today
+              </Button>
+            </div>
+            <ul class="plan__features" role="list">
+              {features.map((feature) => (
+                <li>
+                  <Tick aria-hidden="true" width={15} height={15} />
+                  {feature}
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .illustration img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-block: var(--space-md);
+  }
+
+  .why {
+    display: grid;
+    max-width: 780px;
+    margin: var(--space-xl) auto var(--space-2xl);
+    padding-inline: var(--space-md);
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+    font-size: var(--text-xs);
+
+    @media (max-width: 782px) {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+  }
+
+  .pricing {
+    max-width: var(--content-max);
+    margin-inline: auto;
+    padding: var(--space-md) var(--space-md) var(--space-2xl);
+  }
+
+  .pricing h2 {
+    margin: 0 0 var(--space-md);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-grey-400);
+    font-family: var(--font-heading);
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .plans {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+
+  .plan {
+    width: min(100%, 25rem);
+    padding: var(--space-sm);
+    border: 1px solid var(--color-grey-200);
+    border-radius: 40px;
+    background-color: var(--color-grey-200);
+  }
+
+  .plan__head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-md);
+    border-radius: 32px;
+    background-color: var(--color-grey-100);
+    text-align: center;
+  }
+
+  .plan h3 {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: var(--text-md);
+    font-weight: 600;
+    line-height: 1;
+    text-transform: capitalize;
+  }
+
+  .plan__price {
+    margin-block: var(--space-sm);
+    font-size: var(--text-lg);
+    font-weight: 700;
+  }
+
+  /* Brighter purple kept at 24px or more for large-text contrast. */
+  .plan__unit {
+    color: var(--color-purple);
+    font-size: max(1.5rem, var(--text-md));
+    font-weight: 600;
+  }
+
+  .plan__features {
+    margin: 0;
+    padding: var(--space-sm) var(--space-sm) var(--space-md);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    list-style: none;
+  }
+
+  .plan__features li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.3em;
+    padding-block: 0.4em;
+  }
+
+  .plan__features svg {
+    flex-shrink: 0;
+    transform: translateY(0.1em);
+  }
+</style>
