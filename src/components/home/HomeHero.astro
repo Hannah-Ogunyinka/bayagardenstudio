@@ -45,7 +45,8 @@ import tabletGreen from '@assets/images/home/hero-tablet-green.webp';
 
   .hero__top {
     display: grid;
-    grid-template-columns: 17.5% 1fr 17.5%;
+    /* minmax(0, …) lets the floating images overflow (and be clipped) without widening the grid. */
+    grid-template-columns: 17.5% minmax(0, 1fr) 17.5%;
     max-height: 1080px;
     padding-bottom: var(--space-lg);
 
@@ -54,7 +55,7 @@ import tabletGreen from '@assets/images/home/hero-tablet-green.webp';
     }
 
     @media (max-width: 782px) {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     }
   }
 
@@ -116,6 +117,11 @@ import tabletGreen from '@assets/images/home/hero-tablet-green.webp';
     :global(img) {
       animation-duration: 6500ms;
       animation-delay: 640ms;
+    }
+
+    @media (max-width: 782px) {
+      grid-row: 3;
+      grid-column: 1 / -1;
     }
 
     @media (min-width: 467px) and (max-width: 782px) {

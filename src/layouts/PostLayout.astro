@@ -66,7 +66,7 @@ const { title, description, summary, published, updated, categories, image } = p
     padding: var(--space-md);
 
     @media (max-width: 782px) {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
     }
   }
 
@@ -124,7 +124,7 @@ const { title, description, summary, published, updated, categories, image } = p
     padding: var(--space-md) var(--space-md) var(--space-xl);
 
     @media (max-width: 960px) {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
     }
   }
 
