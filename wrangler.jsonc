@@ -9,12 +9,14 @@
   "vars": {
     "AWS_SES_REGION": "eu-west-2",
     "CONTACT_TO": "contact@bayagardenstudio.com",
-    "CONTACT_FROM": "Baya Garden Studio <contact@bayagardenstudio.com>"
+    "CONTACT_FROM": "Baya Garden Studio <contact@bayagardenstudio.com>",
+    // Brevo list that newsletter sign-ups join.
+    "BREVO_LIST_ID": "2"
   },
   // Client gallery photos and zip downloads (private: served only through the Worker).
   "r2_buckets": [{ "binding": "GALLERY_BUCKET", "bucket_name": "baya-client-galleries" }]
   // Secrets (set with `npx wrangler secret put NAME`, never in this file):
   // TURNSTILE_SECRET_KEY, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY,
-  // BREVO_API_KEY, BREVO_LIST_ID, BREVO_DOI_TEMPLATE_ID (optional),
+  // BREVO_API_KEY, BREVO_DOI_TEMPLATE_ID (optional),
   // GALLERY_PASSWORDS, GALLERY_COOKIE_SECRET
 }
