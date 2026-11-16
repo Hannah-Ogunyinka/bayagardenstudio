@@ -1,0 +1,123 @@
+---
+/**
+ * Translucent pill navigation fixed to the bottom of the screen on desktop.
+ * Visibility is controlled by src/scripts/floating-nav.ts.
+ */
+import HomeIcon from '@assets/icons/icon-home.svg';
+import { FLOATING_NAV } from '@config/site';
+
+const currentPath = Astro.url.pathname;
+---
+
+<div class="floating-nav-wrapper">
+  <nav class="floating-nav" aria-label="Quick links" data-floating-nav data-visible="false" inert>
+    <a href="/" class="floating-nav__home" aria-label="Home" aria-current={currentPath === '/' ? 'page' : undefined}>
+      <HomeIcon aria-hidden="true" width={26} height={26} />
+    </a>
+    <ul role="list">
+      {
+        FLOATING_NAV.map((item) => (
+          <li>
+            <a href={item.href} aria-current={currentPath === item.href ? 'page' : undefined}>
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</div>
+
+<script>
+  import { initFloatingNav } from '../../scripts/floating-nav';
+  initFloatingNav();
+</script>
+
+<style>
+  .floating-nav-wrapper {
+    position: fixed;
+    bottom: var(--space-lg);
+    left: 0;
+    z-index: var(--z-floating-nav);
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .floating-nav {
+    display: flex;
+    align-items: center;
+    padding: var(--space-xs) var(--space-lg);
+    border-radius: var(--radius-pill);
+    background-color: var(--color-glass-strong);
+    box-shadow: var(--shadow-float);
+    backdrop-filter: var(--glass-blur);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.2s ease,
+      visibility 0.2s;
+    pointer-events: auto;
+  }
+
+  .floating-nav[data-visible='true'] {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .floating-nav__home {
+    display: flex;
+    padding-right: var(--space-sm);
+    border-right: var(--border-thin) solid var(--color-text);
+    color: var(--color-text);
+
+    :global(svg) {
+      transition: transform 0.2s ease-in;
+    }
+
+    :global(path) {
+      transition: fill 0.2s ease-in;
+    }
+  }
+
+  /* Only the icon lifts on hover; the divider beside it stays put. */
+  .floating-nav__home:hover,
+  .floating-nav__home:focus-visible {
+    :global(svg) {
+      transform: translateY(-0.1em);
+    }
+
+    :global(path) {
+      fill: var(--color-purple);
+    }
+  }
+
+  ul {
+    display: flex;
+    gap: var(--space-sm);
+    margin: 0;
+    padding: 0 0 0 var(--space-sm);
+    list-style: none;
+  }
+
+  ul a {
+    display: inline-block;
+    color: var(--color-text);
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+      transform 0.2s ease-in,
+      color 0.2s ease-in;
+  }
+
+  ul a:hover,
+  ul a:focus-visible {
+    color: var(--color-purple);
+    transform: translateY(-0.1em);
+  }
+
+  ul a[aria-current='page'] {
+    color: var(--color-purple);
+  }
+</style>

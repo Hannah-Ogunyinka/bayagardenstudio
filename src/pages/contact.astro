@@ -1,0 +1,80 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ContactForm from '@components/forms/ContactForm.astro';
+import grid from '@assets/images/contact/contact-grid.png';
+import { MQ } from '@config/breakpoints';
+---
+
+<BaseLayout
+  title="Contact"
+  description="Tell Baya Garden Studio about your project: web design and development, email marketing, website care or brand photography. We'll be in touch."
+>
+  <div class="contact">
+    <h1>Solutions <span class="accent">crafted</span> for Businesses</h1>
+    <div class="contact__columns">
+      <Image src={grid} alt="" widths={[320, 480, 640]} sizes={`${MQ.mdDown} 100vw, 40vw`} class="contact__image" />
+      <div class="contact__form">
+        <h2 class="sr-only">Start your project</h2>
+        <ContactForm />
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .contact {
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    padding: var(--space-md) var(--space-md) var(--space-xl);
+  }
+
+  /* Theme: a 900px heading box set to the right. On the live site
+     "Businesses" overhangs the screen edge at 1920px; here the box widens to
+     fit the word instead, so the lines break the same way without overflow. */
+  h1 {
+    width: min-content;
+    min-width: min(100%, var(--measure-contact-title));
+    max-width: 100%;
+    margin: 0 0 var(--space-md) auto;
+    font-size: var(--text-display-sm);
+    font-weight: var(--weight-bold);
+    line-height: 1.1;
+    text-align: right;
+    text-transform: capitalize;
+  }
+
+  .accent {
+    color: var(--color-purple);
+  }
+
+  .contact__columns {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: space-between;
+    align-items: flex-start;
+
+    /* On phones the form comes first, as on the live site. */
+    @media (--md-down) {
+      flex-direction: column-reverse;
+      align-items: stretch;
+    }
+  }
+
+  .contact__form {
+    flex: 0 0 calc(50% - var(--space-md) / 2);
+
+    @media (--md-down) {
+      flex-basis: auto;
+    }
+  }
+
+  .contact__image {
+    max-width: min(50%, 29.8125rem); /* token-exempt: the collage's natural width (477px) */
+    height: auto;
+
+    @media (--md-down) {
+      max-width: 100%;
+    }
+  }
+</style>

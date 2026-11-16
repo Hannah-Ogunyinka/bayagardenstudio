@@ -1,0 +1,31 @@
+---
+import { categoryUrl } from '@lib/content';
+
+interface Props {
+  name: string;
+}
+
+const { name } = Astro.props;
+---
+
+<a class="category-tag" href={categoryUrl(name)}>{name}</a>
+
+<style>
+  .category-tag {
+    display: inline-block;
+    padding: 0.5em 1em;
+    border-radius: var(--radius-sm);
+    background-color: var(--color-accent);
+    color: var(--color-white);
+    font-family: var(--font-body);
+    font-size: var(--text-small);
+    line-height: var(--leading-body);
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .category-tag:hover {
+    background-color: var(--color-text);
+  }
+</style>

@@ -1,0 +1,108 @@
+---
+/** Generated from the post's own headings, so it never goes out of date. */
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+  headings: MarkdownHeading[];
+  /** 'plugin': dark label and bullet list (theme single.html). 'box': bordered panel with a pill heading (text-only posts). */
+  variant?: 'plugin' | 'box';
+}
+
+const { headings, variant = 'plugin' } = Astro.props;
+const items = headings.filter((heading) => heading.depth === 2);
+---
+
+{
+  items.length > 1 && (
+    <nav class:list={['toc', `toc--${variant}`]} aria-labelledby="toc-title">
+      <h2 id="toc-title">Table of Contents</h2>
+      <ul>
+        {items.map((heading) => (
+          <li>
+            <a href={`#${heading.slug}`}>{heading.text}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
+
+<style>
+  /* Styled as the theme's table of contents plugin: a dark label, then a
+     16px bulleted list. */
+  .toc {
+    font-family: var(--font-heading);
+  }
+
+  /* The label sits centred in its column, as on the live site. */
+  h2 {
+    display: table;
+    margin: 0 auto;
+    border-radius: var(--radius-xs);
+    background-color: var(--color-grey-700);
+    color: var(--color-white);
+    font-family: var(--font-heading);
+    font-size: var(--text-body);
+    font-weight: var(--weight-regular);
+    line-height: var(--leading-body);
+    text-transform: none;
+  }
+
+  ul {
+    margin: var(--space-sm) 0;
+    padding-left: 2.5em;
+    font-size: var(--text-toc);
+    line-height: var(--leading-body);
+  }
+
+  a {
+    color: var(--color-black);
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--color-purple-dark);
+    text-decoration: underline;
+  }
+
+  /* Box variant: bordered panel, pill heading, semibold links. */
+  .toc--box {
+    width: 100%;
+    padding: var(--space-sm);
+    border: var(--border-hairline) solid var(--color-rule);
+    border-radius: var(--radius-sm);
+  }
+
+  .toc--box h2 {
+    display: block;
+    margin: 0 0 var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-button);
+    background-color: var(--color-text);
+    font-size: var(--text-ui);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-normal);
+    text-align: center;
+  }
+
+  .toc--box ul {
+    margin: 0;
+    padding: 0 var(--space-sm);
+    list-style: none;
+    font-size: var(--text-body);
+  }
+
+  .toc--box li {
+    font-size: 0.77em; /* token-exempt: the theme's link size, relative to body text */
+    line-height: var(--leading-normal);
+  }
+
+  .toc--box li + li {
+    margin-top: calc(var(--space-sm) * 1.5);
+  }
+
+  .toc--box a {
+    color: var(--color-text);
+    font-weight: var(--weight-semibold);
+  }
+</style>

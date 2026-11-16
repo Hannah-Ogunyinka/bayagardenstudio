@@ -1,0 +1,59 @@
+---
+/** Dark rounded call-to-action panel used at the foot of several pages. */
+import Button from './Button.astro';
+
+interface Props {
+  title?: string;
+  href?: string;
+  label?: string;
+  /** "small" for a sentence-length message. */
+  size?: 'large' | 'small';
+}
+
+const {
+  title = 'Start building your digital home today',
+  href = '/contact/',
+  label = 'Start your project',
+  size = 'large',
+} = Astro.props;
+---
+
+<section class="cta" aria-labelledby="cta-title">
+  <h2 id="cta-title" class:list={[`cta__title--${size}`]}>{title}</h2>
+  <Button href={href} variant="fill">{label}</Button>
+</section>
+
+<style>
+  .cta {
+    display: grid;
+    margin: var(--space-md) var(--inset-band);
+    padding: var(--space-md) var(--space-sm);
+    justify-items: center;
+    gap: var(--space-md);
+    border-radius: 1em;
+    background-color: var(--color-text);
+    text-align: center;
+
+  }
+
+  h2 {
+    max-width: var(--measure-cta);
+    margin: 0;
+    color: var(--color-white);
+    font-family: var(--font-heading);
+    font-size: var(--text-h2);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-heading);
+    letter-spacing: var(--tracking-tight);
+    text-transform: none;
+  }
+
+  .cta__title--small {
+    max-width: 35em;
+    font-family: var(--font-heading);
+    font-size: var(--text-body);
+    font-weight: var(--weight-regular);
+    line-height: var(--leading-body);
+    letter-spacing: normal;
+  }
+</style>

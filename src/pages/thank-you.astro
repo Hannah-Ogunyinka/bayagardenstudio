@@ -1,0 +1,38 @@
+---
+/**
+ * Where a form lands when it is posted without JavaScript, and where Brevo's
+ * double opt-in confirmation link returns people. Not in the sitemap, noindex.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Button from '@components/ui/Button.astro';
+---
+
+<BaseLayout title="Thank you" description="Thank you for getting in touch with Baya Garden Studio." noindex>
+  <section class="thanks" aria-labelledby="thanks-title">
+    <h1 id="thanks-title">Thank you!</h1>
+    <p>We've got it. If you sent an enquiry, we'll be in touch soon.</p>
+    <Button href="/" variant="dark">Back to the home page</Button>
+  </section>
+</BaseLayout>
+
+<style>
+  .thanks {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-sm);
+    max-width: var(--container-text);
+    margin-inline: auto;
+    padding: var(--space-xl) var(--gutter);
+  }
+
+  h1 {
+    margin: 0;
+    font-size: var(--text-display-sm);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-tight);
+  }
+
+  p {
+    margin: 0;
+  }
+</style>

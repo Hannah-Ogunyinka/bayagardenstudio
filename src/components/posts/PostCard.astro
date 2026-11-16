@@ -1,0 +1,83 @@
+---
+/** Card used on the Insights page and category archives. */
+import { Image } from 'astro:assets';
+import CategoryTag from './CategoryTag.astro';
+import { postUrl, type Post } from '@lib/content';
+import { MQ } from '@config/breakpoints';
+
+interface Props {
+  post: Post;
+  headingLevel?: 'h2' | 'h3';
+}
+
+const { post, headingLevel: Heading = 'h3' } = Astro.props;
+const [category] = post.data.categories;
+---
+
+<article class="post-card">
+  {/* Repeats the title link for mouse users only, so it is announced once. */}
+  <a href={postUrl(post)} class="post-card__media" tabindex="-1" aria-hidden="true">
+    <Image
+      src={post.data.image.src}
+      alt=""
+      widths={[320, 480, 640]}
+      sizes={`${MQ.smDown} 100vw, ${MQ.lgDown} 50vw, 33vw`}
+      class="post-card__image"
+    />
+  </a>
+  {category && <CategoryTag name={category} />}
+  <Heading class="post-card__title">
+    <a href={postUrl(post)}>{post.data.title}</a>
+  </Heading>
+</article>
+
+<style>
+  /* Block flow, as in the theme's query loop: the image keeps 1em below it
+     and the title 1em (of its own size) above and below. */
+  .post-card__media {
+    display: block;
+  }
+
+  .post-card__image {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-bottom: 1em;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+  }
+
+  .post-card :global(.category-tag) {
+    /* As in the theme, the tag gains space above it on phones and small tablets. */
+    @media (--md-down) {
+      margin-top: var(--space-sm);
+    }
+  }
+
+  .post-card__title {
+    margin: 1em 0;
+    font-family: var(--font-heading);
+    font-size: var(--text-lead);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-normal);
+    text-transform: none;
+  }
+
+  /* As an h2 (category archives) the theme's heading defaults apply. */
+  h2.post-card__title {
+    margin: 0.83em 0;
+    line-height: var(--leading-heading);
+    text-transform: capitalize;
+  }
+
+  .post-card__title a {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .post-card__title a:hover,
+  .post-card:has(.post-card__media:hover) .post-card__title a {
+    color: var(--color-purple);
+  }
+</style>

@@ -1,0 +1,42 @@
+---
+/**
+ * Root-level dynamic route, matching WordPress permalinks:
+ *   /post-slug/        → a single article
+ *   /category-slug/    → a category archive (category base was stripped)
+ * Static pages in src/pages take priority over this route.
+ */
+import { render } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PostLayout from '@layouts/PostLayout.astro';
+import CategoryArchive from '@components/posts/CategoryArchive.astro';
+import { CATEGORIES } from '@config/categories';
+import { categorySlug, getPosts, type Post } from '@lib/content';
+
+type Props = { kind: 'post'; post: Post } | { kind: 'category'; name: string; posts: Post[] };
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return [
+    ...posts.map((post) => ({ params: { slug: post.id }, props: { kind: 'post' as const, post } })),
+    ...CATEGORIES.map((name) => ({
+      params: { slug: categorySlug(name) },
+      props: { kind: 'category' as const, name, posts: posts.filter((p) => p.data.categories.includes(name)) },
+    })),
+  ];
+}
+
+const props = Astro.props;
+const rendered = props.kind === 'post' ? await render(props.post) : undefined;
+---
+
+{
+  props.kind === 'post' && rendered ? (
+    <PostLayout post={props.post} headings={rendered.headings}>
+      <rendered.Content />
+    </PostLayout>
+  ) : props.kind === 'category' ? (
+    <BaseLayout title={props.name} description={`Articles about ${props.name.toLowerCase()} from Baya Garden Studio.`}>
+      <CategoryArchive name={props.name} posts={props.posts} />
+    </BaseLayout>
+  ) : null
+}

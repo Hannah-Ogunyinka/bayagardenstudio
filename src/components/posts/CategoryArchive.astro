@@ -1,0 +1,63 @@
+---
+import PostCard from './PostCard.astro';
+import BackLink from '@components/ui/BackLink.astro';
+import type { Post } from '@lib/content';
+
+interface Props {
+  name: string;
+  posts: Post[];
+}
+
+const { name, posts } = Astro.props;
+---
+
+<section class="archive">
+  <header class="archive__header">
+    <BackLink href="/insights/">Back to Articles</BackLink>
+    <h1>{name}</h1>
+  </header>
+  <ul class="archive__grid" role="list">
+    {
+      posts.map((post) => (
+        <li>
+          <PostCard post={post} headingLevel="h2" />
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  /* Mirrors the theme's archive.html: medium padding, back link, a 6rem
+     category name, then the same three-column grid as Insights. */
+  .archive {
+    box-sizing: content-box;
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    padding: var(--space-md);
+  }
+
+  .archive__header {
+    padding-bottom: var(--space-md);
+  }
+
+  h1 {
+    margin: var(--space-md) 0 0;
+    font-size: var(--text-section-title);
+    font-weight: var(--weight-extrabold);
+    line-height: var(--leading-none);
+    text-transform: capitalize;
+  }
+
+  .archive__grid {
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(max(min(var(--grid-min-xs), 100%), (100% - 2 * var(--space-md)) / 3), 1fr)
+    );
+    gap: var(--space-md);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+</style>

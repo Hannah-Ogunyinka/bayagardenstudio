@@ -1,0 +1,208 @@
+---
+/**
+ * Homepage hero: the main heading with four device mock-ups floating
+ * gently around it (animation carried over from the WordPress theme).
+ * The images are decorative, so they are hidden from screen readers.
+ */
+import { Image, getImage } from 'astro:assets';
+import { MQ } from '@config/breakpoints';
+import tabletGreenWide from '@assets/images/home/hero-tablet-green-wide.webp';
+import tabletPurple from '@assets/images/home/hero-tablet-purple.webp';
+import mobileRed from '@assets/images/home/hero-mobile-red.webp';
+import tabletGreen from '@assets/images/home/hero-tablet-green.webp';
+import tabletPurpleMobile from '@assets/images/home/hero-tablet-purple-mobile.webp';
+
+// On phones the live site swaps the purple tablet for a cropped site thumbnail.
+const purpleMobile = await getImage({ src: tabletPurpleMobile, widths: [400, 800], format: 'webp' });
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero__top">
+    <div class="hero__float hero__float--left" aria-hidden="true">
+      <Image src={tabletGreenWide} alt="" widths={[400, 640, 960]} sizes="40rem" loading="eager" />
+    </div>
+
+    <div class="hero__heading">
+      <h1 id="hero-title">Expertly crafted <span class="accent">digital</span> solutions</h1>
+      <p class="hero__strap">Web design | tech strategy | brand photography</p>
+    </div>
+
+    <div class="hero__float hero__float--right" aria-hidden="true">
+      <picture>
+        <source media={MQ.smDown} srcset={purpleMobile.srcSet.attribute} sizes="100vw" />
+        <Image src={tabletPurple} alt="" widths={[400, 800, 1024]} sizes="50rem" loading="eager" />
+      </picture>
+    </div>
+  </div>
+
+  <div class="hero__bottom" aria-hidden="true">
+    <div class="hero__float hero__float--bottom-left">
+      <Image src={mobileRed} alt="" widths={[480, 960]} sizes="30em" />
+    </div>
+    <div class="hero__float hero__float--bottom-right">
+      <Image src={tabletGreen} alt="" widths={[544, 1024]} sizes="34em" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-top: var(--space-sm);
+    overflow-x: clip;
+  }
+
+  .hero__top {
+    display: grid;
+    /* minmax(0, …) lets the floating images overflow (and be clipped) without widening the grid. */
+    grid-template-columns: 17.5% minmax(0, 1fr) 17.5%;
+    max-width: var(--container-wide);
+    max-height: var(--hero-max-height);
+    margin-inline: auto;
+    /* As in the original theme, artwork is clipped at the 1920px row, not the screen. */
+    overflow-x: clip;
+    padding-bottom: var(--space-lg);
+
+    @media (--2xl-up) {
+      height: 75vh;
+    }
+
+    @media (--md-down) {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+  }
+
+  /* The theme centres the heading column vertically between the artwork. */
+  .hero__heading {
+    align-self: center;
+    padding: var(--space-md) var(--space-sm);
+    text-align: center;
+
+    @media (--md-down) {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+  }
+
+  h1 {
+    margin: 0 0 var(--space-sm);
+    font-size: var(--text-hero);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-tight);
+    text-transform: capitalize;
+  }
+
+  .accent {
+    color: var(--color-purple);
+  }
+
+  .hero__strap {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--text-eyebrow);
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+  }
+
+  .hero__float {
+    position: relative;
+  }
+
+  .hero__float :global(img) {
+    width: 100%;
+    transform: translate(-3%, -5%);
+    animation: float 8s ease-in-out infinite alternate;
+  }
+
+  .hero__float--left {
+    width: clamp(20rem, 14rem + 28.6vw, 40rem); /* token-exempt: artwork position from the live theme */
+    right: clamp(9rem, 4rem + 24vw, 26rem); /* token-exempt: artwork position from the live theme */
+    padding-top: var(--space-sm);
+
+    :global(img) {
+      animation-delay: 400ms;
+    }
+  }
+
+  .hero__float--right {
+    width: clamp(20rem, 12.6rem + 37vw, 50rem); /* token-exempt: artwork position from the live theme */
+    left: clamp(2rem, 13rem - 14vw, 12rem); /* token-exempt: artwork position from the live theme */
+    /* Sits on the bottom of the row, as on the live site. */
+    align-self: end;
+
+    :global(img) {
+      animation-duration: 6500ms;
+      animation-delay: 640ms;
+    }
+
+    @media (--md-down) {
+      grid-row: 3;
+      grid-column: 1 / -1;
+    }
+
+    @media (--xs-up) and (--md-down) {
+      left: clamp(20rem, 17rem + 14vw, 30rem); /* token-exempt: artwork position from the live theme */
+    }
+  }
+
+  @media (--md-down) {
+    .hero__float--left :global(img) {
+      height: 8em;
+      object-fit: cover;
+      border-radius: var(--radius-m);
+    }
+
+    .hero__float--right :global(img) {
+      height: 10em;
+      object-fit: cover;
+      object-position: top;
+      border-radius: var(--radius-m);
+    }
+  }
+
+  /* Three equal columns, capped at 1920px: the photos hang off the first two. */
+  .hero__bottom {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: var(--container-wide);
+    height: 26em;
+    margin-inline: auto;
+    overflow-x: clip;
+
+    @media (--lg-down) {
+      display: none;
+    }
+  }
+
+  .hero__float--bottom-left {
+    width: 30em;
+    left: -4rem;
+
+    :global(img) {
+      animation-duration: 7000ms;
+      animation-delay: 0ms;
+    }
+  }
+
+  .hero__float--bottom-right {
+    width: 34em;
+    top: 3rem; /* token-exempt: artwork position from the live theme */
+    left: 15rem; /* token-exempt: artwork position from the live theme */
+
+    :global(img) {
+      animation-delay: 540ms;
+    }
+  }
+
+  @keyframes float {
+    0% {
+      transform: translate(-3%, -5%);
+    }
+    50% {
+      transform: translate(0, 0);
+    }
+    100% {
+      transform: translate(3%, -6%);
+    }
+  }
+</style>

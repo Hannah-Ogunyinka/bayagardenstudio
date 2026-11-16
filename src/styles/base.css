@@ -1,0 +1,305 @@
+/* ==========================================================================
+   Base element styles and layout primitives. Load after tokens.css.
+   Element styles mirror the live WordPress global styles so pages match;
+   everything reads from tokens, so pages should not need raw numbers.
+   ========================================================================== */
+@import './tokens.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  /* Never set a px font-size here: it would override the reader's default. */
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--space-md);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-heading);
+  font-size: var(--text-body);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-body);
+  overflow-wrap: break-word; /* long URLs and words wrap instead of being clipped */
+}
+
+/* ------------------------------------------------------------- Headings */
+h1,
+h2,
+h3,
+h4 {
+  margin-block: 0 var(--stack-s);
+  color: var(--color-text);
+}
+
+h1 {
+  font-family: var(--font-heading);
+  font-size: var(--text-h1);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-snug);
+}
+
+h2 {
+  font-family: var(--font-body);
+  font-size: var(--text-h2);
+  line-height: var(--leading-heading);
+  text-transform: capitalize;
+}
+
+h3 {
+  font-size: var(--text-h3);
+  line-height: var(--leading-normal);
+}
+
+h4 {
+  font-size: var(--text-h4);
+}
+
+/* ----------------------------------------------------------------- Text */
+p {
+  margin-block: 0 var(--stack-s);
+  color: var(--color-text);
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-decoration-thickness: var(--underline-thickness);
+  transition: color var(--duration-fast) ease-in-out;
+}
+
+p a {
+  color: var(--color-text);
+}
+
+b,
+strong {
+  font-weight: var(--weight-semibold);
+}
+
+ul,
+ol {
+  margin-block: 0 var(--stack-s);
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/*
+ * The newsletter band is sticky at the bottom of the viewport underneath
+ * everything else; main content sits above it so it is only revealed once
+ * the footer scrolls past.
+ */
+main {
+  position: relative;
+  z-index: var(--z-content);
+  background-color: var(--color-bg);
+  display: flow-root; /* keeps the last section's margin inside, so the newsletter band never shows through a gap */
+  overflow-x: clip; /* lets edge-to-edge images use 100vw without a sideways scrollbar */
+}
+
+main:focus {
+  outline: none;
+}
+
+/* Visible keyboard focus everywhere (the WordPress theme had none on custom buttons). */
+:focus-visible {
+  outline: var(--focus-width) solid var(--color-focus);
+  outline-offset: var(--focus-offset);
+  border-radius: var(--radius-xs);
+}
+
+/* ---------------------------------------------------------------- Forms */
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 0.8em;
+  border: 0;
+  border-radius: var(--radius-xs);
+  background-color: var(--color-surface-raised);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: max(1rem, var(--text-small)); /* token-exempt: 16px floor stops iOS zooming into fields */
+}
+
+::placeholder {
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--text-ui);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+/* --------------------------------------------------------------- Layout
+   Small, composable primitives (same set as the PHSL system). Prefer these
+   to one-off flex and grid rules in components. */
+
+/* Centred content column with responsive side gutters. */
+.container {
+  width: var(--container);
+  margin-inline: auto;
+}
+
+.container.wide {
+  --container-max: var(--container-wide);
+}
+
+.container.text {
+  --container-max: var(--container-text);
+}
+
+.container.narrow {
+  --container-max: var(--container-narrow);
+}
+
+/* Vertical rhythm for a section. */
+.section {
+  padding-block: var(--section-space);
+}
+
+/* Stack: even vertical space between direct children.
+   Set --stack on the element to change it: style="--stack: var(--stack-l)". */
+.stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.stack > * {
+  margin-block: 0;
+}
+
+.stack > * + * {
+  margin-block-start: var(--stack, var(--stack-s));
+}
+
+/* Flow: running text. Space is in em so it tracks the text size. */
+.flow > * {
+  margin-block: 0;
+}
+
+.flow > * + * {
+  margin-block-start: var(--flow-space);
+}
+
+/* Cluster: a wrapping row of buttons, tags or links. */
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cluster-gap, var(--gap-inline));
+}
+
+/* Auto grid: as many columns as fit, never narrower than --grid-min.
+   min(100%, …) stops overflow on a 320px screen or at 400% zoom. */
+.auto-grid {
+  display: grid;
+  gap: var(--gap-grid);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min, var(--grid-min-m))), 1fr));
+}
+
+/* Switcher: side by side when there's room, stacked when not, with no
+   media query. Switches when the container is narrower than --switch-at. */
+.switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-columns);
+}
+
+.switcher > * {
+  min-width: 0;
+  flex-grow: 1;
+  flex-basis: calc((var(--switch-at, var(--container-text)) - 100%) * 999);
+}
+
+/* ------------------------------------------------------------ Utilities */
+/* Small uppercase label above a heading ("Our offer", "Featured post"). */
+.eyebrow {
+  margin-block: 0 var(--stack-s);
+  font-family: var(--font-body);
+  font-size: var(--text-eyebrow);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px; /* token-exempt: standard visually-hidden pattern */
+  height: 1px; /* token-exempt: standard visually-hidden pattern */
+  padding: 0;
+  margin: -1px; /* token-exempt: standard visually-hidden pattern */
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: var(--space-2xs);
+  left: var(--space-2xs);
+  z-index: calc(var(--z-menu) + 1);
+  padding: 0.75em 1.25em;
+  border-radius: var(--radius-button);
+  background: var(--color-surface-inverse);
+  color: var(--color-text-inverse);
+  font-family: var(--font-body);
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+@media (--sm-down) {
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
+@media (--sm-up) and (--lg-down) {
+  .hide-tablet {
+    display: none !important;
+  }
+}
+
+@media (--lg-up) {
+  .hide-desktop {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Pages built on the theme's white templates (text-only posts). */
+body.surface-raised {
+  background-color: var(--color-surface-raised);
+}

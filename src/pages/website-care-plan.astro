@@ -1,0 +1,285 @@
+---
+/**
+ * Support: website care plans. Service hero with a jump link to prices,
+ * an illustration band, the case for maintenance, then the two plans.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Button from '@components/ui/Button.astro';
+import ServiceHero from '@components/services/ServiceHero.astro';
+import Tick from '@assets/icons/tick-in-circle.svg';
+import heroLarge from '@assets/images/services/Support-Image-desktop.svg';
+import heroMedium from '@assets/images/services/Support-hero-image-md.svg';
+import heroSmall from '@assets/images/services/Support-hero-image-sm.svg';
+import { MQ } from '@config/breakpoints';
+
+const shared = [
+  'Monthly maintenance report',
+  'No long term contract – can cancel at any time',
+  'Uptime monitoring',
+];
+
+const plans = [
+  {
+    name: 'Foundation plan',
+    price: 75,
+    features: [
+      ...shared,
+      'Weekly cloud back ups',
+      'WordPress core updates',
+      'Plugin updates',
+      'Theme updates',
+      'Optimise WordPress database',
+      'Optimise images on WordPress site',
+      'Review WordPress security logs',
+    ],
+  },
+  {
+    name: 'Comprehensive plan',
+    price: 125,
+    /* The theme sets this price on two lines, with a blank line under "from". */
+    stacked: true,
+    features: [
+      ...shared,
+      'Daily cloud back ups',
+      'WordPress core updates',
+      'Plugin updates',
+      'Theme updates',
+      'Optimise WordPress database',
+      'Optimise images on WordPress site',
+      'Review WordPress security logs',
+      'Test all WordPress forms',
+      'Check and update spam comments',
+      'Run performance tests',
+      'Performance optimisation',
+      'Find and fix 404 errors',
+      'Find and fix broken links',
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Website care plan"
+  description="Keep your website up to date, backed up and running smoothly with a Set and Forget website care plan."
+>
+  <ServiceHero
+    eyebrow="Website care plans"
+    title="Support"
+    size="small"
+    intro="Keep your website up to date, backed up and running smoothly with a Set and Forget website care plan."
+  >
+    <Button slot="action" href="#pricing" variant="dark" size="slim" arrow>View prices</Button>
+  </ServiceHero>
+
+  <!-- Decorative illustration of a tidy desk; art-directed for each screen size. -->
+  <picture class="illustration">
+    <source media={`${MQ.smDown}`} srcset={heroSmall.src} width={604} height={464} />
+    <source media={`${MQ.lgDown}`} srcset={heroMedium.src} width={1200} height={463} />
+    <img src={heroLarge.src} alt="" width={1440} height={463} decoding="async" />
+  </picture>
+
+  <section class="why" aria-label="Why your website needs care">
+    <div>
+      <p>
+        Websites are no longer a “set and forget” part of your business. As technology evolves, website software is
+        constantly being updated to make it more secure, faster and more visible to search engines.
+      </p>
+      <p>
+        Just like your smartphone and your computer, websites need to be updated too. Let us take that burden off your
+        shoulders with our website care plans.
+      </p>
+      <p>Baya Garden Studio will handle all the technical details, so you can focus on running your business.</p>
+    </div>
+    <div class="why__lined">
+      <p>
+        We’ll keep your website software up-to-date, perform regular backups to prevent data loss, and optimise the
+        backend codebase and assets to keep your site responsive and performant.
+      </p>
+      <p>
+        Don’t let the maintenance and management of your website consume valuable time and resources. Sign up for our
+        website care plan and enjoy the peace of mind that comes with knowing your site is in good hands.
+      </p>
+    </div>
+  </section>
+
+  <section id="pricing" class="pricing" aria-labelledby="pricing-title">
+    <h2 id="pricing-title">Website Care Plans</h2>
+    <div class="plans">
+      {
+        plans.map(({ name, price, features, stacked }) => (
+          <article class="plan" aria-labelledby={`plan-${price}`}>
+            <div class="plan__head">
+              <h3 id={`plan-${price}`}>{name}</h3>
+              {stacked ? (
+                <p class="plan__price plan__price--stacked">
+                  <span class="plan__unit">from</span>
+                  <br />
+                  <br />£{price} <span class="plan__unit">Monthly</span>
+                </p>
+              ) : (
+                <p class="plan__price">
+                  <span class="plan__unit">from</span> £{price} <span class="plan__unit">Monthly</span>
+                </p>
+              )}
+              <Button href="/contact/" variant="outline" aria-describedby={`plan-${price}`}>
+                Book today
+              </Button>
+            </div>
+            <ul class="plan__features" role="list">
+              {features.map((feature) => (
+                <li>
+                  <Tick aria-hidden="true" width={15} height={15} />
+                  {feature}
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Kept inside the 1920px frame on very wide screens, as on the live site. */
+  .illustration img {
+    display: block;
+    width: 100%;
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    height: auto;
+    margin-block: var(--space-md);
+  }
+
+  .why {
+    display: grid;
+    max-width: calc(var(--container-split) + 2 * var(--space-md));
+    margin-inline: auto;
+    padding: var(--space-md);
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+
+    @media (--md-down) {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+  }
+
+  .why p {
+    margin-block: 0 var(--stack-s);
+  }
+
+  /* The theme's second column is one paragraph split by a blank line. */
+  .why__lined p {
+    margin-bottom: 1lh;
+  }
+
+  .why p:last-child {
+    margin-bottom: 0;
+  }
+
+  .pricing {
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    padding: var(--space-md);
+  }
+
+  .pricing h2 {
+    margin: 0 0 var(--space-md);
+    padding-top: var(--space-md);
+    border-top: var(--border-hairline) solid var(--color-grey-400);
+    font-family: var(--font-heading);
+    font-size: var(--text-section-title);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-tight);
+    text-align: center;
+  }
+
+  /* Theme: two 426px columns side by side down to 782px, each card capped
+     at 400px and centred in its column. */
+  .plans {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, var(--plan-column)));
+    justify-content: center;
+    align-items: start;
+    gap: var(--space-md);
+
+    /* Stacked WordPress columns sit flush. */
+    @media (--md-down) {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+    }
+  }
+
+  .plan {
+    justify-self: center;
+    width: min(100%, var(--measure-plan));
+    padding: var(--space-sm);
+    border: var(--border-hairline) solid var(--color-grey-200);
+    border-radius: var(--radius-panel-l);
+    background-color: var(--color-grey-200);
+  }
+
+  .plan__head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--stack-s);
+    padding: var(--space-md);
+    border: var(--border-hairline) solid var(--color-grey-100);
+    border-radius: var(--radius-panel);
+    background-color: var(--color-grey-100);
+    text-align: center;
+  }
+
+  .plan h3 {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: var(--text-h3);
+    font-weight: var(--weight-bold);
+    line-height: 1;
+    text-transform: capitalize;
+  }
+
+  /* Theme: the price shrinks to its text and is centred; when it wraps on very
+     wide screens, "Monthly" drops to a left-aligned second line. */
+  .plan__price {
+    margin: 0;
+    font-size: var(--text-h2-sm);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-body);
+    text-align: start;
+  }
+
+  /* Theme: line-height 0.7 on the centred two-line price, so the gap under "from" stays tight. */
+  .plan__price--stacked {
+    line-height: 0.7; /* token-exempt: theme's stacked price */
+    text-align: center;
+  }
+
+  /* Bold at 18.66px or more, so the brighter purple passes large-text contrast. */
+  .plan__unit {
+    color: var(--color-purple);
+    font-size: var(--text-lead);
+    font-weight: var(--weight-bold);
+  }
+
+  .plan__features {
+    max-width: var(--grid-min-l);
+    margin: 0 auto;
+    padding: var(--stack-s) 0;
+    list-style: none;
+  }
+
+  .plan__features li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.3em;
+    padding: 0.5em;
+  }
+
+  .plan__features svg {
+    flex-shrink: 0;
+    transform: translateY(0.1em);
+  }
+</style>

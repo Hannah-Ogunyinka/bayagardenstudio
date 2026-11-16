@@ -1,0 +1,46 @@
+---
+/**
+ * Everything search engines and social networks read in <head>:
+ * title, description, canonical, robots, Open Graph, Twitter and JSON-LD.
+ */
+import { SITE } from '@config/site';
+import { absoluteUrl, buildJsonLd, buildTitle, type SeoInput } from '@lib/seo';
+
+type Props = SeoInput;
+
+const props = Astro.props;
+const pageTitle = buildTitle(props);
+const canonical = absoluteUrl(Astro.url.pathname);
+const robots = props.noindex
+  ? 'noindex, nofollow'
+  : 'index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large';
+const ogImage = props.image ? absoluteUrl(props.image) : undefined;
+const jsonLd = buildJsonLd({ ...props, url: Astro.url.pathname, pageTitle });
+---
+
+<title>{pageTitle}</title>
+{props.description && <meta name="description" content={props.description} />}
+<link rel="canonical" href={canonical} />
+<meta name="robots" content={robots} />
+
+<meta property="og:locale" content={SITE.locale} />
+<meta property="og:type" content={props.article ? 'article' : 'website'} />
+<meta property="og:title" content={pageTitle} />
+{props.description && <meta property="og:description" content={props.description} />}
+<meta property="og:url" content={canonical} />
+<meta property="og:site_name" content={SITE.name} />
+{ogImage && <meta property="og:image" content={ogImage} />}
+{
+  props.article && (
+    <>
+      <meta property="article:published_time" content={props.article.published.toISOString()} />
+      {props.article.modified && <meta property="article:modified_time" content={props.article.modified.toISOString()} />}
+    </>
+  )
+}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={pageTitle} />
+{props.description && <meta name="twitter:description" content={props.description} />}
+{ogImage && <meta name="twitter:image" content={ogImage} />}
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

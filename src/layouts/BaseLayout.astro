@@ -1,0 +1,45 @@
+---
+/**
+ * Page shell shared by every page: <head>, skip link, header, menu,
+ * floating nav, footer and newsletter band.
+ */
+import { Font } from 'astro:assets';
+import Seo from '@components/seo/Seo.astro';
+import SiteHeader from '@components/layout/SiteHeader.astro';
+import FloatingNav from '@components/layout/FloatingNav.astro';
+import SiteFooter from '@components/layout/SiteFooter.astro';
+import { SITE } from '@config/site';
+import type { SeoInput } from '@lib/seo';
+import '@styles/base.css';
+
+type Props = SeoInput & {
+  /** Hide the floating nav (e.g. on gallery or utility pages). */
+  floatingNav?: boolean;
+  /** Page background: the grey default, or white (as the theme's white-header templates). */
+  surface?: 'default' | 'raised';
+};
+
+const { floatingNav = true, surface = 'default', ...seo } = Astro.props;
+---
+
+<!doctype html>
+<html lang={SITE.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <Font cssVariable="--font-poppins" preload />
+    <Font cssVariable="--font-montserrat" />
+    <Seo {...seo} />
+  </head>
+  <body class:list={{ 'surface-raised': surface === 'raised' }}>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <SiteHeader />
+    <main id="main" tabindex="-1" data-inert-when-menu-open>
+      <slot />
+    </main>
+    {floatingNav && <FloatingNav />}
+    <SiteFooter />
+  </body>
+</html>

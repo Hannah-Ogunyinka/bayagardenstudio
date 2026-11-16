@@ -1,0 +1,32 @@
+/* Long-form article and project text. Applied with class="prose". */
+.prose {
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+}
+
+.prose h2 {
+  margin-top: 1.4em;
+  font-family: var(--font-heading);
+  font-size: var(--text-lead);
+  font-weight: var(--weight-bold);
+  text-transform: none;
+}
+
+.prose h3 {
+  margin-top: 1.2em;
+  font-size: var(--text-ui);
+  font-weight: var(--weight-semibold);
+}
+
+.prose li {
+  margin-bottom: 1em;
+}
+
+.prose a {
+  color: var(--color-accent-strong);
+}
+
+.prose img {
+  width: 100%;
+  margin-block: var(--space-md);
+}

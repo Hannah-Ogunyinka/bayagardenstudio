@@ -1,0 +1,127 @@
+---
+/**
+ * Sticky-feeling top bar: logo, site title, primary call to action and Menu button.
+ * The menu overlay itself is rendered by MenuOverlay.astro.
+ */
+import Button from '@components/ui/Button.astro';
+import MenuOverlay from './MenuOverlay.astro';
+import LogoMark from '@assets/icons/logo-mark.svg';
+import { SITE } from '@config/site';
+
+const isHome = Astro.url.pathname === '/';
+---
+
+<MenuOverlay />
+
+<header class="site-header" data-inert-when-menu-open>
+  <div class="site-header__inner">
+    <a href="/" class="site-header__brand" aria-current={isHome ? 'page' : undefined}>
+      <LogoMark class="site-header__logo" aria-hidden="true" width={50} height={50} />
+      <span class="site-header__title hide-mobile">{SITE.name}</span>
+      <span class="sr-only">{SITE.name} home</span>
+    </a>
+
+    <div class="site-header__actions">
+      <Button href="/contact/" variant="fill" arrow class="hide-mobile hide-tablet">Start your project today</Button>
+      <button
+        type="button"
+        class="site-header__menu-button"
+        aria-expanded="false"
+        aria-controls="site-menu"
+        data-menu-open
+      >
+        Menu
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  import { initMenu } from '../../scripts/menu';
+  initMenu();
+</script>
+
+<style>
+  .site-header {
+    position: relative;
+    z-index: var(--z-header);
+    padding: var(--space-sm) var(--space-md);
+    backdrop-filter: var(--glass-blur);
+  }
+
+  .site-header__inner {
+    display: flex;
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-xs);
+  }
+
+  .site-header__brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .site-header__logo {
+    width: var(--logo-size);
+    height: var(--logo-size);
+  }
+
+  .site-header__title {
+    font-family: var(--font-heading);
+    font-size: var(--text-logo);
+    font-weight: 600;
+  }
+
+  /* When both the visible title and sr-only text exist, avoid announcing the name twice. */
+  .site-header__title + .sr-only {
+    display: none;
+  }
+
+  @media (--sm-down) {
+    .site-header__title + .sr-only {
+      display: initial;
+    }
+  }
+
+  .site-header__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  .site-header__menu-button {
+    padding: 1.2em 2.8em;
+    border: var(--border-thin) solid var(--color-purple);
+    border-radius: var(--radius-button);
+    background-color: var(--color-glass);
+    backdrop-filter: var(--glass-blur);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: var(--text-small);
+    font-weight: 500;
+    letter-spacing: var(--tracking-caps);
+    line-height: var(--leading-body);
+    text-transform: uppercase;
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease-in-out,
+      color 0.2s ease-in-out;
+  }
+
+  /* The theme's outline buttons slim down on small phones. */
+  @media (--xs-down) {
+    .site-header__menu-button {
+      padding: 0.8em 2.4em;
+    }
+  }
+
+  .site-header__menu-button:hover {
+    background-color: var(--color-purple);
+    color: var(--color-white);
+  }
+</style>

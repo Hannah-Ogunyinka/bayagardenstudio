@@ -1,0 +1,336 @@
+---
+/**
+ * Single article. Mirrors the theme's single.html template: a grey header
+ * (back link, title 55% / summary 35%, category and date), a full-width
+ * featured image, then a white body in 25/50/25 columns with the table of
+ * contents on the left and the author box centred below.
+ */
+import { Image } from 'astro:assets';
+import type { MarkdownHeading } from 'astro';
+import BaseLayout from './BaseLayout.astro';
+import CategoryTag from '@components/posts/CategoryTag.astro';
+import TableOfContents from '@components/posts/TableOfContents.astro';
+import AuthorBox from '@components/posts/AuthorBox.astro';
+import BackLink from '@components/ui/BackLink.astro';
+import { formatDate, type Post } from '@lib/content';
+
+interface Props {
+  post: Post;
+  headings: MarkdownHeading[];
+}
+
+const { post, headings } = Astro.props;
+const { title, description, summary, published, updated, categories, image, template, toc } = post.data;
+const isText = template === 'text';
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  image={image.src.src}
+  surface={isText ? 'raised' : 'default'}
+  article={{ type: 'BlogPosting', published, modified: updated, section: categories[0] }}
+>
+  <article class:list={['post', `post--${template}`]}>
+    <header class="post__header">
+      <div class="post__header-inner">
+      <div class="post__back">
+          <BackLink href="/insights/" weight={isText ? 'medium' : 'semibold'}>Back to Articles</BackLink>
+        </div>
+      <div class="post__intro">
+        <h1>{title}</h1>
+        {summary && <p class="post__summary">{summary}</p>}
+      </div>
+      <div class="post__meta">
+        {categories.map((category) => <CategoryTag name={category} />)}
+        <p><span class="post__posted">Posted on:</span> <time datetime={published.toISOString()}>{formatDate(published)}</time></p>
+      </div>
+      </div>
+    </header>
+
+    {
+      !isText && (
+        <Image
+          src={image.src}
+          alt={image.alt}
+          layout="full-width"
+          loading="eager"
+          fetchpriority="high"
+          class="post__image"
+        />
+      )
+    }
+
+    <div class="post__body">
+      <div class="post__aside">
+        {toc && <TableOfContents headings={headings} variant={isText ? 'box' : 'plugin'} />}
+      </div>
+      <div class="post__content">
+        <slot />
+      </div>
+    </div>
+    <div class="post__author">
+      <AuthorBox />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  /* Above 1920px the theme keeps the whole article in a centred 1920px frame. */
+  .post {
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    background-color: var(--color-surface-raised);
+  }
+
+  .post__header {
+    padding: var(--space-md) var(--space-md) var(--space-md);
+    background-color: var(--color-bg);
+  }
+
+  .post__back {
+    margin-bottom: var(--space-sm);
+  }
+
+  /* Theme columns 55% / 10% / 35%, stacking below 782px. */
+  .post__intro {
+    display: grid;
+    grid-template-columns: 55% 1fr 35%;
+    align-items: start;
+
+    @media (--md-down) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  h1 {
+    margin: 0 0 var(--space-sm);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-heading);
+    text-transform: capitalize;
+  }
+
+  .post__summary {
+    grid-column: 3;
+    margin: 0 0 var(--space-md);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: var(--text-post-summary);
+    font-weight: var(--weight-medium);
+
+    @media (--md-down) {
+      grid-column: 1;
+    }
+  }
+
+  .post__meta :global(.category-tag) {
+    margin-bottom: var(--space-sm);
+
+    @media (--md-down) {
+      margin-top: var(--space-sm);
+    }
+  }
+
+  .post__meta p {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3em;
+    align-items: center;
+    margin: 0;
+    font-family: var(--font-heading);
+  }
+
+  .post__posted {
+    font-weight: var(--weight-medium);
+  }
+
+  .post__image {
+    width: 100%;
+    margin-bottom: var(--space-md);
+    aspect-ratio: 16 / 7;
+    object-fit: cover;
+    object-position: top;
+
+    @media (--md-down) {
+      aspect-ratio: 4 / 3;
+    }
+  }
+
+  /* Content wrapper capped at 1440px, then 25/50/25 columns. */
+  .post__body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) minmax(0, 1fr);
+    gap: var(--space-md);
+    box-sizing: content-box;
+    max-width: var(--container-post);
+    margin-inline: auto;
+    padding-inline: var(--space-md);
+
+    @media (--md-down) {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+    }
+  }
+
+  .post__aside {
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-self: start;
+    justify-content: center;
+    padding-top: var(--space-sm);
+
+    @media (--md-down) {
+      position: static;
+    }
+  }
+
+  /* Article text: the theme's flow layout with a small block gap. */
+  .post__content {
+    color: var(--color-black);
+    line-height: var(--leading-body);
+  }
+
+  .post__content > :global(*) {
+    margin-block: var(--space-sm) 0;
+  }
+
+  .post__content > :global(:first-child) {
+    margin-top: 0;
+  }
+
+  .post__content :global(:is(h2, h3)) {
+    color: inherit;
+  }
+
+  .post__content :global(h2) {
+    margin-bottom: var(--space-sm);
+    font-family: var(--font-heading);
+    font-size: var(--text-h3);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-normal);
+    text-transform: none;
+  }
+
+  .post__content :global(h3) {
+    margin-bottom: var(--space-sm);
+    font-family: var(--font-heading);
+    font-size: var(--text-lead);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-body);
+    text-transform: none;
+  }
+
+  .post__content :global(:is(ul, ol)) {
+    margin-bottom: var(--space-sm);
+    padding-left: 2em;
+  }
+
+  .post__content :global(li) {
+    margin-bottom: 1em;
+  }
+
+  .post__content :global(strong) {
+    font-weight: var(--weight-semibold);
+  }
+
+  .post__content :global(a) {
+    color: var(--color-text);
+    font-weight: var(--weight-semibold);
+  }
+
+  .post__content :global(a:hover) {
+    color: var(--color-purple-dark);
+  }
+
+  .post__content :global(pre) {
+    padding: var(--space-sm) 0 var(--space-sm) var(--space-sm);
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: var(--text-code);
+    line-height: var(--leading-normal);
+  }
+
+  .post__content :global(pre code) {
+    font-family: inherit;
+  }
+
+  .post__content :global(img) {
+    width: 100%;
+    height: auto;
+  }
+
+  /* ---- Text template (theme "single post without featured image") ----
+     White page; the header sits in the middle of 25% / 55% / 20% columns. */
+  .post--text .post__header {
+    display: grid;
+    grid-template-columns: 25% 55% 20%;
+    padding: var(--space-md) 0 0;
+    background-color: transparent;
+
+    @media (--md-down) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  .post--text .post__header-inner {
+    grid-column: 2;
+    padding-inline: var(--space-md);
+
+    @media (--md-down) {
+      grid-column: 1;
+    }
+  }
+
+  .post--text .post__intro {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .post--text h1 {
+    margin-block: 0 var(--space-sm);
+    line-height: var(--leading-snug);
+    text-transform: none;
+  }
+
+  .post--text .post__summary {
+    grid-column: 1;
+    margin-bottom: var(--space-sm);
+    line-height: var(--leading-normal);
+  }
+
+  .post--text .post__meta {
+    margin-block: var(--space-sm);
+    padding: 0.6em 0 0.4em;
+  }
+
+  .post--text .post__meta :global(.category-tag) {
+    margin-top: 0;
+  }
+
+  .post--text .post__meta p {
+    gap: var(--space-sm);
+    padding-left: 0.6em;
+  }
+
+  .post--text .post__posted {
+    line-height: var(--leading-none);
+  }
+
+  /* This template's content wrapper isn't capped at 1440px. */
+  .post--text .post__body {
+    max-width: none;
+    padding-top: var(--space-sm);
+  }
+
+  .post--text .post__author {
+    padding-bottom: var(--space-lg);
+  }
+
+  /* Author box: centred, one third of the content wrapper. */
+  .post__author {
+    box-sizing: content-box;
+    max-width: var(--container-post);
+    margin-inline: auto;
+    padding: 0 var(--space-md) var(--space-2xl);
+  }
+</style>

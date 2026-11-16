@@ -1,0 +1,48 @@
+---
+/** "Back to Articles" style link with the theme's purple arrow. */
+interface Props {
+  href: string;
+  /** The theme uses semibold on featured-image posts and medium elsewhere. */
+  weight?: 'medium' | 'semibold';
+}
+
+const { href, weight = 'medium' } = Astro.props;
+---
+
+<a class:list={['back-link', `back-link--${weight}`]} href={href}>
+  <svg class="back-link__icon" viewBox="0 0 512 512" aria-hidden="true">
+    <path d="M244 400 100 256l144-144M120 256h292"></path>
+  </svg>
+  <slot />
+</a>
+
+<style>
+  .back-link {
+    display: flex;
+    width: fit-content;
+    gap: var(--space-sm);
+    align-items: center;
+    color: var(--color-grey-500);
+    font-family: var(--font-body);
+    font-weight: var(--weight-medium);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .back-link--semibold {
+    font-weight: var(--weight-semibold);
+  }
+
+  .back-link:hover {
+    color: var(--color-purple-dark);
+  }
+
+  .back-link__icon {
+    width: var(--icon-back);
+    height: var(--icon-back);
+    fill: none;
+    stroke: var(--color-accent);
+    stroke-linecap: square;
+    stroke-width: 48;
+  }
+</style>

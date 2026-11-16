@@ -1,0 +1,203 @@
+---
+/**
+ * Footer plus the newsletter band that sits behind it.
+ * The band is `position: sticky; bottom: 0` underneath the footer, so it is
+ * revealed as the footer scrolls up and away.
+ */
+import { Image } from 'astro:assets';
+import Badge from '@assets/icons/badge-strategically-crafted.svg';
+import newsletterPhone from '@assets/images/shared/newsletter-phone.webp';
+import NewsletterForm from '@components/forms/NewsletterForm.astro';
+import { FOOTER_LINKS, SITE } from '@config/site';
+
+const year = new Date().getFullYear();
+const columns = [
+  { title: 'Quick links', links: FOOTER_LINKS.quick },
+  { title: 'Connect', links: FOOTER_LINKS.connect },
+  { title: 'Legal', links: FOOTER_LINKS.legal },
+] as const;
+---
+
+<footer class="site-footer" data-inert-when-menu-open>
+  <div class="site-footer__inner">
+    <p class="site-footer__strap" aria-hidden="true"><span>Create</span><span>Code</span><span>Connect</span></p>
+
+    <div class="site-footer__main">
+      <div class="site-footer__badge">
+        <Badge role="img" aria-label="Strategically crafted for growth, designed to engage" width={200} height={200} />
+      </div>
+
+      {
+        columns.map((column) => (
+          <nav class="site-footer__column" aria-labelledby={`footer-${column.title.toLowerCase().replace(' ', '-')}`}>
+            <h2 id={`footer-${column.title.toLowerCase().replace(' ', '-')}`}>{column.title}</h2>
+            <ul role="list">
+              {column.links.map((link) => {
+                const external = link.href.startsWith('http');
+                return (
+                  <li>
+                    <a href={link.href} {...(external && { target: '_blank', rel: 'noopener noreferrer' })}>
+                      {link.label}
+                      {external && <span class="sr-only"> (opens in a new tab)</span>}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+        ))
+      }
+    </div>
+
+    <p class="site-footer__legal">© {year} | {SITE.name}</p>
+  </div>
+</footer>
+
+<section class="newsletter-band" aria-labelledby="newsletter-band-title" data-inert-when-menu-open>
+  <div class="newsletter-band__inner">
+    <div class="newsletter-band__image">
+      <Image src={newsletterPhone} alt="" width={506} loading="lazy" />
+    </div>
+    <div class="newsletter-band__content">
+      <h2 id="newsletter-band-title">Subscribe today for valuable tips on running your digital empire</h2>
+      <NewsletterForm id="footer-newsletter" layout="inline" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .site-footer {
+    position: relative;
+    z-index: 10;
+    padding: var(--space-sm) var(--space-md);
+    background-color: var(--color-grey-50);
+    box-shadow: var(--shadow-footer);
+    font-family: var(--font-body);
+  }
+
+  .site-footer__inner {
+    max-width: var(--container-wide);
+    margin-inline: auto;
+  }
+
+  .site-footer__strap {
+    display: flex;
+    gap: var(--space-lg);
+    margin: 0 0 var(--space-md);
+    padding-block: 0.3em;
+    border-block: var(--border-hairline) solid var(--color-text);
+    text-transform: uppercase;
+  }
+
+  .site-footer__main {
+    display: grid;
+    grid-template-columns: 55% repeat(3, 1fr);
+    align-items: center;
+    margin-bottom: var(--space-md);
+
+    @media (--lg-down) {
+      grid-template-columns: repeat(3, 1fr);
+      row-gap: var(--space-md);
+    }
+
+    @media (--sm-down) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .site-footer__badge {
+    :global(svg) {
+      width: var(--badge-size);
+      height: auto;
+    }
+
+    @media (--lg-down) {
+      display: flex;
+      grid-column: 1 / -1;
+      justify-content: center;
+    }
+  }
+
+  .site-footer__column {
+    align-self: start;
+    text-align: center;
+  }
+
+  .site-footer__column h2 {
+    margin-bottom: var(--stack-s);
+    font-family: var(--font-body);
+    font-size: var(--text-ui);
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .site-footer__column ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .site-footer__column li {
+    margin-bottom: 0.7em;
+    font-family: var(--font-heading);
+    font-size: var(--text-ui);
+  }
+
+  .site-footer__column a {
+    color: var(--color-text);
+    font-weight: var(--weight-light);
+  }
+
+  .site-footer__column a:hover {
+    color: var(--color-purple);
+  }
+
+  .site-footer__legal {
+    margin: 0;
+    padding-block: 0.3em;
+    border-block: var(--border-hairline) solid var(--color-text);
+    text-transform: uppercase;
+  }
+
+  .newsletter-band {
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+    padding: var(--space-xl) var(--space-md) 0;
+    background-color: var(--color-text);
+    font-family: var(--font-body);
+  }
+
+  .newsletter-band__inner {
+    display: flex;
+    max-width: var(--container-l);
+    max-height: var(--thumb-max-height);
+    margin-inline: auto;
+    gap: var(--space-md);
+    overflow-y: clip;
+
+    @media (--md-down) {
+      flex-direction: column;
+      max-height: none;
+    }
+  }
+
+  .newsletter-band__image {
+    flex: 0 0 40%;
+  }
+
+  .newsletter-band__content {
+    flex: 1 1 60%;
+    padding-bottom: var(--space-md);
+  }
+
+  .newsletter-band h2 {
+    margin-bottom: var(--space-sm);
+    color: var(--color-white);
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    font-weight: 400;
+    line-height: 1.7;
+    text-transform: none;
+  }
+</style>

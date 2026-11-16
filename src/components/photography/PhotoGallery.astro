@@ -1,0 +1,207 @@
+---
+/**
+ * Filterable masonry gallery with a lightbox.
+ * - Without JavaScript every photo shows and each links to a large version.
+ * - With JavaScript, the filter buttons show one category (Portraits first, as on
+ *   the live site) and photos open in a <dialog> with previous/next and Escape.
+ */
+import { Image, getImage } from 'astro:assets';
+import { GALLERY, PHOTO_CATEGORIES } from '@data/photography';
+import { MQ } from '@config/breakpoints';
+
+const photos = await Promise.all(
+  GALLERY.map(async (photo, index) => ({
+    ...photo,
+    index,
+    large: await getImage({ src: photo.image, width: 1200, format: 'webp', quality: 85 }),
+  })),
+);
+const defaultCategory = PHOTO_CATEGORIES[0];
+---
+
+<section class="gallery" aria-label="Photography portfolio" data-gallery data-default={defaultCategory}>
+  <div class="gallery__filters" role="group" aria-label="Filter photos" hidden data-filters>
+    {
+      PHOTO_CATEGORIES.map((category) => (
+        <button type="button" data-filter={category} aria-pressed={category === defaultCategory ? 'true' : 'false'}>
+          {category}
+        </button>
+      ))
+    }
+  </div>
+  <p class="sr-only" role="status" data-gallery-status></p>
+
+  <ul class="gallery__grid" role="list">
+    {
+      photos.map(({ image, alt, category, index, large }) => (
+        <li data-category={category}>
+          <a href={large.src} data-index={index} aria-label={alt ? `View larger: ${alt}` : `View photo ${index + 1} larger`}>
+            <Image src={image} alt={alt} widths={[300, 480, 640]} sizes={`${MQ.smDown} 50vw, 33vw`} />
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+
+  <dialog class="lightbox" aria-label="Photo viewer" data-lightbox>
+    <img class="lightbox__image" alt="" data-lightbox-image />
+    <button type="button" class="lightbox__btn lightbox__close" data-close aria-label="Close">×</button>
+    <button type="button" class="lightbox__btn lightbox__prev" data-step="-1" aria-label="Previous photo">‹</button>
+    <button type="button" class="lightbox__btn lightbox__next" data-step="1" aria-label="Next photo">›</button>
+  </dialog>
+</section>
+
+<script>
+  import { initGallery } from '../../scripts/gallery';
+
+  document.querySelectorAll<HTMLElement>('[data-gallery]').forEach(initGallery);
+</script>
+
+<style>
+  .gallery {
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    padding: calc(2 * var(--space-md)) calc(var(--space-md) + var(--gallery-gutter) / 2) var(--space-md);
+  }
+
+  .gallery__filters {
+    display: flex;
+    justify-content: center;
+    gap: 0.625rem; /* token-exempt: live filter spacing (10px) */
+    margin-bottom: calc(1.25rem + var(--gallery-gutter) / 2); /* token-exempt: live 20px plus the tile inset */
+  }
+
+  .gallery__filters[hidden] {
+    display: none;
+  }
+
+  .gallery__filters button {
+    padding: 0.3125rem 0.625rem; /* token-exempt: live filter padding (5px 10px) */
+    border: 0;
+    border-radius: var(--radius-xs);
+    background-color: var(--color-grey-75);
+    color: var(--color-grey-600);
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 0.8125rem; /* token-exempt: live filter size (13px) */
+    line-height: 1.8;
+    letter-spacing: 0.0625rem; /* token-exempt: live 1px tracking */
+    text-transform: uppercase;
+  }
+
+  .gallery__filters button[aria-pressed='true'] {
+    background-color: var(--color-violet);
+    color: var(--color-white);
+  }
+
+  /* CSS columns give the masonry look and reflow when a filter hides photos. */
+  .gallery__grid {
+    margin: 0;
+    padding: 0;
+    columns: 3;
+    column-gap: var(--gallery-gutter);
+    list-style: none;
+
+    @media (--sm-down) {
+      columns: 2;
+    }
+  }
+
+  /* With JavaScript the photos fill row by row, like the live masonry; each tile spans rows to its height. */
+  .gallery__grid.is-masonry {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 1px; /* token-exempt: masonry row unit */
+    column-gap: var(--gallery-gutter);
+    columns: auto;
+
+    @media (--sm-down) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .gallery__grid.is-masonry li {
+    margin-bottom: 0;
+  }
+
+  .gallery__grid li {
+    margin-bottom: var(--gallery-gutter);
+    break-inside: avoid;
+  }
+
+  .gallery__grid li[hidden] {
+    display: none;
+  }
+
+  .gallery__grid a {
+    display: block;
+  }
+
+  .gallery__grid img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .lightbox {
+    width: 100vw;
+    max-width: none;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: var(--color-scrim-strong);
+  }
+
+  .lightbox::backdrop {
+    background: transparent;
+  }
+
+  .lightbox[open] {
+    display: grid;
+    place-items: center;
+  }
+
+  .lightbox__image {
+    max-width: calc(100vw - 2 * var(--tap-min) - var(--space-md));
+    max-height: calc(100dvh - 2 * var(--space-lg));
+    object-fit: contain;
+  }
+
+  .lightbox__btn {
+    position: absolute;
+    width: var(--tap-min);
+    height: var(--tap-min);
+    border: 0;
+    border-radius: 50%;
+    background: var(--color-on-scrim);
+    color: var(--color-white);
+    cursor: pointer;
+    font-size: var(--text-h3);
+    line-height: 1;
+  }
+
+  .lightbox__btn:hover {
+    background: var(--color-on-scrim-hover);
+  }
+
+  .lightbox__close {
+    top: var(--space-xs);
+    right: var(--space-sm);
+  }
+
+  .lightbox__prev,
+  .lightbox__next {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .lightbox__prev {
+    left: var(--space-2xs);
+  }
+
+  .lightbox__next {
+    right: var(--space-2xs);
+  }
+</style>

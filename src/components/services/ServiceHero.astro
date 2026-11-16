@@ -1,0 +1,121 @@
+---
+/**
+ * Header shared by the Build, Support, Grow and Projects pages: a purple eyebrow
+ * between rules, the service name set very large, then the intro line.
+ * An optional "action" slot (e.g. a "View prices" button) sits to the right.
+ */
+interface Props {
+  eyebrow: string;
+  title: string;
+  intro: string;
+  /** "small" for the Support page, whose title is a step smaller on the live site. */
+  size?: 'large' | 'small';
+  /** Adds a rule under the intro, as on the Projects page. */
+  ruled?: boolean;
+  /** "wide" lets the intro run to about 24em (480px), as on the Projects page. */
+  introWidth?: 'default' | 'wide';
+}
+
+const { eyebrow, title, intro, size = 'large', ruled = false, introWidth = 'default' } = Astro.props;
+const hasAction = Astro.slots.has('action');
+---
+
+<header class="service-hero">
+  <p class="service-hero__eyebrow">{eyebrow}</p>
+  <h1 class:list={[`service-hero__title--${size}`, { 'service-hero__title--spaced': hasAction }]}>{title}</h1>
+  <div class:list={['service-hero__foot', { 'service-hero__foot--action': hasAction, 'service-hero__foot--ruled': ruled }]}>
+    <p class:list={['service-hero__intro', { 'service-hero__intro--wide': introWidth === 'wide' }]}>{intro}</p>
+    {hasAction && <div class="service-hero__action"><slot name="action" /></div>}
+  </div>
+</header>
+
+<style>
+  .service-hero {
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    padding-inline: var(--space-md);
+  }
+
+  /* Kept at 24px or more so the brighter purple passes large-text contrast. */
+  .service-hero__eyebrow {
+    margin: 0;
+    padding-block: var(--space-md) var(--space-sm);
+    border-top: var(--border-hairline) solid var(--color-grey-400);
+    border-bottom: var(--border-hairline) solid var(--color-grey-400);
+    color: var(--color-purple);
+    font-family: var(--font-body);
+    font-size: max(var(--text-large-min), var(--text-lead));
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-snug);
+    text-transform: uppercase;
+  }
+
+  h1 {
+    margin: 0;
+    padding-block: var(--space-sm);
+    font-size: var(--text-display);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-heading);
+    text-align: center;
+    text-transform: capitalize;
+  }
+
+  .service-hero__title--small {
+    font-size: var(--text-display-sm);
+  }
+
+  /* With an action row (Support), the theme's title keeps its block gap below. */
+  .service-hero__title--spaced {
+    margin-bottom: var(--space-sm);
+  }
+
+  .service-hero__intro.service-hero__intro--wide {
+    max-width: var(--measure-m); /* 480px */
+  }
+
+  .service-hero__foot--ruled {
+    border-bottom: var(--border-hairline) solid var(--color-grey-400);
+  }
+
+  .service-hero__foot {
+    display: grid;
+    grid-template-columns: 1fr;
+    border-top: var(--border-hairline) solid var(--color-grey-400);
+  }
+
+  .service-hero__intro {
+    max-width: var(--measure-hero-intro);
+    margin: 0;
+    padding-block: var(--space-md);
+    font-size: var(--text-body);
+    line-height: var(--leading-relaxed);
+  }
+
+  .service-hero__foot--action {
+    grid-template-columns: 1fr 20% 10%;
+    border-bottom: var(--border-hairline) solid var(--color-grey-400);
+
+    @media (--md-down) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Stacked, the theme keeps an empty, padded action cell under the intro. */
+  .service-hero__foot:not(.service-hero__foot--action) {
+    @media (--md-down) {
+      padding-bottom: calc(2 * var(--space-sm));
+    }
+  }
+
+  .service-hero__foot--action .service-hero__intro {
+    padding-block: var(--space-sm);
+  }
+
+  /* As on the live site, the button sits at the bottom left of its ruled cell. */
+  .service-hero__action {
+    display: flex;
+    align-items: flex-end;
+    padding: var(--space-sm) var(--space-sm) var(--space-sm) 0;
+    border-right: var(--border-hairline) solid var(--color-grey-400);
+  }
+</style>

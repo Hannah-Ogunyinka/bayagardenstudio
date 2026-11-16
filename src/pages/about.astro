@@ -1,0 +1,264 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import fallingCameras from '@assets/images/about/falling-cameras.webp';
+import workshop from '@assets/images/about/workshop-laptop.jpg';
+import hannahCamera from '@assets/images/about/hannah-with-camera.jpg';
+import jumping from '@assets/images/about/jumping-off-sofa.webp';
+import signature from '@assets/images/about/signature.png';
+import { MQ } from '@config/breakpoints';
+---
+
+<BaseLayout
+  title="About | Building effective online spaces for creators - Engage with your audience"
+  description="Baya Garden Studio aims to help you build an effective digital space that allows you to engage with your audience and automate your business online."
+>
+  <div class="about">
+    <header class="about__intro">
+      <h1>A <span class="accent">community</span> and <span class="accent">one stop shop</span> for the creative market pitching their tent in the digital world</h1>
+      <p class="about__lede">Baya Garden Studio will help your business become more visible, connect with your tribe and thrive online.</p>
+    </header>
+
+    <Image
+      src={fallingCameras}
+      alt="Hannah taking a self portrait with cameras falling around her"
+      layout="full-width"
+      loading="eager"
+      fetchpriority="high"
+      class="about__hero"
+    />
+
+    <div class="about__band">
+    <section aria-labelledby="began">
+      <h2 id="began" class="about__began-title">How it all began.</h2>
+      <div class="about__story">
+      <div class="about__began">
+        <p>I’ll never forget the first time I built a website.</p>
+        <p>
+          Back in 2015, I started an engineering workshop for children and with limited capital to fund the business, I
+          decided to build the website myself using Wix. I’ve always been quite creative and a problem solver, so after a
+          little research on the internet, I was able to build an online space in one night.
+        </p>
+      </div>
+      <Image src={workshop} alt="A child building a robot at a laptop in the engineering workshop" widths={[320, 480, 640]} sizes={`${MQ.mdDown} 50vw, 25vw`} class="about__photo about__photo--offset" />
+      <Image src={hannahCamera} alt="Hannah smiling and holding a camera with a flash" widths={[320, 480, 640]} sizes={`${MQ.mdDown} 50vw, 25vw`} class="about__photo" />
+      </div>
+    </section>
+
+    <div class="about__columns">
+      <p>
+        It served my business adequately for about a year but then the Wix platform was no longer the best fit for my
+        business needs (I will say that Wix has a much better offering today than what was on offer back then). I wanted
+        greater flexibility to build my website in the way that I envisioned it and the idea of owning my website and
+        having the ability to move it whenever I needed to became important to me which was how I was introduced to
+        Wordpress.
+      </p>
+      <p>
+        Over the years, my focus has shifted from building websites for myself to building digital spaces for other
+        businesses. Through running two businesses – an engineering children’s workshop and a photography business, I
+        learnt the importance of community, building trust and designing systems that allowed a business to thrive.
+      </p>
+    </div>
+
+    <section class="about__lean" aria-labelledby="lean">
+      <Image src={jumping} alt="A child leaping off a sofa mid-air, in black and white" widths={[480, 720, 1024]} sizes={`${MQ.mdDown} 100vw, 60vw`} />
+      <div>
+        <h2 id="lean">Lean business is the goal.</h2>
+        <p>
+          I’m passionate about lean businesses which means I believe that your business should free you from
+          overwhelming responsibilities that takes away from what matters to you most. This is why making your website
+          work harder for you is central to the Baya Garden Studio approach.
+        </p>
+      </div>
+    </section>
+
+    <div class="about__columns">
+      <div>
+        <p>
+          Armed with a comprehensive tech strategy, your space should be optimised to engage with your audience and
+          streamline your business processes.
+        </p>
+        <p>
+          I have learned a lot over the years about optimising businesses and I am obsessed about refining my strategies
+          and sharing the best tried and true approaches with you so that you don’t have to waste time starting from
+          scratch.
+        </p>
+      </div>
+      <div>
+        <p>
+          I love sharing best practices here at the Baya Garden Studio. Connect with me through my newsletter to receive
+          quick tips on what’s working today.
+        </p>
+        <Image src={signature} alt="Signed, Hannah Ogunyinka" width={300} class="about__signature" />
+      </div>
+    </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .about__intro {
+    display: grid;
+    grid-template-columns: 50% 15% 35%;
+    row-gap: var(--stack-s);
+    padding: var(--space-md);
+
+    @media (--md-down) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  h1 {
+    margin: 0 0 var(--stack-s);
+    font-size: var(--text-h2);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-snug);
+    text-transform: capitalize;
+  }
+
+  .accent {
+    color: var(--color-purple);
+  }
+
+  .about__lede {
+    grid-column: 3;
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--text-lead);
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-snug);
+
+    @media (--md-down) {
+      grid-column: auto;
+    }
+  }
+
+  .about__hero {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  /* Padding and gaps scale with the page width, as on the live site. */
+  .about__band {
+    display: flex;
+    padding: 6%;
+    flex-direction: column;
+    gap: 3vw; /* token-exempt: scales with the page, as on the live site */
+  }
+
+  .about p {
+    margin: 0;
+  }
+
+  .about p + p {
+    margin-top: var(--stack-s);
+  }
+
+  /* Paragraphs that are columns side by side take no stacking gap. */
+  .about__columns > p + p {
+    margin-top: 0;
+  }
+
+  h2 {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: var(--text-h2);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-normal);
+    text-transform: none;
+  }
+
+  /* Theme columns 33.38% / 33% / 33.62% with a 3vw gap; WordPress shrinks
+     them in proportion, which is what these fr values give. */
+  .about__story {
+    display: grid;
+    grid-template-columns: 33.38fr 33fr 33.62fr;
+    column-gap: 3vw;
+    align-items: start;
+
+    @media (--md-down) {
+      grid-template-columns: 1fr;
+      row-gap: var(--stack-s);
+    }
+  }
+
+  .about__began-title {
+    margin-bottom: calc(var(--space-lg) * 0.6);
+  }
+
+  .about__photo {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    border-radius: var(--radius-panel);
+  }
+
+  /* The theme drops the first photo by about 3vw. */
+  .about__photo--offset {
+    margin-top: 3vw;
+
+    @media (--md-down) {
+      margin-top: 0;
+    }
+  }
+
+  .about__columns {
+    display: grid;
+    width: 100%;
+    max-width: var(--container-about);
+    margin-inline: auto;
+    padding-block: var(--space-xl);
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+
+    @media (--md-down) {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+  }
+
+  /* Theme columns 69% / 33% with a 3vw gap, shrunk in proportion. */
+  .about__lean {
+    display: grid;
+    grid-template-columns: 69fr 33fr;
+    column-gap: 3vw;
+    align-items: center;
+
+    @media (--md-down) {
+      grid-template-columns: 1fr;
+    }
+
+    /* Never stretched past the photo's own 1024px, as on the live site;
+       only the text column is centred. */
+    :global(img) {
+      display: block;
+      align-self: start;
+      width: 100%;
+      max-width: var(--photo-lean-max);
+      height: auto;
+      aspect-ratio: 3 / 2;
+      object-fit: cover;
+      border-radius: var(--radius-panel);
+    }
+
+    /* Theme: the heading's small gap plus a 2vw block gap above the text. */
+    h2 {
+      margin-bottom: calc(var(--space-sm) + 2vw);
+      line-height: var(--leading-heading);
+    }
+  }
+
+  /* Theme: 407px wide at a 2.96 ratio, contained, one small gap below the text. */
+  .about__signature {
+    display: block;
+    width: min(100%, 25.4rem); /* token-exempt: signature artwork width */
+    height: auto;
+    aspect-ratio: 2.96; /* token-exempt: theme's signature box */
+    object-fit: contain;
+    margin: var(--space-sm) auto 0;
+  }
+</style>

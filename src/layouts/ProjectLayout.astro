@@ -1,0 +1,264 @@
+---
+/**
+ * Case study: title, tagline and services, hero image, optional client quote,
+ * then sections laid out with the heading on the left and text on the right.
+ */
+import { Image } from 'astro:assets';
+import BaseLayout from './BaseLayout.astro';
+import type { Project } from '@lib/content';
+import '@styles/prose.css';
+import { MQ } from '@config/breakpoints';
+import BackLink from '@components/ui/BackLink.astro';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const { title, description, tagline, taglineWidth, services, hero, quote, imageLayout, published, updated } = project.data;
+---
+
+<BaseLayout title={title} description={description} image={hero.src.src} article={{ published, modified: updated }}>
+  <article class="project">
+    <header class="project__header">
+      <div>
+        <div class="project__back">
+          <BackLink href="/projects/" weight="medium">Back to projects</BackLink>
+        </div>
+        <h1>{title}</h1>
+        <p class:list={['project__tagline', { 'project__tagline--wide': taglineWidth === 'wide' }]}>{tagline}</p>
+      </div>
+      <div>
+        <h2 class="sr-only">What we delivered</h2>
+        <ul class="project__services">{services.map((service) => <li>{service}</li>)}</ul>
+      </div>
+    </header>
+
+    <Image src={hero.src} alt={hero.alt} widths={[640, 960, 1440, Math.min(1920, hero.src.width)]} sizes={`${MQ.x2xlDown} 100vw, ${Math.min(1824, hero.src.width)}px`} loading="eager" fetchpriority="high" class="project__hero" />
+
+    <div class:list={['project__body', 'prose', `project__body--${imageLayout}`]}>
+      {quote && <blockquote class="project__quote"><p>{quote}</p></blockquote>}
+      <slot />
+    </div>
+  </article>
+</BaseLayout>
+
+<script>
+  // The showcase videos loop silently. Visitors who prefer reduced motion get them paused;
+  // everyone else can pause them with the native controls.
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll<HTMLVideoElement>('.project-video video').forEach((video) => {
+      video.removeAttribute('autoplay');
+      video.pause();
+    });
+  }
+</script>
+
+<style>
+  .project {
+    max-width: var(--container-wide);
+    margin-inline: auto;
+  }
+
+  .project__header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: var(--space-md);
+    padding: var(--space-md) var(--space-md) var(--stack-s);
+
+    /* Stacked WordPress columns sit flush. */
+    @media (--md-down) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .project__back {
+    margin-bottom: calc(2 * var(--stack-s));
+  }
+
+  h1 {
+    margin: 0 0 var(--stack-s);
+    font-size: var(--text-h2-alt);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-snug);
+    text-transform: none;
+  }
+
+  /* Bold and over 24px, so the brighter purple passes large-text contrast. */
+  .project__tagline {
+    max-width: 14.7em; /* token-exempt: theme tagline box, about 450px */
+    margin: 0;
+    color: var(--color-purple);
+    font-family: var(--font-body);
+    font-size: var(--text-h3);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-heading);
+  }
+
+  .project__tagline--wide {
+    max-width: var(--measure-intro);
+    line-height: var(--leading-snug);
+  }
+
+  .project__header > div:last-child {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+
+    @media (--md-down) {
+      justify-content: flex-start;
+    }
+  }
+
+  .project__services {
+    margin: 0;
+    padding: 0;
+    font-weight: var(--weight-semibold);
+    list-style: none;
+  }
+
+  /* Never stretched past the photo's own width; it stays on the left. */
+  .project__hero {
+    display: block;
+    width: auto;
+    max-width: calc(100% - 2 * var(--space-md));
+    height: auto;
+    margin: calc(2 * var(--stack-s)) var(--space-md) calc(var(--space-md) + var(--stack-s));
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  /*
+   * Case study body: headings (and the client quote) in the left column, text in
+   * the right, with a wide gutter. Photo rows span both columns.
+   */
+  .project__body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: calc(3 * var(--space-md));
+    align-items: start;
+    padding: var(--space-md);
+
+    @media (--md-down) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .project__body > :global(*) {
+    grid-column: 2;
+    margin: 0 0 var(--stack-s);
+
+    @media (--md-down) {
+      grid-column: 1;
+    }
+  }
+
+  .project__body > :global(h2) {
+    grid-column: 1;
+    max-width: 6.8em;
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: var(--text-h2);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-heading);
+    text-transform: capitalize;
+
+    /* Stacked, the heading sits right on its text, as in the theme. */
+    @media (--md-down) {
+      max-width: none;
+    }
+  }
+
+  /* Photo rows span both columns, with a section's padding above and below. */
+  .project__body > :global(p:has(> img)),
+  .project__body > :global(.project-video) {
+    grid-column: 1 / -1;
+    margin-block: var(--space-md) calc(var(--space-md) + var(--stack-s));
+  }
+
+  .project__body :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0;
+  }
+
+  /* A lone image sits centred at a comfortable width. */
+  .project__body > :global(p:has(> img:only-child)) {
+    max-width: var(--measure-xl);
+    justify-self: center;
+  }
+
+  /* Lone images on 'bleed' case studies run edge to edge as a banner. */
+  .project__body--bleed > :global(p:has(> img:only-child)) {
+    width: 100vw;
+    max-width: none;
+    margin-inline: calc(50% - 50vw);
+  }
+
+  .project__body--bleed > :global(p > img:only-child) {
+    aspect-ratio: var(--ratio-banner);
+    object-fit: cover;
+  }
+
+  /* Two images side by side: narrow and wide, each at its own shape. */
+  .project__body > :global(p:has(> img + img):not(:has(> img ~ img ~ img))) {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    align-items: start;
+    gap: var(--space-md);
+
+    @media (--sm-down) {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+  }
+
+  /* Three or more images: the theme's grid with a 38rem minimum column, so
+     they pair up only on wide screens, with 0.7em corners. */
+  .project__body > :global(p:has(> img ~ img ~ img)) {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(var(--grid-min-photo), 100%), 1fr));
+    gap: var(--space-sm);
+    /* The theme's bento section adds its own x-large padding. */
+    margin-block: calc(var(--space-md) + var(--space-xl)) calc(var(--space-md) + var(--space-xl) + var(--stack-s));
+  }
+
+  .project__body > :global(p:has(> img ~ img ~ img) > img) {
+    border-radius: 0.7em;
+  }
+
+  /* The client quote sits beside the whole introduction, as on the live site. */
+  .project__body > .project__quote {
+    grid-column: 1;
+    grid-row: span 4;
+    align-self: center;
+    margin: 0;
+
+    @media (--md-down) {
+      grid-row: auto;
+    }
+  }
+
+  .project__quote p {
+    max-width: 11em;
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: var(--text-h2-sm);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-heading);
+    text-transform: capitalize;
+  }
+
+  .project__body :global(.project-video) {
+    margin-inline: 0;
+  }
+
+  .project__body :global(.project-video video) {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+</style>

@@ -1,0 +1,83 @@
+---
+import { Image } from 'astro:assets';
+import CategoryTag from '@components/posts/CategoryTag.astro';
+import { getPosts, postUrl } from '@lib/content';
+import { MQ } from '@config/breakpoints';
+
+const [post] = await getPosts();
+---
+
+{
+  post && (
+    <section class="featured" aria-labelledby="featured-title">
+      <h2 id="featured-title" class="featured__eyebrow eyebrow">Featured post</h2>
+      <article class="featured__card">
+        <div class="featured__text">
+          {post.data.categories[0] && <CategoryTag name={post.data.categories[0]} />}
+          <h3>
+            <a href={postUrl(post)}>{post.data.title}</a>
+          </h3>
+        </div>
+        {/* Image repeats the title link for mouse users; hidden from keyboards and screen readers so the link is announced once. */}
+        <a href={postUrl(post)} class="featured__media" tabindex="-1" aria-hidden="true">
+          <Image src={post.data.image.src} alt="" widths={[480, 800, 1200]} sizes={`${MQ.mdDown} 100vw, 55vw`} />
+        </a>
+      </article>
+    </section>
+  )
+}
+
+<style>
+  .featured {
+    padding: 0 var(--inset-band);
+  }
+
+  .featured__eyebrow {
+    margin-bottom: var(--space-md);
+    padding-block: var(--space-sm);
+    border-block: var(--border-hairline) solid var(--color-grey-200);
+  }
+
+  .featured__card {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    gap: var(--space-md);
+    /* The theme's columns block adds 1.75em below itself on wider screens. */
+    margin-bottom: calc(var(--space-lg) + 1.75em);
+
+    @media (--md-down) {
+      grid-template-columns: 1fr;
+      margin-bottom: var(--space-lg);
+    }
+  }
+
+  h3 {
+    margin: var(--space-sm) 0 0;
+    font-family: var(--font-heading);
+    font-size: var(--text-h2-sm);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-heading);
+    text-transform: capitalize;
+  }
+
+  h3 a {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  h3 a:hover,
+  .featured__card:has(.featured__media:hover) h3 a {
+    color: var(--color-purple);
+  }
+
+  .featured__media {
+    display: block;
+  }
+
+  .featured__card :global(img) {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: var(--radius-m);
+  }
+</style>

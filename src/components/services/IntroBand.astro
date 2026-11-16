@@ -1,0 +1,68 @@
+---
+/** Dark full-width band with a framed product image beside the service introduction. */
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { MQ } from '@config/breakpoints';
+
+interface Props {
+  image: ImageMetadata;
+  /** "line" leaves a full blank line between paragraphs instead of the usual block gap. */
+  paragraphGap?: 'block' | 'line';
+}
+
+const { image, paragraphGap = 'block' } = Astro.props;
+---
+
+<section class="intro-band" aria-label="Introduction">
+  <div class="intro-band__inner">
+    <Image src={image} alt="" widths={[480, 768, 1024]} sizes={`${MQ.mdDown} 100vw, 45vw`} loading="eager" />
+    <div class:list={['intro-band__text', { 'intro-band__text--line': paragraphGap === 'line' }]}><slot /></div>
+  </div>
+</section>
+
+<style>
+  .intro-band {
+    padding: var(--space-3xl) var(--space-md);
+    background-color: var(--color-grey-800);
+    color: var(--color-white);
+  }
+
+  .intro-band__inner {
+    display: grid;
+    max-width: var(--container-content);
+    margin-inline: auto;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: var(--space-md);
+
+    /* Stacked, the theme's columns sit edge to edge. */
+    @media (--md-down) {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+  }
+
+  .intro-band img {
+    width: 100%;
+    height: auto;
+    border-radius: 0;
+  }
+
+  .intro-band__text {
+    padding-block: var(--space-md);
+  }
+
+  .intro-band__text :global(p) {
+    max-width: var(--measure-band);
+    margin: 0 auto;
+    color: inherit;
+  }
+
+  .intro-band__text :global(p + p) {
+    margin-top: var(--stack-s);
+  }
+
+  .intro-band__text--line :global(p + p) {
+    margin-top: calc(var(--leading-body) * 1em);
+  }
+</style>

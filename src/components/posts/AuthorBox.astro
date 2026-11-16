@@ -1,0 +1,65 @@
+---
+/** Author box below each article, as the theme's post-author block. */
+import { Image } from 'astro:assets';
+import avatar from '@assets/images/authors/hannah-ogunyinka.png';
+---
+
+<aside class="author" aria-label="About the author">
+  <Image src={avatar} alt="" width={96} height={96} densities={[1, 2]} class="author__avatar" />
+  <div>
+    <p class="author__label">Article written by:</p>
+    <p class="author__name">Hannah Ogunyinka</p>
+    <p class="author__bio">
+      Freelance developer and photographer from London. An ex Primary school teacher of 15 years, Hannah is still
+      passionate about education and loves to share how to build effective spaces on the web with small businesses.
+    </p>
+  </div>
+</aside>
+
+<style>
+  .author {
+    display: flex;
+    align-items: flex-start;
+    width: calc(100% / 3);
+    margin: var(--space-md) auto;
+    padding: var(--space-sm);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-grey-950);
+    color: var(--color-white);
+    font-family: var(--font-heading);
+    font-weight: var(--weight-light);
+
+    @media (--md-down) {
+      width: 100%;
+    }
+  }
+
+  .author p {
+    margin: 0;
+    color: var(--color-white);
+  }
+
+  .author__avatar {
+    width: var(--avatar-author);
+    height: var(--avatar-author);
+    flex: none;
+    margin-right: 1em;
+    border-radius: var(--radius-round);
+  }
+
+  .author .author__label {
+    margin-bottom: var(--space-sm);
+    font-size: var(--text-byline);
+    font-weight: var(--weight-regular);
+    line-height: var(--leading-body);
+  }
+
+  .author .author__name {
+    margin-bottom: var(--space-sm);
+    font-weight: var(--weight-semibold);
+  }
+
+  .author__bio {
+    font-size: 0.7em;
+  }
+</style>

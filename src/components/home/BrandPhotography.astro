@@ -1,0 +1,110 @@
+---
+import { Image } from 'astro:assets';
+import Button from '@components/ui/Button.astro';
+import portraitOne from '@assets/images/home/brand-portrait-1.jpg';
+import portraitTwo from '@assets/images/home/brand-portrait-2.jpg';
+import { MQ } from '@config/breakpoints';
+---
+
+<section class="brand" aria-labelledby="brand-title">
+  <div class="brand__inner">
+    <div class="brand__text">
+      <p class="brand__eyebrow eyebrow">Brand photography</p>
+      <h2 id="brand-title">Level up your brand with high-end images</h2>
+      <p>
+        First impressions matter. Our professional brand photography will elevate your brand and convey to your
+        audience that the details matter and are crafted meticulously. Whether it’s for your website, social media, or
+        marketing materials, stand out from the crowd and show you mean business.
+      </p>
+      <div class="brand__actions">
+        <Button href="/contact/" variant="light">Book a session today</Button>
+        <Button href="/brand-photography/" variant="ghost">Learn more<span class="sr-only"> about brand photography</span></Button>
+      </div>
+    </div>
+    <div class="brand__photos">
+    <Image
+      src={portraitOne}
+      alt="Brand portrait of a woman with red curly hair in a hoodie against a grey backdrop"
+      widths={[320, 480, 683]}
+      sizes={`${MQ.mdDown} 50vw, 25vw`}
+    />
+    <Image
+      src={portraitTwo}
+      alt="Brand portrait of a smiling man in a navy jumper against a grey backdrop"
+      widths={[320, 480, 683]}
+      sizes={`${MQ.mdDown} 50vw, 25vw`}
+    />
+    </div>
+  </div>
+</section>
+
+<style>
+  .brand {
+    margin-bottom: var(--space-xl);
+  }
+
+  /* The dark panel stops at 1920px on very wide screens, as on the live site. */
+  .brand__inner {
+    padding: var(--space-lg);
+    background-color: var(--color-text);
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--space-md);
+    max-width: var(--container-wide);
+    margin-inline: auto;
+
+    @media (--md-down) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* The text runs from the top; the photos sit on the bottom edge. */
+  .brand__photos {
+    align-self: end;
+
+    @media (--md-down) {
+      order: -1;
+    }
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+  }
+
+  .brand p,
+  .brand h2 {
+    color: var(--color-white);
+  }
+
+  .brand__eyebrow {
+    margin: 0;
+    padding-block: var(--space-sm);
+    border-block: var(--border-hairline) solid var(--color-grey-400);
+  }
+
+  h2 {
+    margin: var(--space-md) 0 0;
+    font-family: var(--font-heading);
+    font-size: var(--text-h2-sm);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-heading);
+  }
+
+  .brand__text > p:not(.brand__eyebrow) {
+    margin: var(--space-md) 0 0;
+  }
+
+  .brand__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+  }
+
+  .brand :global(img) {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border-radius: 1em;
+  }
+</style>

@@ -1,0 +1,75 @@
+---
+/**
+ * Purple Brand Photography panel. It is the page heading on /brand-photography/
+ * and a section on /services/, so the heading level is a prop.
+ */
+import Button from '@components/ui/Button.astro';
+
+interface Props {
+  as?: 'h1' | 'h2';
+  packagesHref?: string;
+}
+
+const { as: Heading = 'h2', packagesHref = '/brand-photography-packages/' } = Astro.props;
+---
+
+<section class="photography" aria-labelledby="photography-title">
+  <Heading id="photography-title">Brand Photography</Heading>
+  <p>
+    First impressions matter. Our professional brand photography will elevate your brand and convey to your audience that
+    the details matter and are crafted meticulously. Whether it’s for your website, social media, or marketing materials,
+    stand out from the crowd and show you mean business.
+  </p>
+  <div class="photography__actions">
+    <Button href="/contact/" variant="dark">Book a session today</Button>
+    <Button href={packagesHref} variant="light">View packages</Button>
+  </div>
+</section>
+
+<style>
+  .photography {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-md);
+    border-radius: 2em;
+    background-color: var(--color-purple);
+    color: var(--color-white);
+    text-align: center;
+  }
+
+  h1,
+  h2 {
+    max-width: var(--measure-photo);
+    margin: 0;
+    color: inherit;
+    font-family: var(--font-heading);
+    font-size: var(--text-h2);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-heading);
+    text-transform: none;
+  }
+
+  h2 {
+    text-transform: capitalize;
+  }
+
+  /* The Brand Photography page heading has more line height, as on the live site. */
+  h1 {
+    line-height: var(--leading-snug);
+  }
+
+  p {
+    max-width: var(--measure-photo);
+    margin: var(--space-md) 0 0;
+    color: inherit;
+  }
+
+  .photography__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+  }
+</style>

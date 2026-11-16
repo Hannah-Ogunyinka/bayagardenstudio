@@ -1,0 +1,24 @@
+---
+/** Brand Photography: the purple intro panel, then the filterable portfolio. */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PhotographyPanel from '@components/photography/PhotographyPanel.astro';
+import PhotoGallery from '@components/photography/PhotoGallery.astro';
+---
+
+<BaseLayout
+  title="Brand Photography"
+  description="First impressions matter. Our professional brand photography will elevate your brand and convey to your audience that the details matter and are crafted"
+>
+  <div class="intro">
+    <PhotographyPanel as="h1" />
+  </div>
+  <PhotoGallery />
+</BaseLayout>
+
+<style>
+  .intro {
+    max-width: var(--container-wide);
+    margin: var(--space-md) auto 0;
+    padding-inline: var(--space-md);
+  }
+</style>
