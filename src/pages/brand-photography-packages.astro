@@ -190,8 +190,8 @@ const packages: Package[] = [
     gap: var(--stack-s);
     list-style: none;
 
-    @media (--lg-down) {
-      max-width: calc(var(--measure-intro) + 2 * var(--space-md));
+    /* WordPress columns: three across down to 782px, then full-width cards. */
+    @media (--md-down) {
       grid-template-columns: 1fr;
     }
   }
@@ -220,7 +220,7 @@ const packages: Package[] = [
 
   .package__note {
     margin-bottom: 0;
-    color: var(--color-grey-600);
+    color: var(--color-text);
     font-family: var(--font-body);
     letter-spacing: 0.02em;
     text-transform: uppercase;
@@ -245,6 +245,7 @@ const packages: Package[] = [
 
   .package__features {
     margin-bottom: 0;
+    color: var(--color-black);
     padding-left: 2em;
     list-style: disc;
   }
