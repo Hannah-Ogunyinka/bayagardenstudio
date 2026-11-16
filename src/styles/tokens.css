@@ -134,6 +134,7 @@
   --text-logo: var(--step-logo);
   --text-eyebrow: var(--step-logo);     /* small caps labels above headings */
   --text-micro: 0.75rem;                /* 12px: tags and field notes only */
+  --text-field: 1rem;                   /* 16px: form inputs, as on the live site */
   --text-large-min: 1.5rem;             /* 24px: smallest size where the bright purple passes contrast */
 
   --leading-none: 1;

@@ -31,9 +31,9 @@ import { MQ } from '@config/breakpoints';
 
   h1 {
     max-width: 7em;
-    margin-left: auto;
+    margin: 0 0 var(--space-md) auto;
     font-size: var(--text-display-sm);
-    font-weight: 700;
+    font-weight: var(--weight-bold);
     line-height: 1.1;
     text-align: right;
     text-transform: capitalize;
@@ -45,28 +45,31 @@ import { MQ } from '@config/breakpoints';
 
   .contact__columns {
     display: flex;
-    gap: var(--space-lg);
+    gap: var(--space-md);
     justify-content: space-between;
+    align-items: flex-start;
 
-    > * {
-      width: 50%;
+    /* On phones the form comes first, as on the live site. */
+    @media (--md-down) {
+      flex-direction: column-reverse;
+      align-items: stretch;
     }
+  }
+
+  .contact__form {
+    flex: 0 0 calc(50% - var(--space-md) / 2);
 
     @media (--md-down) {
-      flex-direction: column;
-
-      > * {
-        width: 100%;
-      }
+      flex-basis: auto;
     }
   }
 
   .contact__image {
-    max-width: var(--measure-s);
-  }
+    max-width: min(50%, 29.8125rem); /* token-exempt: the collage's natural width (477px) */
+    height: auto;
 
-  .contact__form {
-    max-width: var(--measure-m);
-    margin-left: auto;
+    @media (--md-down) {
+      max-width: 100%;
+    }
   }
 </style>

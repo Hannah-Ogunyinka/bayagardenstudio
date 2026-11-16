@@ -17,17 +17,17 @@ const services = [
   <div class="contact-form__row">
     <div class="field">
       <label for="contact-first-name">First name <span aria-hidden="true">*</span></label>
-      <input id="contact-first-name" name="firstName" type="text" autocomplete="given-name" required />
+      <input id="contact-first-name" name="firstName" type="text" autocomplete="given-name" required placeholder=" " />
     </div>
     <div class="field">
       <label for="contact-last-name">Last name <span aria-hidden="true">*</span></label>
-      <input id="contact-last-name" name="lastName" type="text" autocomplete="family-name" required />
+      <input id="contact-last-name" name="lastName" type="text" autocomplete="family-name" required placeholder=" " />
     </div>
   </div>
 
   <div class="field">
     <label for="contact-email">Email <span aria-hidden="true">*</span></label>
-    <input id="contact-email" name="email" type="email" autocomplete="email" required />
+    <input id="contact-email" name="email" type="email" autocomplete="email" required placeholder=" " />
   </div>
 
   <fieldset class="contact-form__options">
@@ -44,7 +44,7 @@ const services = [
 
   <div class="field">
     <label for="contact-message">Message <span aria-hidden="true">*</span></label>
-    <textarea id="contact-message" name="message" rows="4" required></textarea>
+    <textarea id="contact-message" name="message" rows="3" required placeholder=" "></textarea>
   </div>
 
   <!-- Honeypot: hidden from people, tempting to bots. -->
@@ -63,14 +63,14 @@ const services = [
 <style>
   .contact-form {
     display: grid;
-    gap: var(--space-xs);
+    gap: 1.25rem; /* token-exempt: live field spacing (20px) */
     font-family: var(--font-body);
   }
 
   .contact-form__row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--space-xs);
+    gap: 1.25rem var(--stack-s); /* token-exempt: live field spacing (20px) */
 
     @media (--sm-down) {
       grid-template-columns: 1fr;
@@ -81,25 +81,46 @@ const services = [
     position: relative;
   }
 
-  /* Labels sit inside the field like the original placeholders, but stay visible. */
+  /*
+   * Labels look like the live site's placeholders, inside the field. They stay
+   * real labels, and shrink to the top edge once the field is focused or filled.
+   */
   .field label {
     position: absolute;
-    top: 0.6em;
-    left: 1.6em;
-    font-size: var(--text-micro);
-    letter-spacing: var(--tracking-caps);
+    top: 50%;
+    left: 1em;
+    font-size: var(--text-field);
     text-transform: uppercase;
     pointer-events: none;
+    transform: translateY(-50%);
+    transition:
+      top 150ms,
+      font-size 150ms,
+      transform 150ms;
+  }
+
+  .field:has(textarea) label {
+    top: 0.7em;
+    transform: none;
+  }
+
+  .field:has(:focus) label,
+  .field:has(input:not(:placeholder-shown), textarea:not(:placeholder-shown)) label {
+    top: 0.45em;
+    font-size: var(--text-micro);
+    transform: none;
   }
 
   .field input,
   .field textarea {
-    padding: 1.8em 1.6em 0.8em;
+    padding: 1.4em 0.95em 0.5em;
+    border: var(--border-hairline) solid var(--color-white);
     border-radius: var(--radius-sm);
+    font-size: var(--text-field);
   }
 
   .field input {
-    height: 4em;
+    height: 4rem; /* token-exempt: live field height (64px) */
   }
 
   .contact-form__options {
@@ -108,7 +129,7 @@ const services = [
     border: 0;
     border-radius: var(--radius-sm);
     background-color: var(--color-white);
-    font-size: var(--text-small);
+    font-size: var(--text-ui);
   }
 
   legend {
@@ -120,14 +141,18 @@ const services = [
   .check {
     display: flex;
     align-items: center;
-    gap: 0.6em;
-    margin-bottom: 0.6em;
+    gap: 0.4em;
+    margin-bottom: 1em;
     clear: both;
   }
 
+  .check:last-child {
+    margin-bottom: 0;
+  }
+
   .check input {
-    width: 1.1em;
-    height: 1.1em;
+    width: 0.9em;
+    height: 0.9em;
     accent-color: var(--color-purple-dark);
   }
 
@@ -138,14 +163,15 @@ const services = [
 
   button {
     width: 100%;
-    height: 4em;
+    height: 4rem; /* token-exempt: live button height (64px) */
     border: 0;
     border-radius: var(--radius-button);
     background-color: var(--color-text);
     color: var(--color-white);
     font-family: var(--font-body);
-    font-size: var(--text-small);
-    letter-spacing: var(--tracking-caps);
+    font-size: var(--text-field);
+    font-weight: var(--weight-medium);
+    letter-spacing: 0.04em;
     text-transform: uppercase;
     cursor: pointer;
   }
