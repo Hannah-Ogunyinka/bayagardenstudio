@@ -31,8 +31,8 @@ const { as: Heading = 'h2', packagesHref = '/brand-photography-packages/' } = As
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: var(--space-md) var(--space-md) var(--space-lg);
-    border-radius: var(--radius-panel);
+    padding: var(--space-md);
+    border-radius: 2em;
     background-color: var(--color-purple);
     color: var(--color-white);
     text-align: center;
@@ -40,20 +40,29 @@ const { as: Heading = 'h2', packagesHref = '/brand-photography-packages/' } = As
 
   h1,
   h2 {
-    margin: 0 0 var(--space-sm);
+    max-width: var(--measure-photo);
+    margin: 0;
     color: inherit;
     font-family: var(--font-heading);
-    font-size: var(--text-h2-sm);
-    font-weight: 700;
-    line-height: 1.2;
+    font-size: var(--text-h2);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-heading);
     text-transform: none;
   }
 
+  h2 {
+    text-transform: capitalize;
+  }
+
+  /* The Brand Photography page heading has more line height, as on the live site. */
+  h1 {
+    line-height: var(--leading-snug);
+  }
+
   p {
-    max-width: var(--measure-l);
-    margin-block: 0 var(--space-md);
+    max-width: var(--measure-photo);
+    margin: var(--space-md) 0 0;
     color: inherit;
-    font-size: var(--text-ui);
   }
 
   .photography__actions {
@@ -61,5 +70,6 @@ const { as: Heading = 'h2', packagesHref = '/brand-photography-packages/' } = As
     flex-wrap: wrap;
     justify-content: center;
     gap: var(--space-sm);
+    margin-top: var(--space-md);
   }
 </style>

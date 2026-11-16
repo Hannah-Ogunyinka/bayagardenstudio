@@ -98,22 +98,25 @@ const services = [
 
 <style>
   /*
-   * Tiled hero. Three columns of client-work tiles; the outer columns sit half a
-   * tile lower, and the grid is pulled up under the header so the top row is cropped.
-   * Tile height comes from the images' 1012 × 806 ratio.
+   * Tiled hero, measured from the live site. Three columns of client-work tiles
+   * (1012 × 806 screenshots); the centre column sits half a tile higher and the
+   * grid starts under the header, so the top row is cropped.
    */
   .hero {
-    --gap: 2rem; /* token-exempt: tile spacing from the live theme */
-    --tile-h: calc((110vw - 2 * var(--gap)) / 3 * 0.7964);
+    --gap: 2em;
+    --header-h: var(--header-height);
+    --tile-w: calc((108.5vw - 2 * var(--gap)) / 3);
+    --tile-h: calc(var(--tile-w) * 0.7976);
 
+    display: flow-root; /* keeps the grid's negative margin inside the hero */
     overflow: clip;
-    margin-top: -6rem;
-    margin-bottom: clamp(2rem, 16vw, 16rem); /* token-exempt: spacing under the tiled hero, from the live theme */
+    margin-top: calc(-1 * var(--header-h));
+    margin-bottom: calc(var(--tile-h) * 0.78);
   }
 
   .hero__grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, var(--tile-w));
     grid-auto-rows: calc((var(--tile-h) - var(--gap)) / 2);
     grid-template-areas:
       '.           centre-top    .'
@@ -123,9 +126,8 @@ const services = [
       'left-bottom centre-bottom right-bottom'
       '.           centre-bottom .';
     gap: var(--gap);
-    width: 110vw;
-    margin-top: calc(var(--tile-h) * -0.45);
-    margin-inline: -5vw;
+    margin-top: calc(-0.5 * (var(--tile-h) + var(--gap)));
+    margin-left: -2.85vw;
   }
 
   .hero__tile {
@@ -163,35 +165,38 @@ const services = [
     grid-area: title;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: var(--space-md);
+    justify-content: flex-end;
     border-radius: var(--radius-panel);
     background-color: var(--color-grey-200);
   }
 
   .hero__scroll {
     align-self: flex-end;
-    padding-top: var(--space-sm);
+    margin-inline-end: 10%;
+    padding-block: var(--space-sm) var(--space-md);
   }
 
   h1 {
     margin: 0;
     font-size: var(--text-services-title);
-    font-weight: 700;
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-snug);
     text-transform: capitalize;
   }
 
-  /* Phones and small tablets: only the centre column, stacked. */
+  /* Phones and tablets: only the centre column, stacked. */
   @media (--lg-down) {
     .hero {
-      margin-bottom: clamp(2rem, 12vw, 6rem); /* token-exempt: spacing under the tiled hero, from the live theme */
+      --header-h: 0;
+      --top-h: calc((109vw - var(--gap)) * 0.7944);
+
+      margin-bottom: calc(14vw + 9rem); /* token-exempt: space under the hero, measured from the live site */
     }
 
     .hero__grid {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      width: auto;
+      gap: var(--gap);
       margin: 0;
     }
 
@@ -202,23 +207,29 @@ const services = [
       display: none;
     }
 
+    /* Only the bottom of this tile shows: 39px on a phone, more on a tablet. */
     .hero__tile--centre-top {
       order: 1;
-      width: calc(100% - var(--space-lg));
-      margin-top: -55vw;
-      margin-left: var(--space-lg);
-    }
-
-    .hero__tile--centre-bottom {
-      order: 3;
-      width: calc(100% - 2 * var(--space-lg));
-      margin-right: calc(2 * var(--space-lg));
+      width: calc(109vw - var(--gap));
+      height: var(--top-h);
+      max-width: none;
+      margin-top: calc(45vw - 5.2rem - var(--top-h) - var(--gap)); /* token-exempt: crop of the top tile, measured from the live site */
+      margin-left: var(--gap);
     }
 
     .hero__title-tile {
       order: 2;
       width: 85%;
       min-height: 24em;
+      margin-inline: auto;
+    }
+
+    .hero__tile--centre-bottom {
+      order: 3;
+      width: calc(109vw - 2 * var(--gap));
+      height: auto;
+      max-width: none;
+      aspect-ratio: 1012 / 806;
     }
   }
 
@@ -226,7 +237,8 @@ const services = [
   .services {
     max-width: var(--container-wide);
     margin-inline: auto;
-    padding-inline: var(--space-md);
+    padding-inline: calc(var(--space-sm) + var(--space-md));
+    padding-bottom: var(--space-2xl);
   }
 
   .services__list {
@@ -236,10 +248,6 @@ const services = [
     margin: 0 0 var(--space-md);
     padding: 0;
     list-style: none;
-
-    @media (--xl-down) {
-      gap: var(--space-sm);
-    }
 
     @media (--md-down) {
       grid-template-columns: 1fr;
@@ -251,37 +259,36 @@ const services = [
     min-width: 0;
     flex-direction: column;
     align-items: center;
+    gap: 1.28em;
     padding: var(--space-md);
-
-    @media (--md-up) and (--xl-down) {
-      padding-inline: var(--space-sm);
-    }
     border-radius: var(--radius-panel);
     background-color: var(--color-grey-200);
     text-align: center;
   }
 
   .service-card h2 {
-    margin: 0 0 var(--space-sm);
+    margin: 0;
     font-family: var(--font-heading);
-    font-size: var(--text-h2-sm);
-    font-weight: 700;
+    font-size: var(--text-h2);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-heading);
   }
 
-
-  /* Darker purple than the live site so the small text passes contrast on grey. */
+  /* Darker purple than the live site so the subtitle passes contrast on grey. */
   .service-card__subtitle {
     margin: 0;
-    color: var(--color-purple-dark);
+    padding-block: var(--space-sm);
+    color: var(--color-accent-strong);
     font-family: var(--font-body);
-    font-size: var(--text-small);
+    font-size: var(--text-ui);
+    font-weight: var(--weight-medium);
+    line-height: 1.4;
+    letter-spacing: 0.03em;
     text-transform: uppercase;
   }
 
   .service-card__text {
     flex-grow: 1;
-    margin-block: var(--space-sm) var(--space-md);
-    font-size: var(--text-small);
+    margin: 0;
   }
-
 </style>

@@ -124,7 +124,7 @@ const columns = [
   }
 
   .site-footer__column h2 {
-    margin-bottom: 0.8em;
+    margin-bottom: var(--stack-s);
     font-family: var(--font-body);
     font-size: var(--text-ui);
     font-weight: 600;
@@ -139,12 +139,13 @@ const columns = [
 
   .site-footer__column li {
     margin-bottom: 0.7em;
+    font-family: var(--font-heading);
+    font-size: var(--text-ui);
   }
 
   .site-footer__column a {
     color: var(--color-text);
-    font-size: var(--text-ui);
-    font-weight: 300;
+    font-weight: var(--weight-light);
   }
 
   .site-footer__column a:hover {

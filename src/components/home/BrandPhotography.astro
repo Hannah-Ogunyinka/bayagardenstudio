@@ -9,7 +9,7 @@ import { MQ } from '@config/breakpoints';
 <section class="brand" aria-labelledby="brand-title">
   <div class="brand__inner">
     <div class="brand__text">
-      <p class="brand__eyebrow">Brand photography</p>
+      <p class="brand__eyebrow eyebrow">Brand photography</p>
       <h2 id="brand-title">Level up your brand with high-end images</h2>
       <p>
         First impressions matter. Our professional brand photography will elevate your brand and convey to your
@@ -21,6 +21,7 @@ import { MQ } from '@config/breakpoints';
         <Button href="/brand-photography/" variant="ghost">Learn more<span class="sr-only"> about brand photography</span></Button>
       </div>
     </div>
+    <div class="brand__photos">
     <Image
       src={portraitOne}
       alt="Brand portrait of a woman with red curly hair in a hoodie against a grey backdrop"
@@ -33,32 +34,38 @@ import { MQ } from '@config/breakpoints';
       widths={[320, 480, 683]}
       sizes={`${MQ.mdDown} 50vw, 25vw`}
     />
+    </div>
   </div>
 </section>
 
 <style>
   .brand {
+    margin-bottom: var(--space-xl);
+    padding: var(--space-lg);
     background-color: var(--color-text);
-    padding: var(--space-lg) var(--space-md);
   }
 
   .brand__inner {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 2fr;
     gap: var(--space-md);
     max-width: var(--container-wide);
     margin-inline: auto;
-    align-items: start;
+    align-items: center;
 
     @media (--md-down) {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
     }
   }
 
-  .brand__text {
+  .brand__photos {
     @media (--md-down) {
-      grid-column: 1 / -1;
+      order: -1;
     }
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
   }
 
   .brand p,
@@ -67,31 +74,27 @@ import { MQ } from '@config/breakpoints';
   }
 
   .brand__eyebrow {
-    padding-block: var(--space-2xs);
+    margin: 0;
+    padding-block: var(--space-sm);
     border-block: var(--border-hairline) solid var(--color-grey-400);
-    font-family: var(--font-body);
-    font-size: var(--text-small);
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
   }
 
   h2 {
-    margin-top: var(--space-md);
+    margin: var(--space-md) 0 0;
     font-family: var(--font-heading);
     font-size: var(--text-h2-sm);
-    font-weight: 700;
-    line-height: 1.2;
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-heading);
   }
 
   .brand__text > p:not(.brand__eyebrow) {
-    font-size: var(--text-ui);
+    margin: var(--space-md) 0 0;
   }
 
   .brand__actions {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-2xs);
+    gap: var(--space-sm);
     margin-top: var(--space-md);
   }
 
@@ -99,6 +102,6 @@ import { MQ } from '@config/breakpoints';
     width: 100%;
     aspect-ratio: 2 / 3;
     object-fit: cover;
-    border-radius: var(--radius-m);
+    border-radius: 1em;
   }
 </style>

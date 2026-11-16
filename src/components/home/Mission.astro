@@ -10,7 +10,7 @@ const background = await getImage({ src: desk, width: 1920, format: 'webp', qual
   <div class="mission__overlay">
     <Stamp class="mission__stamp" aria-hidden="true" />
     <div class="mission__text">
-      <p class="mission__eyebrow">Our mission</p>
+      <p class="mission__eyebrow eyebrow">Our mission</p>
       <h2 id="mission-title">Elevating Brands, Simplifying Workflows, Unleashing Creativity</h2>
       <p>At Baya Garden Studio, website design and business automation is at the heart of what we do.</p>
       <p>
@@ -40,7 +40,7 @@ const background = await getImage({ src: desk, width: 1920, format: 'webp', qual
     max-height: var(--hero-max-height);
     align-items: center;
     justify-content: flex-end;
-    padding: var(--space-md);
+    padding: var(--space-xl) var(--space-md);
     border-radius: 1em;
     background-color: var(--color-tint-dark);
 
@@ -52,9 +52,9 @@ const background = await getImage({ src: desk, width: 1920, format: 'webp', qual
 
   .mission__stamp {
     position: absolute;
-    bottom: 10%;
-    left: 4%;
-    width: clamp(6rem, 12vw, 10rem); /* token-exempt: artwork position from the live theme */
+    bottom: var(--space-xl);
+    left: var(--space-md);
+    width: clamp(6rem, 13vw + 3rem, 15rem); /* token-exempt: stamp size from the live theme */
     color: var(--color-white);
     animation: rotate 7s linear infinite;
 
@@ -71,11 +71,11 @@ const background = await getImage({ src: desk, width: 1920, format: 'webp', qual
   }
 
   .mission__text {
-    max-width: var(--measure-l);
+    flex: 0 0 40%;
     text-align: right;
 
     @media (--md-down) {
-      text-align: center;
+      flex-basis: auto;
     }
   }
 
@@ -84,22 +84,21 @@ const background = await getImage({ src: desk, width: 1920, format: 'webp', qual
     color: var(--color-white);
   }
 
-  .mission__eyebrow {
-    font-family: var(--font-body);
-    font-size: var(--text-ui);
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
   h2 {
     font-family: var(--font-heading);
     font-size: var(--text-h2-sm);
-    font-weight: 700;
-    line-height: 1.3;
+    font-weight: var(--weight-bold);
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+    text-transform: none;
   }
 
   .mission__text > p:not(.mission__eyebrow) {
-    font-size: var(--text-ui);
+    margin: 0;
+  }
+
+  /* The live site separates the two sentences with a blank line. */
+  .mission__text > p + p {
+    margin-top: calc(var(--leading-body) * 1em);
   }
 </style>

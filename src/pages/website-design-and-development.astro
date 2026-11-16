@@ -37,7 +37,7 @@ const addOns = [
     intro="For the high flyer that wants to turn up looking their best online, greet prospective clients with a polished, strategically crafted website that shows you mean business."
   />
 
-  <IntroBand image={tablet}>
+  <IntroBand image={tablet} paragraphGap="line">
     <p>
       From initial design concept to final production, Baya Garden Studio offers a package where you’ll walk away with an
       expertly crafted, custom website, optimised for growth – all in just 5 weeks.
@@ -121,32 +121,39 @@ const addOns = [
 <style>
   .included,
   .add-ons {
-    padding: var(--space-4xl) var(--space-md) var(--space-md);
+    padding: var(--space-md);
+    background-color: var(--color-white);
+
+    @media (--lg-up) {
+      padding-inline: calc(var(--space-md) + var(--indent));
+    }
   }
 
   .included {
-    background-color: var(--color-white);
+    display: flow-root;
+    padding-block: var(--space-3xl) 0;
   }
 
   .section-head,
   .bento,
   .add-ons__list {
-    max-width: var(--container-max);
+    max-width: var(--container-content);
     margin-inline: auto;
   }
 
   .section-head h2 {
-    margin-bottom: var(--space-sm);
+    margin-bottom: var(--stack-s);
     font-family: var(--font-heading);
     font-size: var(--text-section-title);
-    font-weight: 600;
-    line-height: 1.1;
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-tight);
   }
 
   .section-head__note {
+    margin: 0;
     font-family: var(--font-body);
-    font-size: var(--text-logo);
-    line-height: 1.3;
+    font-size: var(--text-eyebrow);
+    line-height: var(--leading-snug);
     text-transform: uppercase;
   }
 
@@ -185,19 +192,18 @@ const addOns = [
     display: flex;
     min-width: 0;
     flex-direction: column;
-    padding: var(--inset-m);
+    padding: var(--inset-m) 1.5em;
     border: var(--border-hairline) solid var(--color-grey-200);
     border-radius: var(--radius-panel);
     background-color: var(--color-white);
-    font-size: var(--text-small);
   }
 
   .card h3 {
-    margin-bottom: var(--space-sm);
+    margin-bottom: var(--stack-s);
     font-family: var(--font-heading);
     font-size: var(--text-card-title);
-    font-weight: 600;
-    line-height: 1.3;
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-body);
     text-transform: none;
   }
 
@@ -250,11 +256,12 @@ const addOns = [
     width: 110%;
     max-width: none;
     height: auto;
-    margin: auto -1.5rem -1.5rem 0;
+    margin: auto -1.5em calc(-1 * var(--inset-m)) 0;
   }
 
   /* Optional add-ons */
   .add-ons h2 {
+    font-weight: var(--weight-bold);
     color: var(--color-purple);
   }
 
@@ -279,21 +286,22 @@ const addOns = [
     padding: var(--space-md);
     border-radius: var(--radius-panel);
     background-color: var(--color-surface-accent);
-    font-size: var(--text-small);
   }
 
   .add-on__icon {
     display: block;
+    width: 1.7em;
+    height: auto;
   }
 
   /* At least 24px so the purple passes large-text contrast on the lilac card. */
   .add-on h3 {
-    margin-block: var(--space-sm);
+    margin-block: var(--stack-s);
     color: var(--color-purple);
     font-family: var(--font-heading);
     font-size: max(var(--text-large-min), var(--text-card-title));
-    font-weight: 600;
-    line-height: 1.2;
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-heading);
     text-transform: capitalize;
   }
 </style>

@@ -106,6 +106,7 @@ main {
   position: relative;
   z-index: var(--z-content);
   background-color: var(--color-bg);
+  display: flow-root; /* keeps the last section's margin inside, so the newsletter band never shows through a gap */
   overflow-x: clip; /* lets edge-to-edge images use 100vw without a sideways scrollbar */
 }
 
@@ -225,6 +226,17 @@ textarea {
 }
 
 /* ------------------------------------------------------------ Utilities */
+/* Small uppercase label above a heading ("Our offer", "Featured post"). */
+.eyebrow {
+  margin-block: 0 var(--stack-s);
+  font-family: var(--font-body);
+  font-size: var(--text-eyebrow);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+}
+
 .sr-only {
   position: absolute;
   width: 1px; /* token-exempt: standard visually-hidden pattern */

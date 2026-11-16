@@ -63,6 +63,7 @@ const plans = [
   <ServiceHero
     eyebrow="Website care plans"
     title="Support"
+    size="small"
     intro="Keep your website up to date, backed up and running smoothly with a Set and Forget website care plan."
   >
     <Button slot="action" href="#pricing" variant="dark" arrow>View prices</Button>
@@ -139,17 +140,20 @@ const plans = [
 
   .why {
     display: grid;
-    max-width: var(--container-text);
-    margin: var(--space-xl) auto var(--space-2xl);
-    padding-inline: var(--space-md);
+    max-width: calc(var(--container-split) + 2 * var(--space-md));
+    margin-inline: auto;
+    padding: var(--space-md);
     grid-template-columns: 1fr 1fr;
     gap: var(--space-md);
-    font-size: var(--text-small);
 
     @media (--md-down) {
       grid-template-columns: 1fr;
       gap: 0;
     }
+  }
+
+  .why p {
+    margin-block: 0 var(--stack-s);
   }
 
   .pricing {
@@ -163,8 +167,9 @@ const plans = [
     padding-top: var(--space-md);
     border-top: var(--border-hairline) solid var(--color-grey-400);
     font-family: var(--font-heading);
-    font-size: var(--text-h2);
-    font-weight: 700;
+    font-size: var(--text-section-title);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-tight);
     text-align: center;
   }
 
@@ -173,11 +178,12 @@ const plans = [
     flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start;
-    gap: var(--space-md);
+    /* The live cards sit 13px in from each 426px column. */
+    gap: var(--space-md) calc(var(--space-md) + 2 * 0.8125rem); /* token-exempt: live column inset */
   }
 
   .plan {
-    width: min(100%, var(--grid-min-l));
+    width: min(100%, var(--measure-plan));
     padding: var(--space-sm);
     border: var(--border-hairline) solid var(--color-grey-200);
     border-radius: var(--radius-panel-l);
@@ -188,7 +194,9 @@ const plans = [
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: var(--stack-s);
     padding: var(--space-md);
+    border: var(--border-hairline) solid var(--color-grey-100);
     border-radius: var(--radius-panel);
     background-color: var(--color-grey-100);
     text-align: center;
@@ -197,30 +205,37 @@ const plans = [
   .plan h3 {
     margin: 0;
     font-family: var(--font-heading);
-    font-size: var(--text-lead);
-    font-weight: 600;
+    font-size: var(--text-h3);
+    font-weight: var(--weight-bold);
     line-height: 1;
     text-transform: capitalize;
   }
 
   .plan__price {
-    margin-block: var(--space-sm);
-    font-size: var(--text-h3);
-    font-weight: 700;
+    margin: 0;
+    font-size: var(--text-h2-sm);
+    font-weight: var(--weight-bold);
+    /* Wrapped prices stay compact, as on the live site; padding keeps one-line prices at full height. */
+    padding-block: 0.33em;
+    line-height: 1.05;
   }
 
-  /* Brighter purple kept at 24px or more for large-text contrast. */
+  /* Bold at 18.66px or more, so the brighter purple passes large-text contrast. */
   .plan__unit {
     color: var(--color-purple);
-    font-size: max(var(--text-large-min), var(--text-lead));
-    font-weight: 600;
+    font-size: var(--text-lead);
+    font-weight: var(--weight-bold);
+  }
+
+  .plan__head :global(.button) {
+    padding-inline: 2.8em;
+    font-weight: var(--weight-medium);
   }
 
   .plan__features {
-    margin: 0;
-    padding: var(--space-sm) var(--space-sm) var(--space-md);
-    font-size: var(--text-small);
-    font-weight: 500;
+    max-width: var(--grid-min-l);
+    margin: 0 auto;
+    padding: var(--stack-s) 0;
     list-style: none;
   }
 
@@ -228,7 +243,7 @@ const plans = [
     display: flex;
     align-items: baseline;
     gap: 0.3em;
-    padding-block: 0.4em;
+    padding: 0.5em;
   }
 
   .plan__features svg {

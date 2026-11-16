@@ -26,15 +26,15 @@ const { href, variant = 'fill', arrow = false, class: className, ...rest } = Ast
   .button {
     display: inline-flex;
     align-items: center;
-    gap: 0.5em;
+    gap: 0.3em;
     padding: var(--btn-pad-block) var(--btn-pad-inline);
     border: var(--border-thin) solid transparent;
     border-radius: var(--radius-button);
     font-family: var(--font-body);
     font-size: var(--text-small);
     font-weight: var(--weight-regular);
-    letter-spacing: var(--tracking-caps);
-    line-height: 1;
+    letter-spacing: var(--tracking-button);
+    line-height: var(--leading-body);
     text-decoration: none;
     text-transform: uppercase;
     white-space: nowrap;
@@ -84,7 +84,10 @@ const { href, variant = 'fill', arrow = false, class: className, ...rest } = Ast
   }
 
   .button--ghost {
+    padding-inline: var(--btn-pad-block);
+    border-width: var(--border-hairline);
     border-color: var(--color-grey-100);
+    font-weight: var(--weight-medium);
     background-color: transparent;
     color: var(--color-white);
   }
@@ -95,7 +98,6 @@ const { href, variant = 'fill', arrow = false, class: className, ...rest } = Ast
   }
 
   .button--dark {
-    padding: 0.9em 1.4em;
     border-color: var(--color-text);
     background-color: var(--color-text);
     color: var(--color-white);

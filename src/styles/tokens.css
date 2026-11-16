@@ -130,6 +130,7 @@
   --text-hero: var(--step-home-h1);
   --text-services-title: var(--step-services-h1);
   --text-logo: var(--step-logo);
+  --text-eyebrow: var(--step-logo);     /* small caps labels above headings */
   --text-micro: 0.75rem;                /* 12px: tags and field notes only */
   --text-large-min: 1.5rem;             /* 24px: smallest size where the bright purple passes contrast */
 
@@ -142,6 +143,9 @@
 
   --tracking-caps: 0.05em;
   --tracking-wide: 0.08em;
+  --tracking-eyebrow: 0.07em;
+  --tracking-button: 0.05rem;           /* 0.8px at every button size, as on the live site */
+  --tracking-tight: -0.02em;            /* large call-to-action headings */
 
   --measure: 62ch;
   --measure-narrow: 40ch;
@@ -153,6 +157,9 @@
   --measure-xl: 48rem;
   --measure-2xl: 52rem;
   --measure-prose: 32rem;               /* post body column, as on the live site */
+  --measure-cta: 40.625rem;             /* 650px: call-to-action headings */
+  --measure-plan: 25rem;                /* 400px: pricing plan cards */
+  --measure-photo: 43.75rem;            /* 700px: photography panel */
 
   /* --------------------------------------------------------------- Space */
   --gutter: var(--space-md);            /* page edges: 24 -> 48px */
@@ -171,10 +178,13 @@
   --inset-m: 1.5rem;                    /* 24px: compact cards at every size */
   --inset-card: var(--space-md);        /* card padding */
   --inset-l: var(--space-lg);           /* panel padding */
+  --indent: 2rem;                       /* 32px: extra inset for home page sections on wide screens */
   --flow-space: 1em;                    /* between paragraphs */
 
   /* -------------------------------------------------------------- Layout */
   --container-max: 81.25rem;            /* 1300px: most content */
+  --container-content: 80rem;           /* 1280px: home page sections */
+  --container-split: 67.5rem;           /* 1080px: two-column copy on service pages */
   --container-wide: 120rem;             /* 1920px: full-bleed bands */
   --container-l: 75rem;                 /* 1200px: featured images */
   --container-m: 68.75rem;              /* 1100px: card grids, embeds */
@@ -187,7 +197,8 @@
   --grid-min-m: 15rem;
   --grid-min-l: 20rem;
 
-  --header-height: 5.625rem;            /* 90px */
+  /* Desktop header: the 1.7-line button, its 1.2em padding and border, plus the header padding (98px at 1440). */
+  --header-height: calc(var(--text-small) * 4.1 + 2 * var(--border-thin) + 2 * var(--space-sm));
   --hero-max-height: 67.5rem;           /* 1080px: tallest a hero band grows */
   --media-max-height: 40rem;            /* 640px: featured photos */
   --embed-min-height: 40rem;            /* booking calendar */

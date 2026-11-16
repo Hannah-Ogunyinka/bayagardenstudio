@@ -36,6 +36,7 @@ const offers = [
         }
       </ul>
     </div>
+    <div class="offer__device">
     <Image
       src={template}
       alt="Example website design shown on a tablet: the Kimberley interior design theme"
@@ -43,37 +44,41 @@ const offers = [
       sizes={`${MQ.mdDown} 100vw, 50vw`}
       class="offer__image"
     />
+    </div>
   </div>
 </section>
 
 <style>
   .offer {
-    max-width: var(--container-max);
+    padding: var(--space-md);
+
+    @media (--lg-up) {
+      padding-inline: calc(var(--space-md) + var(--indent));
+    }
+  }
+
+  .offer > * {
+    max-width: var(--container-content);
     margin-inline: auto;
-    padding: var(--space-xl) var(--space-md);
   }
 
   .eyebrow {
-    margin-bottom: 0;
-    font-family: var(--font-body);
-    font-size: var(--text-small);
-    letter-spacing: 0.1em;
     text-align: center;
-    text-transform: uppercase;
   }
 
   h2 {
-    margin-bottom: var(--space-lg);
+    margin-bottom: calc(2 * var(--space-md));
     font-family: var(--font-heading);
     font-size: var(--text-h2-alt);
-    font-weight: 700;
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-heading);
     text-align: center;
   }
 
   .offer__columns {
     display: grid;
-    grid-template-columns: 1fr 1.4fr;
-    gap: var(--space-lg);
+    grid-template-columns: 2fr 3fr;
+    gap: var(--space-md) var(--space-xl);
     align-items: start;
 
     @media (--md-down) {
@@ -82,42 +87,59 @@ const offers = [
   }
 
   .offer__list {
-    max-width: var(--measure-s);
-    font-family: var(--font-body);
-    font-size: var(--text-ui);
+    max-width: var(--measure-m);
+  }
+
+  .offer__list > p {
+    margin: 0;
   }
 
   ul {
+    max-width: 23em;
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
   li {
-    padding-block: 1.2em;
+    padding-block: 1.5em;
     border-bottom: var(--border-hairline) solid var(--color-grey-400);
   }
 
+  li > * + * {
+    margin-top: var(--stack-s);
+  }
+
   .offer__icon {
-    width: var(--icon-feature);
-    height: var(--icon-feature);
-    margin-bottom: 1em;
+    display: block;
+    width: 3em;
+    height: 3em;
     color: var(--color-text);
   }
 
   h3 {
-    margin-bottom: var(--space-2xs);
+    margin-bottom: 0;
     font-family: var(--font-body);
     font-size: var(--text-lead);
-    font-weight: 400;
-    letter-spacing: 0.02em;
+    font-weight: var(--weight-semibold);
+    line-height: 1.4;
     text-transform: uppercase;
+  }
+
+  li p {
+    margin: 0;
+  }
+
+  /* Dark tablet frame around the template screenshot. */
+  .offer__device {
+    padding: var(--space-sm);
+    border-radius: 1.8em;
+    background-color: var(--color-surface-inverse);
+    box-shadow: var(--shadow-footer);
   }
 
   .offer__image {
     width: 100%;
-    border: clamp(6px, 1vw, 14px) solid var(--color-text); /* token-exempt: device frame artwork from the live theme */
-    border-radius: clamp(var(--radius-m), 2vw, var(--radius-panel));
-    box-shadow: var(--shadow-lift);
+    border-radius: var(--radius-media);
   }
 </style>

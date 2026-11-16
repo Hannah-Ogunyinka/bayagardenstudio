@@ -60,7 +60,7 @@ import tabletGreen from '@assets/images/home/hero-tablet-green.webp';
   }
 
   .hero__heading {
-    padding-top: var(--space-md);
+    padding: var(--space-md) var(--space-sm);
     text-align: center;
 
     @media (--md-down) {
@@ -70,10 +70,10 @@ import tabletGreen from '@assets/images/home/hero-tablet-green.webp';
   }
 
   h1 {
-    margin: 0;
+    margin: 0 0 var(--space-sm);
     font-size: var(--text-hero);
-    font-weight: 700;
-    line-height: 1;
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-tight);
     text-transform: capitalize;
   }
 
@@ -82,10 +82,11 @@ import tabletGreen from '@assets/images/home/hero-tablet-green.webp';
   }
 
   .hero__strap {
-    margin-top: var(--space-sm);
+    margin: 0;
     font-family: var(--font-body);
-    font-size: var(--text-ui);
-    letter-spacing: 0.05em;
+    font-size: var(--text-eyebrow);
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-caps);
     text-transform: uppercase;
   }
 
@@ -150,7 +151,7 @@ import tabletGreen from '@assets/images/home/hero-tablet-green.webp';
     justify-content: space-between;
     overflow-x: clip;
 
-    @media (--md-down) {
+    @media (--lg-down) {
       display: none;
     }
   }

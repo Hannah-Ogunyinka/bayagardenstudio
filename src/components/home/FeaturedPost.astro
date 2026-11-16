@@ -10,7 +10,7 @@ const [post] = await getPosts();
 {
   post && (
     <section class="featured" aria-labelledby="featured-title">
-      <h2 id="featured-title" class="featured__eyebrow">Featured post</h2>
+      <h2 id="featured-title" class="featured__eyebrow eyebrow">Featured post</h2>
       <article class="featured__card">
         <div class="featured__text">
           {post.data.categories[0] && <CategoryTag name={post.data.categories[0]} />}
@@ -28,25 +28,21 @@ const [post] = await getPosts();
   .featured {
     max-width: var(--container-wide);
     margin-inline: auto;
-    padding: var(--space-xl) var(--space-md) var(--space-lg);
+    padding: 0 var(--space-md);
   }
 
   .featured__eyebrow {
     margin-bottom: var(--space-md);
-    padding-block: var(--space-2xs);
+    padding-block: var(--space-sm);
     border-block: var(--border-hairline) solid var(--color-grey-200);
-    font-family: var(--font-body);
-    font-size: var(--text-small);
-    font-weight: 400;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
   }
 
   .featured__card {
     position: relative;
     display: grid;
-    grid-template-columns: 1fr 1.4fr;
+    grid-template-columns: 2fr 3fr;
     gap: var(--space-md);
+    margin-bottom: var(--space-lg);
 
     @media (--md-down) {
       grid-template-columns: 1fr;
@@ -59,11 +55,12 @@ const [post] = await getPosts();
   }
 
   h3 {
-    margin-top: var(--space-2xs);
+    margin: var(--space-sm) 0 0;
     font-family: var(--font-heading);
     font-size: var(--text-h2-sm);
-    font-weight: 700;
-    line-height: 1.25;
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-heading);
+    text-transform: capitalize;
   }
 
   h3 a {
