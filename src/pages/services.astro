@@ -1,0 +1,324 @@
+---
+/**
+ * Services overview: a tiled image hero, the three core services as cards,
+ * then the Brand Photography panel and the closing call to action.
+ */
+import { Image } from 'astro:assets';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Button from '@components/ui/Button.astro';
+import CtaBanner from '@components/ui/CtaBanner.astro';
+import ScrollDown from '@components/ui/ScrollDown.astro';
+import leftTop from '@assets/images/services/left-photography-container.webp';
+import leftBottom from '@assets/images/services/left-mobile-container.webp';
+import centreTop from '@assets/images/services/centre-mobile-container.webp';
+import centreBottom from '@assets/images/services/centre-yoga.webp';
+import rightTop from '@assets/images/services/right-cakes.webp';
+import rightBottom from '@assets/images/services/right-photography-container.webp';
+
+/** Hero tiles are decorative screenshots of client work, so they carry empty alt text. */
+const tiles = [
+  { src: centreTop, area: 'centre-top', eager: true },
+  { src: leftTop, area: 'left-top', eager: true },
+  { src: rightTop, area: 'right-top', eager: true },
+  { src: leftBottom, area: 'left-bottom', eager: false },
+  { src: rightBottom, area: 'right-bottom', eager: false },
+  { src: centreBottom, area: 'centre-bottom', eager: false },
+] as const;
+
+const services = [
+  {
+    name: 'Build',
+    subtitle: 'Web design and development',
+    text: 'For the high flyer that wants to turn up looking their best online, greet prospective clients with a polished, strategically crafted digital base that shows you mean business.',
+    href: '/website-design-and-development/',
+  },
+  {
+    name: 'Support',
+    subtitle: 'Website care plans',
+    text: 'Keep your website up to date, backed up and running smoothly with a Set and Forget website care plan.',
+    href: '/website-care-plan/',
+  },
+  {
+    name: 'Grow',
+    subtitle: 'Marketing and automation',
+    text: 'End the frustration that comes with slow sales and an ineffective growth strategy and start building an audience ready to purchase by working with Baya Garden Studio.',
+    href: '/marketing-and-automation/',
+  },
+] as const;
+---
+
+<BaseLayout
+  title="Services"
+  description="Web design and development, website care plans, marketing and automation, and brand photography for creative businesses from Baya Garden Studio."
+>
+  <section class="hero" aria-labelledby="services-title">
+    <div class="hero__grid">
+      {
+        tiles.map(({ src, area, eager }) => (
+          <Image
+            src={src}
+            alt=""
+            widths={[400, 640, 1012]}
+            sizes="(max-width: 890px) 100vw, 36vw"
+            loading={eager ? 'eager' : 'lazy'}
+            class:list={['hero__tile', `hero__tile--${area}`]}
+          />
+        ))
+      }
+      <div class="hero__title-tile">
+        <h1 id="services-title">Services</h1>
+        <div class="hero__scroll"><ScrollDown href="#our-services" /></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="our-services" class="services" aria-label="Our services">
+    <ul class="services__list" role="list">
+      {
+        services.map(({ name, subtitle, text, href }) => (
+          <li class="service-card">
+            <h2>{name}</h2>
+            <p class="service-card__subtitle">{subtitle}</p>
+            <p class="service-card__text">{text}</p>
+            <Button href={href} variant="dark" arrow>
+              Go to {name.toLowerCase()}
+            </Button>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="photography">
+      <h2>Brand Photography</h2>
+      <p>
+        First impressions matter. Our professional brand photography will elevate your brand and convey to your audience
+        that the details matter and are crafted meticulously. Whether it’s for your website, social media, or marketing
+        materials, stand out from the crowd and show you mean business.
+      </p>
+      <div class="photography__actions">
+        <Button href="/contact/" variant="dark">Book a session today</Button>
+        <Button href="/brand-photography/" variant="light">View packages</Button>
+      </div>
+    </div>
+  </section>
+
+  <CtaBanner />
+</BaseLayout>
+
+<style>
+  /*
+   * Tiled hero. Three columns of client-work tiles; the outer columns sit half a
+   * tile lower, and the grid is pulled up under the header so the top row is cropped.
+   * Tile height comes from the images' 1012 × 806 ratio.
+   */
+  .hero {
+    --gap: 2rem;
+    --tile-h: calc((110vw - 2 * var(--gap)) / 3 * 0.7964);
+
+    overflow: clip;
+    margin-top: -6rem;
+    margin-bottom: clamp(2rem, 16vw, 16rem);
+  }
+
+  .hero__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: calc((var(--tile-h) - var(--gap)) / 2);
+    grid-template-areas:
+      '.           centre-top    .'
+      'left-top    centre-top    right-top'
+      'left-top    title         right-top'
+      'left-bottom title         right-bottom'
+      'left-bottom centre-bottom right-bottom'
+      '.           centre-bottom .';
+    gap: var(--gap);
+    width: 110vw;
+    margin-top: calc(var(--tile-h) * -0.45);
+    margin-inline: -5vw;
+  }
+
+  .hero__tile {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero__tile--centre-top {
+    grid-area: centre-top;
+  }
+
+  .hero__tile--left-top {
+    grid-area: left-top;
+  }
+
+  .hero__tile--right-top {
+    grid-area: right-top;
+  }
+
+  .hero__tile--left-bottom {
+    grid-area: left-bottom;
+  }
+
+  .hero__tile--right-bottom {
+    grid-area: right-bottom;
+  }
+
+  .hero__tile--centre-bottom {
+    grid-area: centre-bottom;
+  }
+
+  .hero__title-tile {
+    display: flex;
+    grid-area: title;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md);
+    border-radius: 32px;
+    background-color: var(--color-grey-200);
+  }
+
+  .hero__scroll {
+    align-self: flex-end;
+    padding-top: var(--space-sm);
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(3.426rem, 3.426rem + ((1vw - 0.2rem) * 3.574), 7rem);
+    font-weight: 700;
+    text-transform: capitalize;
+  }
+
+  /* Phones and small tablets: only the centre column, stacked. */
+  @media (max-width: 890px) {
+    .hero {
+      margin-bottom: clamp(2rem, 12vw, 6rem);
+    }
+
+    .hero__grid {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: auto;
+      margin: 0;
+    }
+
+    .hero__tile--left-top,
+    .hero__tile--right-top,
+    .hero__tile--left-bottom,
+    .hero__tile--right-bottom {
+      display: none;
+    }
+
+    .hero__tile--centre-top {
+      order: 1;
+      width: calc(100% - 2rem);
+      margin-top: -55vw;
+      margin-left: 2rem;
+    }
+
+    .hero__tile--centre-bottom {
+      order: 3;
+      width: calc(100% - 4rem);
+      margin-right: 4rem;
+    }
+
+    .hero__title-tile {
+      order: 2;
+      width: 85%;
+      min-height: 24em;
+    }
+  }
+
+  /* Service cards */
+  .services {
+    max-width: var(--content-max);
+    margin-inline: auto;
+    padding-inline: var(--space-md);
+  }
+
+  .services__list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+    margin: 0 0 var(--space-md);
+    padding: 0;
+    list-style: none;
+
+    @media (max-width: 1100px) {
+      gap: var(--space-sm);
+    }
+
+    @media (max-width: 782px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .service-card {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-md);
+
+    @media (min-width: 783px) and (max-width: 1100px) {
+      padding-inline: var(--space-sm);
+    }
+    border-radius: 32px;
+    background-color: var(--color-grey-200);
+    text-align: center;
+  }
+
+  .service-card h2,
+  .photography h2 {
+    margin: 0 0 var(--space-sm);
+    font-family: var(--font-heading);
+    font-size: var(--text-xl);
+    font-weight: 700;
+  }
+
+  .photography h2,
+  .photography p {
+    color: inherit;
+  }
+
+  /* Darker purple than the live site so the small text passes contrast on grey. */
+  .service-card__subtitle {
+    margin: 0;
+    color: var(--color-purple-dark);
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+  }
+
+  .service-card__text {
+    flex-grow: 1;
+    margin-block: var(--space-sm) var(--space-md);
+    font-size: var(--text-xs);
+  }
+
+  .photography {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-md) var(--space-md) var(--space-lg);
+    border-radius: 32px;
+    background-color: var(--color-purple);
+    color: var(--color-white);
+    text-align: center;
+  }
+
+  .photography p {
+    max-width: 36rem;
+    margin-block: 0 var(--space-md);
+    font-size: var(--text-xs);
+  }
+
+  .photography__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-sm);
+  }
+</style>

@@ -1,0 +1,84 @@
+---
+/**
+ * "Scroll down" prompt: a label beside a pill with a bobbing arrow.
+ * It links to the next section so it also works as a keyboard shortcut.
+ * - "fill": solid purple pill with a white arrow (Services hero)
+ * - "outline": purple outline pill with a purple arrow (service pages)
+ */
+interface Props {
+  href: string;
+  variant?: 'fill' | 'outline';
+}
+
+const { href, variant = 'fill' } = Astro.props;
+---
+
+<a href={href} class:list={['scroll-down', `scroll-down--${variant}`]}>
+  <span>Scroll down</span>
+  <svg aria-hidden="true" width="55" height="101" viewBox="0 0 55 101" fill="none">
+    <rect class="scroll-down__pill" x="1" y="1" width="53" height="99" rx="26.5" stroke-width="2"></rect>
+    <path
+      class="scroll-down__arrow"
+      d="M27.2929 90.7071C27.6834 91.0976 28.3166 91.0976 28.7071 90.7071L35.0711 84.3431C35.4616 83.9526 35.4616 83.3195 35.0711 82.9289C34.6805 82.5384 34.0474 82.5384 33.6569 82.9289L28 88.5858L22.3431 82.9289C21.9526 82.5384 21.3195 82.5384 20.9289 82.9289C20.5384 83.3195 20.5384 83.9526 20.9289 84.3431L27.2929 90.7071ZM27 59L27 90H29L29 59H27Z"
+    ></path>
+  </svg>
+</a>
+
+<style>
+  .scroll-down {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--color-text);
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .scroll-down svg {
+    flex-shrink: 0;
+    width: 55px;
+    height: 101px;
+  }
+
+  .scroll-down__pill {
+    stroke: var(--color-purple);
+  }
+
+  .scroll-down--fill .scroll-down__pill {
+    fill: var(--color-purple);
+  }
+
+  .scroll-down--fill .scroll-down__arrow {
+    fill: var(--color-white);
+  }
+
+  .scroll-down--outline .scroll-down__pill {
+    fill: none;
+  }
+
+  .scroll-down--outline .scroll-down__arrow {
+    fill: var(--color-purple);
+  }
+
+  .scroll-down__arrow {
+    animation: bob 600ms ease-in-out infinite alternate;
+  }
+
+  @keyframes bob {
+    from {
+      transform: translateY(-20%);
+    }
+
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-down__arrow {
+      animation: none;
+    }
+  }
+</style>
