@@ -1,0 +1,190 @@
+---
+/**
+ * Client gallery at /gallery/name/, the same URL as on WordPress.
+ * Rendered on demand: without the gallery's access cookie it shows a password
+ * form; a correct password sets the cookie and reloads the page (POST then
+ * redirect, so refreshing never re-sends the password).
+ * Always noindex and never cached by shared caches.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { getGallery } from '@lib/galleries';
+import { checkPassword, galleryPath, grantAccess, hasAccess } from '@lib/server/gallery-auth';
+
+export const prerender = false;
+
+const gallery = getGallery(Astro.params.slug);
+if (!gallery) return new Response('Gallery not found', { status: 404, headers: { 'x-robots-tag': 'noindex' } });
+
+Astro.response.headers.set('cache-control', 'private, no-store');
+Astro.response.headers.set('x-robots-tag', 'noindex, nofollow');
+
+let wrongPassword = false;
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData();
+  if (await checkPassword(gallery.slug, String(form.get('password') ?? ''))) {
+    await grantAccess(Astro.cookies, gallery.slug);
+    return Astro.redirect(galleryPath(gallery.slug), 303);
+  }
+  wrongPassword = true;
+  Astro.response.status = 401;
+}
+
+const unlocked = !wrongPassword && (await hasAccess(Astro.cookies, gallery.slug));
+const base = galleryPath(gallery.slug);
+const count = gallery.photos.length;
+const megabytes = gallery.download ? Math.round(gallery.download.bytes / 1_000_000) : 0;
+---
+
+<BaseLayout title={gallery.title} description={`Private photo gallery for ${gallery.title}.`} noindex floatingNav={false}>
+  <section class="client-gallery" aria-labelledby="gallery-title">
+    <h1 id="gallery-title">{gallery.title}</h1>
+    {
+      unlocked ? (
+        <>
+          {gallery.download && (
+            <p class="client-gallery__download">
+              <a class="client-gallery__button" href={`${base}${gallery.download.file}`} download>
+                Download all {count} photos <span class="client-gallery__size">(zip, {megabytes} MB)</span>
+              </a>
+            </p>
+          )}
+          <ul class="client-gallery__grid" role="list">
+            {gallery.photos.map((photo, index) => (
+              <li>
+                <a href={`${base}${photo.file}`} aria-label={`Open photo ${index + 1} of ${count} full size`}>
+                  <img
+                    src={`${base}${photo.file}`}
+                    width={photo.width}
+                    height={photo.height}
+                    alt={`Photo ${index + 1} of ${count} from ${gallery.title}'s gallery`}
+                    loading={index < 3 ? 'eager' : 'lazy'}
+                    decoding="async"
+                  />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </>
+      ) : (
+        <form class="client-gallery__gate" method="post" action={base}>
+          <p>This gallery is password protected. Please enter the password you were sent.</p>
+          {wrongPassword && (
+            <p class="client-gallery__error" role="alert" id="password-error">
+              That password is not right. Please check it and try again.
+            </p>
+          )}
+          <label for="gallery-password">Password</label>
+          <input
+            id="gallery-password"
+            name="password"
+            type="password"
+            autocomplete="current-password"
+            required
+            aria-invalid={wrongPassword ? 'true' : undefined}
+            aria-describedby={wrongPassword ? 'password-error' : undefined}
+            autofocus={wrongPassword}
+          />
+          <button type="submit" class="client-gallery__button">View gallery</button>
+        </form>
+      )
+    }
+  </section>
+</BaseLayout>
+
+<style>
+  .client-gallery {
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    padding: var(--space-md) var(--gutter) var(--space-xl);
+    font-family: var(--font-body);
+  }
+
+  h1 {
+    margin: 0 0 var(--space-sm);
+    font-size: var(--text-display-sm);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-tight);
+  }
+
+  .client-gallery__gate {
+    display: grid;
+    gap: var(--space-xs);
+    max-width: var(--measure-s);
+
+    p {
+      margin: 0;
+    }
+  }
+
+  label {
+    font-weight: var(--weight-medium);
+  }
+
+  input {
+    padding: 0.9em 1em;
+    border: var(--border-hairline) solid var(--color-grey-500);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-white);
+    font-size: var(--text-field);
+  }
+
+  input[aria-invalid='true'] {
+    border-color: var(--color-text);
+    border-width: var(--border-thin);
+  }
+
+  .client-gallery__error {
+    padding: 0.8em 1em;
+    border-left: var(--border-thin) solid var(--color-purple-dark);
+    background-color: var(--color-white);
+  }
+
+  .client-gallery__button {
+    justify-self: start;
+    display: inline-block;
+    padding: 0.9em 2.8em;
+    border: 0;
+    border-radius: var(--radius-button);
+    background-color: var(--color-text);
+    color: var(--color-white);
+    font-family: var(--font-body);
+    font-size: var(--text-small);
+    letter-spacing: var(--tracking-caps);
+    text-decoration: none;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .client-gallery__button:hover {
+    background-color: var(--color-grey-950);
+  }
+
+  .client-gallery__size {
+    text-transform: none;
+  }
+
+  .client-gallery__download {
+    margin: 0 0 var(--space-sm);
+  }
+
+  /* Masonry by columns: photos keep their own shape, top to bottom then across. */
+  .client-gallery__grid {
+    columns: 3 var(--grid-min-l);
+    column-gap: var(--gallery-gutter);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      margin-bottom: var(--gallery-gutter);
+      break-inside: avoid;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: var(--radius-media);
+    }
+  }
+</style>

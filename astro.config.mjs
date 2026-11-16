@@ -6,7 +6,7 @@ import sitemap from '@astrojs/sitemap';
 const SITE = 'https://bayagardenstudio.com';
 
 /** URLs that exist but must stay out of search (noindex on the live site). */
-const EXCLUDE_FROM_SITEMAP = ['/book-a-meeting/', '/gallery/', '/design-system/'];
+const EXCLUDE_FROM_SITEMAP = ['/book-a-meeting/', '/gallery/', '/design-system/', '/thank-you/'];
 
 const font = (name, file, weight, style = 'normal') => ({
   weight,

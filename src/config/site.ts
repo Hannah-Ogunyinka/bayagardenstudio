@@ -68,3 +68,10 @@ export const FOOTER_LINKS = {
     { label: 'Cookie Policy', href: '/cookie-policy/' },
   ],
 } as const satisfies Record<string, readonly NavItem[]>;
+
+/**
+ * Cloudflare Turnstile site key (public). Set PUBLIC_TURNSTILE_SITE_KEY in the
+ * build environment; without it the forms use Cloudflare's always-pass test key,
+ * which only works with the matching test secret in local development.
+ */
+export const TURNSTILE_SITE_KEY: string = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA';

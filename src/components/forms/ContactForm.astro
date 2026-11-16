@@ -2,8 +2,11 @@
 /**
  * Project enquiry form. Posts to the on-demand /api/contact/ endpoint, which
  * validates with Zod, verifies Turnstile and sends the enquiry through Amazon SES.
- * Works without JavaScript; with JavaScript it submits in place and announces the result.
+ * With JavaScript (src/scripts/forms.ts) it submits in place and announces the result.
+ * Without it the form still posts, but Turnstile needs JavaScript, so the
+ * server explains and offers the email address instead.
  */
+import { TURNSTILE_SITE_KEY } from '@config/site';
 const services = [
   'Website Design and Development',
   'Email Marketing and Growth Strategy',
@@ -13,7 +16,15 @@ const services = [
 ] as const;
 ---
 
-<form class="contact-form" method="post" action="/api/contact/" data-ajax-form novalidate>
+<form
+  class="contact-form"
+  method="post"
+  action="/api/contact/"
+  data-enhanced-form
+  data-sitekey={TURNSTILE_SITE_KEY}
+  data-invalid-message="Please fill in the fields marked as required, and choose at least one service."
+  novalidate
+>
   <div class="contact-form__row">
     <div class="field">
       <label for="contact-first-name">First name <span aria-hidden="true">*</span></label>
@@ -30,7 +41,7 @@ const services = [
     <input id="contact-email" name="email" type="email" autocomplete="email" required placeholder=" " />
   </div>
 
-  <fieldset class="contact-form__options">
+  <fieldset class="contact-form__options" data-require-one="services">
     <legend>What would you like help with? <span aria-hidden="true">*</span></legend>
     {
       services.map((service, index) => (
@@ -53,12 +64,17 @@ const services = [
     <input id="contact-website" name="website" type="text" tabindex="-1" autocomplete="off" />
   </div>
 
-  <div class="cf-turnstile" data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY} data-theme="light"></div>
+  <div class="contact-form__turnstile" data-turnstile></div>
 
   <button type="submit">Submit form</button>
   <p class="contact-form__status" role="status" aria-live="polite" data-form-status></p>
   <p class="contact-form__note">Fields marked * are required.</p>
 </form>
+
+<script>
+  import { initForms } from '../../scripts/forms';
+  initForms();
+</script>
 
 <style>
   .contact-form {
@@ -154,6 +170,16 @@ const services = [
     width: 0.9em;
     height: 0.9em;
     accent-color: var(--color-purple-dark);
+  }
+
+  .contact-form__turnstile:empty {
+    display: none;
+  }
+
+  .field:has([aria-invalid='true']) input,
+  .field:has([aria-invalid='true']) textarea,
+  .contact-form__options[aria-invalid='true'] {
+    outline: var(--border-thin) solid var(--color-purple-dark);
   }
 
   .hp {
