@@ -1,6 +1,6 @@
 ---
 /**
- * Header shared by the Build, Support and Grow pages: a purple eyebrow
+ * Header shared by the Build, Support, Grow and Projects pages: a purple eyebrow
  * between rules, the service name set very large, then the intro line.
  * An optional "action" slot (e.g. a "View prices" button) sits to the right.
  */
@@ -10,17 +10,21 @@ interface Props {
   intro: string;
   /** "small" for the Support page, whose title is a step smaller on the live site. */
   size?: 'large' | 'small';
+  /** Adds a rule under the intro, as on the Projects page. */
+  ruled?: boolean;
+  /** "wide" lets the intro run to about 24em (480px), as on the Projects page. */
+  introWidth?: 'default' | 'wide';
 }
 
-const { eyebrow, title, intro, size = 'large' } = Astro.props;
+const { eyebrow, title, intro, size = 'large', ruled = false, introWidth = 'default' } = Astro.props;
 const hasAction = Astro.slots.has('action');
 ---
 
 <header class="service-hero">
   <p class="service-hero__eyebrow">{eyebrow}</p>
   <h1 class:list={[`service-hero__title--${size}`]}>{title}</h1>
-  <div class:list={['service-hero__foot', { 'service-hero__foot--action': hasAction }]}>
-    <p class="service-hero__intro">{intro}</p>
+  <div class:list={['service-hero__foot', { 'service-hero__foot--action': hasAction, 'service-hero__foot--ruled': ruled }]}>
+    <p class:list={['service-hero__intro', { 'service-hero__intro--wide': introWidth === 'wide' }]}>{intro}</p>
     {hasAction && <div class="service-hero__action"><slot name="action" /></div>}
   </div>
 </header>
@@ -57,8 +61,15 @@ const hasAction = Astro.slots.has('action');
   }
 
   .service-hero__title--small {
-    margin-bottom: var(--stack-s);
     font-size: var(--text-display-sm);
+  }
+
+  .service-hero__intro.service-hero__intro--wide {
+    max-width: 24.2em;
+  }
+
+  .service-hero__foot--ruled {
+    border-bottom: var(--border-hairline) solid var(--color-grey-400);
   }
 
   .service-hero__foot {
@@ -86,12 +97,6 @@ const hasAction = Astro.slots.has('action');
 
   .service-hero__foot--action .service-hero__intro {
     padding-block: var(--space-sm);
-  }
-
-  /* The live "View prices" button is slimmer than the standard button. */
-  .service-hero__action :global(.button) {
-    padding: 0.8em 2em;
-    font-weight: var(--weight-medium);
   }
 
   /* As on the live site, the button sits at the bottom left of its ruled cell. */

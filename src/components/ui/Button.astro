@@ -4,6 +4,7 @@
  * - "fill": solid green (primary call to action)
  * - "outline": purple outline (secondary, e.g. Menu / Close)
  * - "dark": dark grey fill (newsletter, contact submit)
+ * Sizes: "default", or "slim" (shorter, medium weight: "View prices", "View project").
  */
 import Arrow from '@assets/icons/arrow.svg';
 import type { HTMLAttributes } from 'astro/types';
@@ -12,12 +13,13 @@ type Props = HTMLAttributes<'a'> & {
   href: string;
   variant?: 'fill' | 'outline' | 'purple' | 'light' | 'ghost' | 'dark';
   arrow?: boolean;
+  size?: 'default' | 'slim';
 };
 
-const { href, variant = 'fill', arrow = false, class: className, ...rest } = Astro.props;
+const { href, variant = 'fill', arrow = false, size = 'default', class: className, ...rest } = Astro.props;
 ---
 
-<a href={href} class:list={['button', `button--${variant}`, className]} {...rest}>
+<a href={href} class:list={['button', `button--${variant}`, { 'button--slim': size === 'slim' }, className]} {...rest}>
   <span><slot /></span>
   {arrow && <Arrow class="button__icon" aria-hidden="true" width={18} height={18} />}
 </a>
@@ -42,6 +44,11 @@ const { href, variant = 'fill', arrow = false, class: className, ...rest } = Ast
       background-color 0.2s ease-in-out,
       color 0.2s ease-in-out,
       box-shadow 0.2s ease-in-out;
+  }
+
+  .button--slim {
+    padding: 0.8em 2em;
+    font-weight: var(--weight-medium);
   }
 
   .button--fill {

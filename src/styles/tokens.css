@@ -224,6 +224,7 @@
   --border-hairline: 1px;
   --border-thin: 2px;
   --border-frame: 8px;                  /* white frame around showcase media */
+  --border-showcase: 19px;              /* dark frame around project cards */
 
   --radius-xs: 0.25rem;                 /* inputs, focus rings */
   --radius-s: 0.625rem;                 /* package cards (10px) */

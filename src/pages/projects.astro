@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
+import ServiceHero from '@components/services/ServiceHero.astro';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Button from '@components/ui/Button.astro';
 import CtaBanner from '@components/ui/CtaBanner.astro';
@@ -38,15 +39,15 @@ const cards: Card[] = [
   title="Projects"
   description="In this space you’ll find a selection of projects worked on by Baya Garden studio. Whether it’s design, strategy or integration with third party applications,"
 >
+  <ServiceHero
+    eyebrow="Selection of work"
+    title="Projects"
+    size="small"
+    ruled
+    introWidth="wide"
+    intro="In this space you’ll find a selection of projects worked on by Baya Garden studio. Whether it’s design, strategy or integration with third party applications, we’ve got you covered."
+  />
   <div class="projects">
-    <header class="projects__header">
-      <p class="eyebrow">Selection of work</p>
-      <h1>Projects</h1>
-      <p class="projects__intro">
-        In this space you’ll find a selection of projects worked on by Baya Garden studio. Whether it’s design, strategy
-        or integration with third party applications, we’ve got you covered.
-      </p>
-    </header>
 
     <ul class="projects__list" role="list">
       {
@@ -59,6 +60,7 @@ const cards: Card[] = [
               <Button
                 href={card.href}
                 variant="dark"
+                size="slim"
                 arrow
                 {...(card.external && { target: '_blank', rel: 'noopener noreferrer' })}
               >
@@ -75,52 +77,27 @@ const cards: Card[] = [
 
 <style>
   .projects {
-    max-width: var(--container-max);
+    max-width: var(--container-wide);
     margin-inline: auto;
-    padding: var(--space-md);
-  }
-
-  .projects__header {
-    padding-bottom: var(--space-md);
-    border-bottom: var(--border-hairline) solid var(--color-grey-400);
-  }
-
-  .eyebrow {
-    padding-top: var(--space-2xs);
-    border-top: var(--border-hairline) solid var(--color-grey-400);
-    color: var(--color-purple-dark);
-    font-family: var(--font-body);
-    font-size: var(--text-small);
-    text-transform: uppercase;
-  }
-
-  h1 {
-    font-size: var(--text-display-sm);
-    font-weight: 700;
-    text-align: center;
-  }
-
-  .projects__intro {
-    max-width: var(--measure-s);
-    font-size: var(--text-small);
+    padding: var(--space-md) var(--space-md) var(--space-xl);
   }
 
   .projects__list {
     display: grid;
+    margin: 0;
+    padding: var(--space-xl) 0 0;
     gap: var(--space-md);
-    margin: var(--space-md) 0 0;
-    padding: 0;
     list-style: none;
   }
 
+  /* Thick dark frame, as on the live site; the image fills the left half. */
   .card {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--space-md);
     align-items: center;
-    padding: var(--space-2xs);
-    border: var(--border-frame) solid var(--color-text);
-    border-radius: var(--radius-card);
+    border: var(--border-showcase) solid var(--color-text);
+    border-radius: 1.8em;
+    box-shadow: var(--shadow-photo);
 
     @media (--md-down) {
       grid-template-columns: 1fr;
@@ -128,23 +105,35 @@ const cards: Card[] = [
   }
 
   .card__image {
+    display: block;
     width: 100%;
+    height: auto;
     aspect-ratio: 16 / 9;
     object-fit: cover;
-    border-radius: var(--radius-ms);
+    border-radius: 1.2em;
+
+    /* Stacked on phones, the image sits inset in its own panel. */
+    @media (--md-down) {
+      width: calc(100% - 2em);
+      margin: 1em;
+    }
+  }
+
+  .card__text {
+    padding: var(--space-md);
   }
 
   h2 {
-    margin-bottom: var(--space-2xs);
+    margin: 0;
     font-family: var(--font-heading);
-    font-size: var(--text-h2-alt);
-    font-weight: 700;
-    line-height: 1.1;
+    font-size: var(--text-h2);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-tight);
     text-transform: none;
   }
 
   .card__text p {
-    max-width: var(--measure-xs);
-    font-size: var(--text-ui);
+    max-width: 19em;
+    margin: var(--stack-s) 0 var(--space-sm);
   }
 </style>
