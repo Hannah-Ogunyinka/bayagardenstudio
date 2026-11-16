@@ -2,7 +2,7 @@
 /**
  * Builds the GALLERY_PASSWORDS secret: a JSON map of gallery slug → SHA-256("slug:password").
  *
- *   node scripts/gallery-passwords.mjs passwords.csv     # lines of: slug,password
+ *   node scripts/gallery-passwords.mjs passwords.csv     # slug,password (or a header row with "gallery"/"slug" and "password" columns)
  *   node scripts/gallery-passwords.mjs local.sql         # WordPress dump: reads each gallery's post password
  *
  * Then store it (the plain passwords never leave your computer):
@@ -59,9 +59,14 @@ if (/\.sql$/i.test(file)) {
     if (slugs.has(name) && password && status !== 'inherit') passwords.set(name, password);
   }
 } else {
-  for (const line of source.split(/\r?\n/)) {
-    const [slug, ...rest] = line.split(',');
-    if (slug && slugs.has(slug.trim())) passwords.set(slug.trim(), rest.join(',').trim());
+  const lines = source.split(/\r?\n/).filter(Boolean);
+  const header = lines[0].toLowerCase().split(',').map((h) => h.trim());
+  const hasHeader = header.includes('password');
+  const slugCol = hasHeader ? Math.max(header.indexOf('gallery'), header.indexOf('slug')) : 0;
+  const pwCol = hasHeader ? header.indexOf('password') : 1;
+  for (const line of hasHeader ? lines.slice(1) : lines) {
+    const cells = line.split(',').map((c) => c.trim());
+    if (slugs.has(cells[slugCol]) && cells[pwCol]) passwords.set(cells[slugCol], cells[pwCol]);
   }
 }
 

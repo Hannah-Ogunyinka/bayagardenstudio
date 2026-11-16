@@ -18,8 +18,8 @@ Set the public Turnstile site key as `PUBLIC_TURNSTILE_SITE_KEY` in the build en
 **Galleries**
 
 1. Upload photos and zips once: `node scripts/upload-galleries.mjs <wp-content/uploads folder>`.
-2. Set passwords: `node scripts/gallery-passwords.mjs local.sql | npx wrangler secret put GALLERY_PASSWORDS`
-   (or pass a `slug,password` CSV). Only hashes are stored.
+2. Set passwords: `node scripts/gallery-passwords.mjs gallery-passwords.csv | npx wrangler secret put GALLERY_PASSWORDS`
+   (a CSV with `gallery` and `password` columns, or a WordPress SQL dump). Only hashes are stored.
 3. Set a cookie secret once: `openssl rand -hex 32 | npx wrangler secret put GALLERY_COOKIE_SECRET`.
 
 To add a gallery, add it to `src/data/galleries.json`, upload its files and re-run step 2.
