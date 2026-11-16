@@ -18,7 +18,10 @@ const [post] = await getPosts();
             <a href={postUrl(post)}>{post.data.title}</a>
           </h3>
         </div>
-        <Image src={post.data.image.src} alt="" widths={[480, 800, 1200]} sizes={`${MQ.mdDown} 100vw, 55vw`} />
+        {/* Image repeats the title link for mouse users; hidden from keyboards and screen readers so the link is announced once. */}
+        <a href={postUrl(post)} class="featured__media" tabindex="-1" aria-hidden="true">
+          <Image src={post.data.image.src} alt="" widths={[480, 800, 1200]} sizes={`${MQ.mdDown} 100vw, 55vw`} />
+        </a>
       </article>
     </section>
   )
@@ -36,7 +39,6 @@ const [post] = await getPosts();
   }
 
   .featured__card {
-    position: relative;
     display: grid;
     grid-template-columns: 2fr 3fr;
     gap: var(--space-md);
@@ -45,11 +47,6 @@ const [post] = await getPosts();
     @media (--md-down) {
       grid-template-columns: 1fr;
     }
-  }
-
-  .featured__text :global(.category-tag) {
-    position: relative;
-    z-index: 1;
   }
 
   h3 {
@@ -66,14 +63,13 @@ const [post] = await getPosts();
     text-decoration: none;
   }
 
-  h3 a::after {
-    position: absolute;
-    inset: 0;
-    content: '';
+  h3 a:hover,
+  .featured__card:has(.featured__media:hover) h3 a {
+    color: var(--color-purple);
   }
 
-  .featured__card:hover h3 a {
-    color: var(--color-purple);
+  .featured__media {
+    display: block;
   }
 
   .featured__card :global(img) {

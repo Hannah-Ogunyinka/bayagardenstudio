@@ -15,13 +15,16 @@ const [category] = post.data.categories;
 ---
 
 <article class="post-card">
-  <Image
-    src={post.data.image.src}
-    alt=""
-    widths={[320, 480, 640]}
-    sizes={`${MQ.smDown} 100vw, ${MQ.lgDown} 50vw, 33vw`}
-    class="post-card__image"
-  />
+  {/* Repeats the title link for mouse users only, so it is announced once. */}
+  <a href={postUrl(post)} class="post-card__media" tabindex="-1" aria-hidden="true">
+    <Image
+      src={post.data.image.src}
+      alt=""
+      widths={[320, 480, 640]}
+      sizes={`${MQ.smDown} 100vw, ${MQ.lgDown} 50vw, 33vw`}
+      class="post-card__image"
+    />
+  </a>
   {category && <CategoryTag name={category} />}
   <Heading class="post-card__title">
     <a href={postUrl(post)}>{post.data.title}</a>
@@ -31,8 +34,8 @@ const [category] = post.data.categories;
 <style>
   /* Block flow, as in the theme's query loop: the image keeps 1em below it
      and the title 1em (of its own size) above and below. */
-  .post-card {
-    position: relative;
+  .post-card__media {
+    display: block;
   }
 
   .post-card__image {
@@ -46,9 +49,6 @@ const [category] = post.data.categories;
   }
 
   .post-card :global(.category-tag) {
-    position: relative;
-    z-index: 1;
-
     /* As in the theme, the tag gains space above it on phones and small tablets. */
     @media (--md-down) {
       margin-top: var(--space-sm);
@@ -69,14 +69,8 @@ const [category] = post.data.categories;
     text-decoration: none;
   }
 
-  /* Whole card is clickable, but only the title is announced as the link. */
-  .post-card__title a::after {
-    position: absolute;
-    inset: 0;
-    content: '';
-  }
-
-  .post-card:hover .post-card__title a {
+  .post-card__title a:hover,
+  .post-card:has(.post-card__media:hover) .post-card__title a {
     color: var(--color-purple);
   }
 </style>

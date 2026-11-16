@@ -27,14 +27,17 @@ const [featured] = posts;
               <time datetime={featured.data.published.toISOString()}>{formatDate(featured.data.published)}</time>
             </p>
           </div>
-          <Image
-            src={featured.data.image.src}
-            alt=""
-            widths={[480, 720, 960]}
-            sizes={`${MQ.mdDown} 100vw, 50vw`}
-            loading="eager"
-            class="featured__image"
-          />
+          {/* Repeats the title link for mouse users only, so it is announced once. */}
+          <a href={postUrl(featured)} class="featured__media" tabindex="-1" aria-hidden="true">
+            <Image
+              src={featured.data.image.src}
+              alt=""
+              widths={[480, 720, 960]}
+              sizes={`${MQ.mdDown} 100vw, 50vw`}
+              loading="eager"
+              class="featured__image"
+            />
+          </a>
         </article>
       )
     }
@@ -73,7 +76,6 @@ const [featured] = posts;
   }
 
   .featured {
-    position: relative;
     display: grid;
     grid-template-columns: 2fr 3fr;
     gap: var(--space-md);
@@ -113,19 +115,13 @@ const [featured] = posts;
     text-decoration: none;
   }
 
-  .featured h2 a::after {
-    position: absolute;
-    inset: 0;
-    content: '';
-  }
-
-  .featured:hover h2 a {
+  .featured h2 a:hover,
+  .featured:has(.featured__media:hover) h2 a {
     color: var(--color-purple);
   }
 
-  .featured :global(.category-tag) {
-    position: relative;
-    z-index: 1;
+  .featured__media {
+    display: block;
   }
 
   .featured p {
