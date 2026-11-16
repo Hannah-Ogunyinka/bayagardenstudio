@@ -171,10 +171,12 @@ import { MQ } from '@config/breakpoints';
     text-transform: none;
   }
 
+  /* Theme columns 33.38% / 33% / 33.62% with a 3vw gap; WordPress shrinks
+     them in proportion, which is what these fr values give. */
   .about__story {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    column-gap: 3.4%;
+    grid-template-columns: 33.38fr 33fr 33.62fr;
+    column-gap: 3vw;
     align-items: start;
 
     @media (--md-down) {
@@ -195,8 +197,9 @@ import { MQ } from '@config/breakpoints';
     border-radius: var(--radius-panel);
   }
 
+  /* The theme drops the first photo by about 3vw. */
   .about__photo--offset {
-    margin-top: calc(var(--space-lg) + var(--border-hairline));
+    margin-top: 3vw;
 
     @media (--md-down) {
       margin-top: 0;
@@ -218,35 +221,44 @@ import { MQ } from '@config/breakpoints';
     }
   }
 
+  /* Theme columns 69% / 33% with a 3vw gap, shrunk in proportion. */
   .about__lean {
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    column-gap: 3.4%;
+    grid-template-columns: 69fr 33fr;
+    column-gap: 3vw;
     align-items: center;
 
     @media (--md-down) {
       grid-template-columns: 1fr;
     }
 
+    /* Never stretched past the photo's own 1024px, as on the live site;
+       only the text column is centred. */
     :global(img) {
       display: block;
+      align-self: start;
       width: 100%;
+      max-width: var(--photo-lean-max);
       height: auto;
       aspect-ratio: 3 / 2;
       object-fit: cover;
       border-radius: var(--radius-panel);
     }
 
+    /* Theme: the heading's small gap plus a 2vw block gap above the text. */
     h2 {
-      margin-bottom: calc(var(--stack-s) + var(--space-lg) * 0.6);
+      margin-bottom: calc(var(--space-sm) + 2vw);
       line-height: var(--leading-heading);
     }
   }
 
+  /* Theme: 407px wide at a 2.96 ratio, contained, one small gap below the text. */
   .about__signature {
     display: block;
     width: min(100%, 25.4rem); /* token-exempt: signature artwork width */
     height: auto;
-    margin: var(--space-md) auto 0;
+    aspect-ratio: 2.96; /* token-exempt: theme's signature box */
+    object-fit: contain;
+    margin: var(--space-sm) auto 0;
   }
 </style>

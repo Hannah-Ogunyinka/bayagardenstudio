@@ -180,6 +180,7 @@
   --measure-plan: 25rem;                /* 400px: pricing plan cards */
   --plan-column: 26.625rem;             /* 426px: care plan column holding one card */
   --measure-project: 23.75rem;          /* 380px: project card summaries */
+  --photo-lean-max: 64rem;              /* 1024px: About page photo's natural width */
   --measure-photo: 43.75rem;            /* 700px: photography panel */
 
   /* --------------------------------------------------------------- Space */
