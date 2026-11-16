@@ -131,6 +131,7 @@
   --measure-xl: 48rem;
   --measure-2xl: 52rem;
   --measure-prose: 32rem;               /* post body column, as on the live site */
+  --measure-intro: 37.5rem;             /* 600px: centred page intros */
   --measure-cta: 40.625rem;             /* 650px: call-to-action headings */
   --measure-plan: 25rem;                /* 400px: pricing plan cards */
   --measure-photo: 43.75rem;            /* 700px: photography panel */
@@ -158,6 +159,7 @@
   /* -------------------------------------------------------------- Layout */
   --container-max: 81.25rem;            /* 1300px: most content */
   --container-content: 80rem;           /* 1280px: home page sections */
+  --container-cards: 78.75rem;          /* 1260px: package cards */
   --container-split: 67.5rem;           /* 1080px: two-column copy on service pages */
   --container-wide: 120rem;             /* 1920px: full-bleed bands */
   /* Side gap for panels: the page gutter, growing past 1920px so the panel stays 1920px wide and centred. */
@@ -194,7 +196,7 @@
   --border-frame: 8px;                  /* white frame around showcase media */
 
   --radius-xs: 0.25rem;                 /* inputs, focus rings */
-  --radius-s: 0.375rem;                 /* package cards */
+  --radius-s: 0.625rem;                 /* package cards (10px) */
   --radius-sm: 0.5rem;                  /* tags, author box, form fields */
   --radius-ms: 0.75rem;                 /* project thumbnails */
   --radius-m: 1rem;                     /* small rounded images */
@@ -224,7 +226,7 @@
   --shadow-deep: 12px 12px 50px rgb(0 0 0 / 40%);
   --shadow-float: -6px 6px 10px 0 rgb(0 0 0 / 25%);
   --shadow-lift: -6px 10px 12px rgb(0 0 0 / 25%);
-  --shadow-photo: 0 6px 16px rgb(0 0 0 / 30%);
+  --shadow-photo: 6px 6px 9px rgb(0 0 0 / 20%);
   --shadow-footer: -6px 15px 12px 0 rgb(0 0 0 / 25%);
 
   /* -------------------------------------------------------------- Motion */
