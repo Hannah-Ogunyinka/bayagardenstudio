@@ -4,11 +4,16 @@
  * gently around it (animation carried over from the WordPress theme).
  * The images are decorative, so they are hidden from screen readers.
  */
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
+import { MQ } from '@config/breakpoints';
 import tabletGreenWide from '@assets/images/home/hero-tablet-green-wide.webp';
 import tabletPurple from '@assets/images/home/hero-tablet-purple.webp';
 import mobileRed from '@assets/images/home/hero-mobile-red.webp';
 import tabletGreen from '@assets/images/home/hero-tablet-green.webp';
+import tabletPurpleMobile from '@assets/images/home/hero-tablet-purple-mobile.webp';
+
+// On phones the live site swaps the purple tablet for a cropped site thumbnail.
+const purpleMobile = await getImage({ src: tabletPurpleMobile, widths: [400, 800], format: 'webp' });
 ---
 
 <section class="hero" aria-labelledby="hero-title">
@@ -23,7 +28,10 @@ import tabletGreen from '@assets/images/home/hero-tablet-green.webp';
     </div>
 
     <div class="hero__float hero__float--right" aria-hidden="true">
-      <Image src={tabletPurple} alt="" widths={[400, 800, 1024]} sizes="50rem" loading="eager" />
+      <picture>
+        <source media={MQ.smDown} srcset={purpleMobile.srcSet.attribute} sizes="100vw" />
+        <Image src={tabletPurple} alt="" widths={[400, 800, 1024]} sizes="50rem" loading="eager" />
+      </picture>
     </div>
   </div>
 
@@ -47,7 +55,9 @@ import tabletGreen from '@assets/images/home/hero-tablet-green.webp';
     display: grid;
     /* minmax(0, …) lets the floating images overflow (and be clipped) without widening the grid. */
     grid-template-columns: 17.5% minmax(0, 1fr) 17.5%;
+    max-width: var(--container-wide);
     max-height: var(--hero-max-height);
+    margin-inline: auto;
     padding-bottom: var(--space-lg);
 
     @media (--2xl-up) {
@@ -113,7 +123,8 @@ import tabletGreen from '@assets/images/home/hero-tablet-green.webp';
   .hero__float--right {
     width: clamp(20rem, 12.6rem + 37vw, 50rem); /* token-exempt: artwork position from the live theme */
     left: clamp(2rem, 13rem - 14vw, 12rem); /* token-exempt: artwork position from the live theme */
-    padding-top: var(--space-md);
+    /* Sits on the bottom of the row, as on the live site. */
+    align-self: end;
 
     :global(img) {
       animation-duration: 6500ms;
@@ -145,11 +156,13 @@ import tabletGreen from '@assets/images/home/hero-tablet-green.webp';
     }
   }
 
+  /* Three equal columns, capped at 1920px: the photos hang off the first two. */
   .hero__bottom {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: var(--container-wide);
     height: 26em;
-    justify-content: space-between;
-    overflow-x: clip;
+    margin-inline: auto;
 
     @media (--lg-down) {
       display: none;
@@ -169,7 +182,7 @@ import tabletGreen from '@assets/images/home/hero-tablet-green.webp';
   .hero__float--bottom-right {
     width: 34em;
     top: 3rem; /* token-exempt: artwork position from the live theme */
-    left: 6rem; /* token-exempt: artwork position from the live theme */
+    left: 15rem; /* token-exempt: artwork position from the live theme */
 
     :global(img) {
       animation-delay: 540ms;

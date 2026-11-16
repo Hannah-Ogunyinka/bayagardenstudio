@@ -26,8 +26,7 @@ const {
 <style>
   .cta {
     display: grid;
-    max-width: calc(var(--container-wide) - 2 * var(--space-md));
-    margin: var(--space-md);
+    margin: var(--space-md) var(--inset-band);
     padding: var(--space-md) var(--space-sm);
     justify-items: center;
     gap: var(--space-md);
@@ -35,9 +34,6 @@ const {
     background-color: var(--color-text);
     text-align: center;
 
-    @media (--3xl-up) {
-      margin-inline: auto;
-    }
   }
 
   h2 {

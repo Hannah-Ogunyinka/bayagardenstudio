@@ -16,5 +16,6 @@ export const MQ = {
   xlDown: '(width < 77em)',
   x2xlUp: '(width > 90em)',
   x2xlDown: '(width <= 90em)',
-  x3xlUp: '(width >= 120em)',
+  x3xlUp: '(width > 120em)',
+  x3xlDown: '(width <= 120em)',
 } as const;

@@ -31,4 +31,5 @@
 @custom-media --xl-down (width < 77em);
 @custom-media --2xl-up (width > 90em);
 @custom-media --2xl-down (width <= 90em);
-@custom-media --3xl-up (width >= 120em);
+@custom-media --3xl-up (width > 120em);
+@custom-media --3xl-down (width <= 120em);

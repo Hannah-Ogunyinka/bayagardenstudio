@@ -23,21 +23,21 @@ const background = await getImage({ src: desk, width: 1920, format: 'webp', qual
 
 <style>
   .mission {
-    max-width: calc(var(--container-wide) - 2 * var(--space-md));
-    margin: 0 var(--space-md);
+    margin-inline: var(--inset-band);
     border-radius: 1em;
     background: var(--mission-bg) center / cover;
-
-    @media (--3xl-up) {
-      margin-inline: auto;
-    }
   }
 
   .mission__overlay {
     position: relative;
     display: flex;
-    min-height: 75vh;
     max-height: var(--hero-max-height);
+
+    /* Past 1920px the live site lets the panel shrink to its content. */
+    @media (--3xl-down) {
+      min-height: 75vh;
+    }
+
     align-items: center;
     justify-content: flex-end;
     padding: var(--space-xl) var(--space-md);
@@ -54,12 +54,14 @@ const background = await getImage({ src: desk, width: 1920, format: 'webp', qual
     position: absolute;
     bottom: var(--space-xl);
     left: var(--space-md);
-    width: clamp(6rem, 13vw + 3rem, 15rem); /* token-exempt: stamp size from the live theme */
+    /* A fifth of the panel, as on the live site; never smaller than 6rem. */
+    width: max(6rem, 20% - 2.2rem); /* token-exempt: stamp size from the live theme */
     color: var(--color-white);
     animation: rotate 7s linear infinite;
 
     @media (--md-down) {
       position: static;
+      align-self: flex-start;
       margin-bottom: var(--space-md);
     }
   }

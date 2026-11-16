@@ -41,24 +41,27 @@ import { MQ } from '@config/breakpoints';
 <style>
   .brand {
     margin-bottom: var(--space-xl);
-    padding: var(--space-lg);
-    background-color: var(--color-text);
   }
 
+  /* The dark panel stops at 1920px on very wide screens, as on the live site. */
   .brand__inner {
+    padding: var(--space-lg);
+    background-color: var(--color-text);
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: var(--space-md);
     max-width: var(--container-wide);
     margin-inline: auto;
-    align-items: center;
 
     @media (--md-down) {
       grid-template-columns: 1fr;
     }
   }
 
+  /* The text runs from the top; the photos sit on the bottom edge. */
   .brand__photos {
+    align-self: end;
+
     @media (--md-down) {
       order: -1;
     }

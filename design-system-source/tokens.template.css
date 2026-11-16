@@ -160,6 +160,8 @@
   --container-content: 80rem;           /* 1280px: home page sections */
   --container-split: 67.5rem;           /* 1080px: two-column copy on service pages */
   --container-wide: 120rem;             /* 1920px: full-bleed bands */
+  /* Side gap for panels: the page gutter, growing past 1920px so the panel stays 1920px wide and centred. */
+  --inset-band: max(var(--space-md), (100% - var(--container-wide)) / 2);
   --container-l: 75rem;                 /* 1200px: featured images */
   --container-m: 68.75rem;              /* 1100px: card grids, embeds */
   --container-s: 60rem;                 /* 960px: archives */
@@ -182,6 +184,7 @@
   --avatar-size: 3rem;                  /* 48px */
   --icon-feature: 2rem;                 /* 32px service icons */
   --icon-social: 1.25rem;               /* 20px */
+  --icon-offer: 3.75rem;                /* 60px home offer icons */
   --badge-size: 12.5rem;                /* 200px footer badge */
   --thumb-max-height: 17.5rem;          /* 280px footer thumbnails */
 
