@@ -59,17 +59,16 @@ const defaultCategory = PHOTO_CATEGORIES[0];
 
 <style>
   .gallery {
-    --gutter: 1rem; /* token-exempt: live gallery gutter (16px) */
     max-width: var(--container-wide);
     margin-inline: auto;
-    padding: calc(2 * var(--space-md)) calc(var(--space-md) + var(--gutter) / 2) var(--space-md);
+    padding: calc(2 * var(--space-md)) calc(var(--space-md) + var(--gallery-gutter) / 2) var(--space-md);
   }
 
   .gallery__filters {
     display: flex;
     justify-content: center;
     gap: 0.625rem; /* token-exempt: live filter spacing (10px) */
-    margin-bottom: calc(1.25rem + var(--gutter) / 2); /* token-exempt: live 20px plus the tile inset */
+    margin-bottom: calc(1.25rem + var(--gallery-gutter) / 2); /* token-exempt: live 20px plus the tile inset */
   }
 
   .gallery__filters[hidden] {
@@ -100,7 +99,7 @@ const defaultCategory = PHOTO_CATEGORIES[0];
     margin: 0;
     padding: 0;
     columns: 3;
-    column-gap: var(--gutter);
+    column-gap: var(--gallery-gutter);
     list-style: none;
 
     @media (--sm-down) {
@@ -113,7 +112,7 @@ const defaultCategory = PHOTO_CATEGORIES[0];
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-auto-rows: 1px; /* token-exempt: masonry row unit */
-    column-gap: var(--gutter);
+    column-gap: var(--gallery-gutter);
     columns: auto;
 
     @media (--sm-down) {
@@ -126,7 +125,7 @@ const defaultCategory = PHOTO_CATEGORIES[0];
   }
 
   .gallery__grid li {
-    margin-bottom: var(--gutter);
+    margin-bottom: var(--gallery-gutter);
     break-inside: avoid;
   }
 
