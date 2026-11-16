@@ -39,9 +39,7 @@ const [featured] = posts;
       )
     }
 
-    <hr />
-
-    <section aria-labelledby="further-insights">
+    <section class="further" aria-labelledby="further-insights">
       <h2 id="further-insights" class="insights__subtitle">Further Insights</h2>
       <ul class="insights__grid" role="list">
         {
@@ -57,43 +55,57 @@ const [featured] = posts;
 </BaseLayout>
 
 <style>
+  /* Mirrors the theme's index.html template: medium padding, a 10em title,
+     a 40/60 featured post over a rule, then a three-column query grid. */
   .insights {
+    /* The theme caps the content, not the padded box, at 1920px. */
+    box-sizing: content-box;
     max-width: var(--container-wide);
     margin-inline: auto;
     padding: var(--space-md) var(--space-md) var(--space-xl);
   }
 
   h1 {
-    font-size: var(--text-display-sm);
-    font-weight: 700;
-    line-height: 1.1;
+    margin: 0 0 var(--space-md);
+    font-size: var(--text-insights-title);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-snug);
   }
 
   .featured {
     position: relative;
     display: grid;
-    grid-template-columns: 1fr 1.6fr;
+    grid-template-columns: 2fr 3fr;
     gap: var(--space-md);
     align-items: start;
+    /* The theme's columns block adds 1.75em below itself. */
+    padding-bottom: calc(var(--space-md) + 1.75em);
+    border-bottom: var(--border-hairline) solid var(--color-rule);
 
+    /* Stacked, the theme's columns only keep their horizontal gap. */
     @media (--md-down) {
       grid-template-columns: 1fr;
+      row-gap: 0;
     }
   }
 
   .featured__text {
     display: grid;
-    gap: var(--space-2xs);
+    gap: var(--space-sm);
     justify-items: start;
+
+    /* The theme's category tag gains space above it on phones and small tablets. */
+    @media (--md-down) {
+      padding-top: var(--space-sm);
+    }
   }
 
   .featured h2 {
     margin: 0;
     font-family: var(--font-heading);
-    font-size: var(--text-h3);
-    font-weight: 600;
-    line-height: 1.3;
-    text-transform: none;
+    font-size: var(--text-h2-sm);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-heading);
   }
 
   .featured h2 a {
@@ -117,30 +129,35 @@ const [featured] = posts;
   }
 
   .featured p {
-    font-size: var(--text-small);
+    margin: 0;
   }
 
   .featured__image {
     width: 100%;
-    aspect-ratio: 3 / 2;
-    object-fit: cover;
+    height: auto;
+    border-radius: var(--radius-m);
   }
 
-  hr {
-    margin-block: var(--space-lg);
-    border: 0;
-    border-top: var(--border-hairline) solid var(--color-grey-400);
+  .further {
+    padding-top: var(--space-xl);
   }
 
   .insights__subtitle {
+    margin: 0 0 var(--space-md);
     font-family: var(--font-heading);
-    font-size: var(--text-h2);
-    font-weight: 700;
+    font-size: var(--text-section-title);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-heading);
   }
 
+  /* WordPress grid layout, columnCount 3: three columns until each would be
+     narrower than 12rem, then one. */
   .insights__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--grid-min-m)), 1fr));
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(max(min(var(--grid-min-xs), 100%), (100% - 2 * var(--space-md)) / 3), 1fr)
+    );
     gap: var(--space-md);
     margin: 0;
     padding: 0;

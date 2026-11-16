@@ -105,12 +105,19 @@ const isHome = Astro.url.pathname === '/';
     font-size: var(--text-small);
     font-weight: 500;
     letter-spacing: var(--tracking-caps);
-    line-height: 1;
+    line-height: var(--leading-body);
     text-transform: uppercase;
     cursor: pointer;
     transition:
       background-color 0.2s ease-in-out,
       color 0.2s ease-in-out;
+  }
+
+  /* The theme's outline buttons slim down on small phones. */
+  @media (--xs-down) {
+    .site-header__menu-button {
+      padding: 0.8em 2.4em;
+    }
   }
 
   .site-header__menu-button:hover {

@@ -29,31 +29,38 @@ const [category] = post.data.categories;
 </article>
 
 <style>
+  /* Block flow, as in the theme's query loop: the image keeps 1em below it
+     and the title 1em (of its own size) above and below. */
   .post-card {
     position: relative;
-    display: grid;
-    gap: var(--space-xs);
-    align-content: start;
   }
 
   .post-card__image {
+    display: block;
     width: 100%;
+    height: auto;
+    margin-bottom: 1em;
     aspect-ratio: 3 / 2;
     object-fit: cover;
+    border-radius: var(--radius-sm);
   }
 
   .post-card :global(.category-tag) {
     position: relative;
     z-index: 1;
-    justify-self: start;
+
+    /* As in the theme, the tag gains space above it on phones and small tablets. */
+    @media (--md-down) {
+      margin-top: var(--space-sm);
+    }
   }
 
   .post-card__title {
-    margin: 0;
+    margin: 1em 0;
     font-family: var(--font-heading);
-    font-size: var(--text-ui);
-    font-weight: 600;
-    line-height: 1.3;
+    font-size: var(--text-lead);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-normal);
     text-transform: none;
   }
 
