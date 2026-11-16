@@ -210,8 +210,7 @@
   --hero-max-height: 67.5rem;           /* 1080px: tallest a hero band grows */
   --media-max-height: 40rem;            /* 640px: featured photos */
   --embed-min-height: 40rem;            /* booking calendar */
-  --banner-height: clamp(16rem, 35vw, 32rem);   /* edge-to-edge case study photos */
-  --pair-height: clamp(12rem, 36vw, 32rem);     /* side-by-side case study photos */
+  --ratio-banner: 16 / 7;               /* edge-to-edge case study photos */
   --logo-size: 3.125rem;                /* 50px */
   --avatar-size: 3rem;                  /* 48px */
   --icon-feature: 2rem;                 /* 32px service icons */

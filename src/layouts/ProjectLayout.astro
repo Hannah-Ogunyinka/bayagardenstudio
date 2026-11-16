@@ -5,7 +5,6 @@
  */
 import { Image } from 'astro:assets';
 import BaseLayout from './BaseLayout.astro';
-import CtaBanner from '@components/ui/CtaBanner.astro';
 import type { Project } from '@lib/content';
 import '@styles/prose.css';
 import { MQ } from '@config/breakpoints';
@@ -22,7 +21,7 @@ const { title, description, tagline, services, hero, quote, imageLayout, publish
   <article class="project">
     <header class="project__header">
       <div>
-        <a class="back-link" href="/projects/"><span aria-hidden="true">←</span> Back to projects</a>
+        <a class="back-link" href="/projects/"><span class="back-link__arrow" aria-hidden="true">←</span> Back to projects</a>
         <h1>{title}</h1>
         <p class="project__tagline">{tagline}</p>
       </div>
@@ -39,7 +38,6 @@ const { title, description, tagline, services, hero, quote, imageLayout, publish
       <slot />
     </div>
   </article>
-  <CtaBanner title="Ready to start your own project?" />
 </BaseLayout>
 
 <script>
@@ -55,67 +53,95 @@ const { title, description, tagline, services, hero, quote, imageLayout, publish
 
 <style>
   .project {
-    max-width: var(--container-max);
+    max-width: var(--container-wide);
     margin-inline: auto;
-    padding: var(--space-md);
   }
 
   .project__header {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: var(--space-md);
-    margin-bottom: var(--space-md);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: var(--space-md);
+    padding: var(--space-md) var(--space-md) var(--stack-s);
+
+    @media (--md-down) {
+      grid-template-columns: 1fr;
+      row-gap: var(--space-md);
+    }
   }
 
   .back-link {
-    color: var(--color-text);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--stack-s);
+    margin-bottom: calc(2 * var(--stack-s));
+    color: var(--color-grey-600);
     font-family: var(--font-body);
-    font-size: var(--text-small);
+    font-size: var(--text-body);
+    font-weight: var(--weight-medium);
     text-decoration: none;
     text-transform: uppercase;
   }
 
-  .back-link span {
+  .back-link__arrow {
     color: var(--color-purple);
+    font-size: 1.25em;
   }
 
   h1 {
-    margin: var(--space-3xs) 0;
-    font-size: var(--text-h2-sm);
-    font-weight: 700;
+    margin: 0 0 var(--stack-s);
+    font-size: var(--text-h2-alt);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-snug);
+    text-transform: none;
   }
 
+  /* Bold and over 24px, so the brighter purple passes large-text contrast. */
   .project__tagline {
-    max-width: 16em;
-    color: var(--color-purple-dark);
-    font-size: var(--text-lead);
-    font-weight: 600;
-    line-height: 1.3;
+    max-width: 14.7em;
+    margin: 0;
+    color: var(--color-purple);
+    font-family: var(--font-body);
+    font-size: var(--text-h3);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-heading);
+  }
+
+  .project__header > div:last-child {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+
+    @media (--md-down) {
+      justify-content: flex-start;
+    }
   }
 
   .project__services {
     margin: 0;
     padding: 0;
-    font-size: var(--text-small);
-    font-weight: 600;
+    font-weight: var(--weight-semibold);
     list-style: none;
   }
 
   .project__hero {
-    width: 100%;
+    display: block;
+    width: calc(100% - 2 * var(--space-md));
+    height: auto;
+    margin: calc(2 * var(--stack-s)) var(--space-md) var(--space-md);
     aspect-ratio: 16 / 9;
     object-fit: cover;
   }
 
-  /* Headings sit in the left column, text in the right, images span both. */
+  /*
+   * Case study body: headings (and the client quote) in the left column, text in
+   * the right, with a wide gutter. Photo rows span both columns.
+   */
   .project__body {
     display: grid;
-    grid-template-columns: 1fr 1.1fr;
-    column-gap: var(--space-xl);
+    grid-template-columns: 1fr 1fr;
+    column-gap: calc(3 * var(--space-md));
     align-items: start;
-    padding-block: var(--space-xl);
-    font-size: var(--text-small);
+    padding: var(--space-md);
 
     @media (--md-down) {
       grid-template-columns: 1fr;
@@ -124,31 +150,40 @@ const { title, description, tagline, services, hero, quote, imageLayout, publish
 
   .project__body > :global(*) {
     grid-column: 2;
+    margin: 0 0 var(--stack-s);
 
     @media (--md-down) {
       grid-column: 1;
     }
   }
 
-  .project__body > :global(h2),
-  .project__body > :global(.project__quote) {
+  .project__body > :global(h2) {
     grid-column: 1;
-    margin-top: 0;
-    font-size: var(--text-h2-sm);
+    max-width: 6.8em;
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: var(--text-h2);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-heading);
+    text-transform: capitalize;
+
+    @media (--md-down) {
+      margin-bottom: var(--stack-s);
+    }
   }
 
-  /* Image rows span both columns. */
+  /* Photo rows span both columns, with a section's padding above and below. */
   .project__body > :global(p:has(> img)),
   .project__body > :global(.project-video) {
     grid-column: 1 / -1;
-    margin-block: var(--space-lg);
+    margin-block: var(--space-md);
   }
 
   .project__body :global(img) {
     display: block;
     width: 100%;
+    height: auto;
     margin: 0;
-    border-radius: 0.7em;
   }
 
   /* A lone image sits centred at a comfortable width. */
@@ -165,22 +200,21 @@ const { title, description, tagline, services, hero, quote, imageLayout, publish
   }
 
   .project__body--bleed > :global(p > img:only-child) {
-    height: var(--banner-height);
+    aspect-ratio: var(--ratio-banner);
     object-fit: cover;
-    border-radius: 0;
   }
 
-  /* Two images side by side: narrow and wide. */
+  /* Two images side by side: narrow and wide, each at its own shape. */
   .project__body > :global(p:has(> img + img):not(:has(> img ~ img ~ img))) {
     display: grid;
     grid-template-columns: 1fr 2fr;
+    align-items: start;
     gap: var(--space-md);
-  }
 
-  .project__body > :global(p:has(> img + img):not(:has(> img ~ img ~ img)) > img) {
-    height: var(--pair-height);
-    object-fit: cover;
-    border-radius: 0;
+    @media (--sm-down) {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
   }
 
   /* Three or more images make a two-column showcase grid. */
@@ -191,7 +225,8 @@ const { title, description, tagline, services, hero, quote, imageLayout, publish
   }
 
   /* The client quote sits beside the whole introduction, as on the live site. */
-  .project__quote {
+  .project__body > .project__quote {
+    grid-column: 1;
     grid-row: span 4;
     align-self: center;
     margin: 0;
@@ -202,10 +237,12 @@ const { title, description, tagline, services, hero, quote, imageLayout, publish
   }
 
   .project__quote p {
+    max-width: 11em;
+    margin: 0;
     font-family: var(--font-heading);
-    font-size: var(--text-h3);
-    font-weight: 700;
-    line-height: 1.3;
+    font-size: var(--text-h2-sm);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-heading);
     text-transform: capitalize;
   }
 
@@ -217,6 +254,5 @@ const { title, description, tagline, services, hero, quote, imageLayout, publish
     display: block;
     width: 100%;
     height: auto;
-    border-radius: 0.7em;
   }
 </style>
