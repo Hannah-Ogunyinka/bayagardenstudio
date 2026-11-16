@@ -45,6 +45,8 @@ const projects = defineCollection({
       published: z.coerce.date(),
       updated: z.coerce.date().optional(),
       tagline: z.string(),
+      /** 'wide' gives the tagline a 600px measure and looser leading, as on the iTAV page. */
+      taglineWidth: z.enum(['default', 'wide']).default('default'),
       services: z.array(z.string()).min(1),
       hero: z.object({ src: image(), alt: z.string() }),
       thumbnail: image(),

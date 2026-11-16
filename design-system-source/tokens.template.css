@@ -202,6 +202,7 @@
   --grid-min-s: 11rem;
   --grid-min-m: 15rem;
   --grid-min-l: 20rem;
+  --grid-min-photo: 38rem;              /* 608px: case study photo grid column */
 
   /* Desktop header: the 1.7-line button, its 1.2em padding and border, plus the header padding (98px at 1440). */
   --header-height: calc(var(--text-small) * 4.1 + 2 * var(--border-thin) + 2 * var(--space-sm));

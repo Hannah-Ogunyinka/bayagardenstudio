@@ -5,6 +5,7 @@ published: 2024-10-09
 updated: 2024-10-09
 summary: "Shining a light on unheard creatives and the village that shapes them"
 tagline: "Shining a light on unheard creatives and the village that shapes them"
+taglineWidth: wide
 services: ["Strategy", "Custom Design", "Website development", "Photography"]
 hero:
   src: "../../assets/images/projects/the-itav-film-festival/the-itav-photoshoot-1.jpeg"

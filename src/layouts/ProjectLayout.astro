@@ -8,22 +8,25 @@ import BaseLayout from './BaseLayout.astro';
 import type { Project } from '@lib/content';
 import '@styles/prose.css';
 import { MQ } from '@config/breakpoints';
+import BackLink from '@components/ui/BackLink.astro';
 
 interface Props {
   project: Project;
 }
 
 const { project } = Astro.props;
-const { title, description, tagline, services, hero, quote, imageLayout, published, updated } = project.data;
+const { title, description, tagline, taglineWidth, services, hero, quote, imageLayout, published, updated } = project.data;
 ---
 
 <BaseLayout title={title} description={description} image={hero.src.src} article={{ published, modified: updated }}>
   <article class="project">
     <header class="project__header">
       <div>
-        <a class="back-link" href="/projects/"><span class="back-link__arrow" aria-hidden="true">←</span> Back to projects</a>
+        <div class="project__back">
+          <BackLink href="/projects/" weight="medium">Back to projects</BackLink>
+        </div>
         <h1>{title}</h1>
-        <p class="project__tagline">{tagline}</p>
+        <p class:list={['project__tagline', { 'project__tagline--wide': taglineWidth === 'wide' }]}>{tagline}</p>
       </div>
       <div>
         <h2 class="sr-only">What we delivered</h2>
@@ -31,7 +34,7 @@ const { title, description, tagline, services, hero, quote, imageLayout, publish
       </div>
     </header>
 
-    <Image src={hero.src} alt={hero.alt} widths={[640, 960, 1440, 1920]} sizes={`${MQ.x2xlDown} 100vw, 1440px`} loading="eager" fetchpriority="high" class="project__hero" />
+    <Image src={hero.src} alt={hero.alt} widths={[640, 960, 1440, Math.min(1920, hero.src.width)]} sizes={`${MQ.x2xlDown} 100vw, ${Math.min(1824, hero.src.width)}px`} loading="eager" fetchpriority="high" class="project__hero" />
 
     <div class:list={['project__body', 'prose', `project__body--${imageLayout}`]}>
       {quote && <blockquote class="project__quote"><p>{quote}</p></blockquote>}
@@ -63,28 +66,14 @@ const { title, description, tagline, services, hero, quote, imageLayout, publish
     column-gap: var(--space-md);
     padding: var(--space-md) var(--space-md) var(--stack-s);
 
+    /* Stacked WordPress columns sit flush. */
     @media (--md-down) {
       grid-template-columns: 1fr;
-      row-gap: var(--space-md);
     }
   }
 
-  .back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--stack-s);
+  .project__back {
     margin-bottom: calc(2 * var(--stack-s));
-    color: var(--color-grey-600);
-    font-family: var(--font-body);
-    font-size: var(--text-body);
-    font-weight: var(--weight-medium);
-    text-decoration: none;
-    text-transform: uppercase;
-  }
-
-  .back-link__arrow {
-    color: var(--color-purple);
-    font-size: 1.25em;
   }
 
   h1 {
@@ -97,13 +86,18 @@ const { title, description, tagline, services, hero, quote, imageLayout, publish
 
   /* Bold and over 24px, so the brighter purple passes large-text contrast. */
   .project__tagline {
-    max-width: 14.7em;
+    max-width: 14.7em; /* token-exempt: theme tagline box, about 450px */
     margin: 0;
     color: var(--color-purple);
     font-family: var(--font-body);
     font-size: var(--text-h3);
     font-weight: var(--weight-semibold);
     line-height: var(--leading-heading);
+  }
+
+  .project__tagline--wide {
+    max-width: var(--measure-intro);
+    line-height: var(--leading-snug);
   }
 
   .project__header > div:last-child {
@@ -123,11 +117,13 @@ const { title, description, tagline, services, hero, quote, imageLayout, publish
     list-style: none;
   }
 
+  /* Never stretched past the photo's own width; it stays on the left. */
   .project__hero {
     display: block;
-    width: calc(100% - 2 * var(--space-md));
+    width: auto;
+    max-width: calc(100% - 2 * var(--space-md));
     height: auto;
-    margin: calc(2 * var(--stack-s)) var(--space-md) var(--space-md);
+    margin: calc(2 * var(--stack-s)) var(--space-md) calc(var(--space-md) + var(--stack-s));
     aspect-ratio: 16 / 9;
     object-fit: cover;
   }
@@ -167,8 +163,9 @@ const { title, description, tagline, services, hero, quote, imageLayout, publish
     line-height: var(--leading-heading);
     text-transform: capitalize;
 
+    /* Stacked, the heading sits right on its text, as in the theme. */
     @media (--md-down) {
-      margin-bottom: var(--stack-s);
+      max-width: none;
     }
   }
 
@@ -176,7 +173,7 @@ const { title, description, tagline, services, hero, quote, imageLayout, publish
   .project__body > :global(p:has(> img)),
   .project__body > :global(.project-video) {
     grid-column: 1 / -1;
-    margin-block: var(--space-md);
+    margin-block: var(--space-md) calc(var(--space-md) + var(--stack-s));
   }
 
   .project__body :global(img) {
@@ -217,11 +214,18 @@ const { title, description, tagline, services, hero, quote, imageLayout, publish
     }
   }
 
-  /* Three or more images make a two-column showcase grid. */
+  /* Three or more images: the theme's grid with a 38rem minimum column, so
+     they pair up only on wide screens, with 0.7em corners. */
   .project__body > :global(p:has(> img ~ img ~ img)) {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(min(var(--grid-min-photo), 100%), 1fr));
     gap: var(--space-sm);
+    /* The theme's bento section adds its own x-large padding. */
+    margin-block: calc(var(--space-md) + var(--space-xl)) calc(var(--space-md) + var(--space-xl) + var(--stack-s));
+  }
+
+  .project__body > :global(p:has(> img ~ img ~ img) > img) {
+    border-radius: 0.7em;
   }
 
   /* The client quote sits beside the whole introduction, as on the live site. */
@@ -254,5 +258,7 @@ const { title, description, tagline, services, hero, quote, imageLayout, publish
     display: block;
     width: 100%;
     height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
   }
 </style>
