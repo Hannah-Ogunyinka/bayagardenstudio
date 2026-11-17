@@ -6,6 +6,7 @@
  *   the live site) and photos open in a <dialog> with previous/next and Escape.
  */
 import { Image, getImage } from 'astro:assets';
+import { imageWidths } from '@lib/images';
 import { GALLERY, PHOTO_CATEGORIES } from '@data/photography';
 import { MQ } from '@config/breakpoints';
 
@@ -13,7 +14,7 @@ const photos = await Promise.all(
   GALLERY.map(async (photo, index) => ({
     ...photo,
     index,
-    large: await getImage({ src: photo.image, width: 1200, format: 'webp', quality: 85 }),
+    large: await getImage({ src: photo.image, width: photo.image.width, format: 'webp' }),
   })),
 );
 const defaultCategory = PHOTO_CATEGORIES[0];
@@ -36,7 +37,7 @@ const defaultCategory = PHOTO_CATEGORIES[0];
       photos.map(({ image, alt, category, index, large }) => (
         <li data-category={category}>
           <a href={large.src} data-index={index} aria-label={alt ? `View larger: ${alt}` : `View photo ${index + 1} larger`}>
-            <Image src={image} alt={alt} widths={[300, 480, 640]} sizes={`${MQ.smDown} 50vw, 33vw`} />
+            <Image src={image} alt={alt} widths={imageWidths(image)} sizes={`${MQ.smDown} 50vw, 33vw`} />
           </a>
         </li>
       ))

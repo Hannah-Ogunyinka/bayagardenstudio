@@ -3,7 +3,7 @@ import { getImage } from 'astro:assets';
 import Stamp from '@assets/icons/stamp-mission.svg';
 import desk from '@assets/images/home/mission-desk.jpg';
 
-const background = await getImage({ src: desk, width: 1920, format: 'webp', quality: 82 });
+const background = await getImage({ src: desk, width: Math.min(1920, desk.width), format: 'webp' });
 ---
 
 <section class="mission" aria-labelledby="mission-title" style={`--mission-bg: url('${background.src}')`}>

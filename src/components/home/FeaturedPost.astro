@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import { imageWidths } from '@lib/images';
 import CategoryTag from '@components/posts/CategoryTag.astro';
 import { getPosts, postUrl } from '@lib/content';
 import { MQ } from '@config/breakpoints';
@@ -20,7 +21,7 @@ const [post] = await getPosts();
         </div>
         {/* Image repeats the title link for mouse users; hidden from keyboards and screen readers so the link is announced once. */}
         <a href={postUrl(post)} class="featured__media" tabindex="-1" aria-hidden="true">
-          <Image src={post.data.image.src} alt="" widths={[480, 800, 1200]} sizes={`${MQ.mdDown} 100vw, 55vw`} />
+          <Image src={post.data.image.src} alt="" widths={imageWidths(post.data.image.src)} sizes={`${MQ.mdDown} 100vw, 55vw`} />
         </a>
       </article>
     </section>

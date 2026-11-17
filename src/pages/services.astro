@@ -4,6 +4,7 @@
  * then the Brand Photography panel and the closing call to action.
  */
 import { Image } from 'astro:assets';
+import { imageWidths } from '@lib/images';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Button from '@components/ui/Button.astro';
 import CtaBanner from '@components/ui/CtaBanner.astro';
@@ -60,7 +61,7 @@ const services = [
           <Image
             src={src}
             alt=""
-            widths={[400, 640, 1012]}
+            widths={imageWidths(src)}
             sizes={`${MQ.lgDown} 100vw, 36vw`}
             loading={eager ? 'eager' : 'lazy'}
             class:list={['hero__tile', `hero__tile--${area}`]}

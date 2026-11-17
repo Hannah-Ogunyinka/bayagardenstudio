@@ -5,6 +5,7 @@
  * The images are decorative, so they are hidden from screen readers.
  */
 import { Image, getImage } from 'astro:assets';
+import { imageWidths } from '@lib/images';
 import { MQ } from '@config/breakpoints';
 import tabletGreenWide from '@assets/images/home/hero-tablet-green-wide.webp';
 import tabletPurple from '@assets/images/home/hero-tablet-purple.webp';
@@ -19,7 +20,7 @@ const purpleMobile = await getImage({ src: tabletPurpleMobile, widths: [400, 800
 <section class="hero" aria-labelledby="hero-title">
   <div class="hero__top">
     <div class="hero__float hero__float--left" aria-hidden="true">
-      <Image src={tabletGreenWide} alt="" widths={[400, 640, 960]} sizes="40rem" loading="eager" />
+      <Image src={tabletGreenWide} alt="" widths={imageWidths(tabletGreenWide, 640)} sizes="40rem" loading="eager" />
     </div>
 
     <div class="hero__heading">
@@ -30,17 +31,17 @@ const purpleMobile = await getImage({ src: tabletPurpleMobile, widths: [400, 800
     <div class="hero__float hero__float--right" aria-hidden="true">
       <picture>
         <source media={MQ.smDown} srcset={purpleMobile.srcSet.attribute} sizes="100vw" />
-        <Image src={tabletPurple} alt="" widths={[400, 800, 1024]} sizes="50rem" loading="eager" />
+        <Image src={tabletPurple} alt="" widths={imageWidths(tabletPurple, 800)} sizes="50rem" loading="eager" />
       </picture>
     </div>
   </div>
 
   <div class="hero__bottom" aria-hidden="true">
     <div class="hero__float hero__float--bottom-left">
-      <Image src={mobileRed} alt="" widths={[480, 960]} sizes="30em" />
+      <Image src={mobileRed} alt="" widths={imageWidths(mobileRed)} sizes="39rem" />
     </div>
     <div class="hero__float hero__float--bottom-right">
-      <Image src={tabletGreen} alt="" widths={[544, 1024]} sizes="34em" />
+      <Image src={tabletGreen} alt="" widths={imageWidths(tabletGreen)} sizes="44.5rem" />
     </div>
   </div>
 </section>
