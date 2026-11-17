@@ -4,6 +4,7 @@
  * a bento grid of what's included, then the optional add-ons.
  */
 import { Image } from 'astro:assets';
+import { imageWidths } from '@lib/images';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import CtaBanner from '@components/ui/CtaBanner.astro';
 import ServiceHero from '@components/services/ServiceHero.astro';
@@ -58,7 +59,7 @@ const addOns = [
       <li class="card card--dark card--theme">
         <h3>Custom Theme</h3>
         <p>All websites are built with a custom WordPress theme personalised for your business needs</p>
-        <Image src={yogaTablet} alt="" widths={[400, 640, 1098]} sizes={`${MQ.xlDown} 90vw, 40vw`} class="card__image" />
+        <Image src={yogaTablet} alt="" widths={imageWidths(yogaTablet)} sizes={`${MQ.xlDown} 90vw, 40vw`} class="card__image" />
       </li>
       <li class="card card--images">
         <h3>Optimised Images</h3>

@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig, fontProviders } from 'astro/config';
+import { defineConfig, fontProviders, sharpImageService } from 'astro/config';
 import cloudflare from '@astrojs/cloudflare';
 import sitemap from '@astrojs/sitemap';
 
@@ -35,6 +35,9 @@ export default defineConfig({
   ],
 
   image: {
+    // Sharp's WebP default (quality 80, 4:2:0 chroma) softens fine detail on retina desktops.
+    // 85 with smart subsampling keeps photos crisp at roughly the weight of the WordPress JPEGs.
+    service: sharpImageService({ webp: { quality: 85, smartSubsample: true } }),
     layout: 'constrained',
     responsiveStyles: true,
   },

@@ -1,6 +1,7 @@
 ---
 /** Card used on the Insights page and category archives. */
 import { Image } from 'astro:assets';
+import { imageWidths } from '@lib/images';
 import CategoryTag from './CategoryTag.astro';
 import { postUrl, type Post } from '@lib/content';
 import { MQ } from '@config/breakpoints';
@@ -20,7 +21,7 @@ const [category] = post.data.categories;
     <Image
       src={post.data.image.src}
       alt=""
-      widths={[320, 480, 640]}
+      widths={imageWidths(post.data.image.src)}
       sizes={`${MQ.smDown} 100vw, ${MQ.lgDown} 50vw, 33vw`}
       class="post-card__image"
     />

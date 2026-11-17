@@ -4,6 +4,7 @@
  * into the page, then the three package cards.
  */
 import { Image } from 'astro:assets';
+import { imageWidths } from '@lib/images';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Button from '@components/ui/Button.astro';
 import hero from '@assets/images/packages/hero.jpg';
@@ -78,7 +79,7 @@ const packages: Package[] = [
   <Image
     src={hero}
     alt=""
-    widths={[640, 960, 1200, 1600]}
+    widths={imageWidths(hero)}
     sizes={`${MQ.x2xlDown} 90vw, 1300px`}
     loading="eager"
     fetchpriority="high"

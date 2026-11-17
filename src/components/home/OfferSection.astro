@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import { imageWidths } from '@lib/images';
 import WebDesignIcon from '@assets/icons/icon-web-design.svg';
 import AnalyticsIcon from '@assets/icons/icon-analytics.svg';
 import EmailIcon from '@assets/icons/icon-email-marketing.svg';
@@ -40,7 +41,7 @@ const offers = [
     <Image
       src={template}
       alt="Example website design shown on a tablet: the Kimberley interior design theme"
-      widths={[480, 720, 960]}
+      widths={imageWidths(template)}
       sizes={`${MQ.mdDown} 100vw, 50vw`}
       class="offer__image"
     />

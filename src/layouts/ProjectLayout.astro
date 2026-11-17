@@ -4,6 +4,7 @@
  * then sections laid out with the heading on the left and text on the right.
  */
 import { Image } from 'astro:assets';
+import { imageWidths } from '@lib/images';
 import BaseLayout from './BaseLayout.astro';
 import type { Project } from '@lib/content';
 import '@styles/prose.css';
@@ -34,7 +35,7 @@ const { title, description, tagline, taglineWidth, services, hero, quote, imageL
       </div>
     </header>
 
-    <Image src={hero.src} alt={hero.alt} widths={[640, 960, 1440, Math.min(1920, hero.src.width)]} sizes={`${MQ.x2xlDown} 100vw, ${Math.min(1824, hero.src.width)}px`} loading="eager" fetchpriority="high" class="project__hero" />
+    <Image src={hero.src} alt={hero.alt} widths={imageWidths(hero.src)} sizes={`${MQ.x2xlDown} 100vw, ${Math.min(1824, hero.src.width)}px`} loading="eager" fetchpriority="high" class="project__hero" />
 
     <div class:list={['project__body', 'prose', `project__body--${imageLayout}`]}>
       {quote && <blockquote class="project__quote"><p>{quote}</p></blockquote>}

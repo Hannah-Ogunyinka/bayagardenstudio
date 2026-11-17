@@ -6,6 +6,7 @@
  * contents on the left and the author box centred below.
  */
 import { Image } from 'astro:assets';
+import { imageWidths } from '@lib/images';
 import type { MarkdownHeading } from 'astro';
 import BaseLayout from './BaseLayout.astro';
 import CategoryTag from '@components/posts/CategoryTag.astro';
@@ -54,6 +55,7 @@ const isText = template === 'text';
           src={image.src}
           alt={image.alt}
           layout="full-width"
+          widths={imageWidths(image.src)}
           loading="eager"
           fetchpriority="high"
           class="post__image"

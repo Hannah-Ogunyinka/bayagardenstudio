@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import { imageWidths } from '@lib/images';
 import Button from '@components/ui/Button.astro';
 import portraitOne from '@assets/images/home/brand-portrait-1.jpg';
 import portraitTwo from '@assets/images/home/brand-portrait-2.jpg';
@@ -25,14 +26,14 @@ import { MQ } from '@config/breakpoints';
     <Image
       src={portraitOne}
       alt="Brand portrait of a woman with red curly hair in a hoodie against a grey backdrop"
-      widths={[320, 480, 683]}
-      sizes={`${MQ.mdDown} 50vw, 25vw`}
+      widths={imageWidths(portraitOne)}
+      sizes={`${MQ.mdDown} 50vw, 30vw`}
     />
     <Image
       src={portraitTwo}
       alt="Brand portrait of a smiling man in a navy jumper against a grey backdrop"
-      widths={[320, 480, 683]}
-      sizes={`${MQ.mdDown} 50vw, 25vw`}
+      widths={imageWidths(portraitTwo)}
+      sizes={`${MQ.mdDown} 50vw, 30vw`}
     />
     </div>
   </div>

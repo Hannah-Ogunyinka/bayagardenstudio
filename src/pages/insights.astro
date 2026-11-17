@@ -1,6 +1,7 @@
 ---
 /** Insights: featured latest article, then a grid of every article. */
 import { Image } from 'astro:assets';
+import { imageWidths } from '@lib/images';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import CategoryTag from '@components/posts/CategoryTag.astro';
 import PostCard from '@components/posts/PostCard.astro';
@@ -32,8 +33,8 @@ const [featured] = posts;
             <Image
               src={featured.data.image.src}
               alt=""
-              widths={[480, 720, 960]}
-              sizes={`${MQ.mdDown} 100vw, 50vw`}
+              widths={imageWidths(featured.data.image.src)}
+              sizes={`${MQ.mdDown} 100vw, 56vw`}
               loading="eager"
               class="featured__image"
             />

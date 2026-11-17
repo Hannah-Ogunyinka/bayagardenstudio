@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import { imageWidths } from '@lib/images';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import ContactForm from '@components/forms/ContactForm.astro';
 import grid from '@assets/images/contact/contact-grid.png';
@@ -13,7 +14,7 @@ import { MQ } from '@config/breakpoints';
   <div class="contact">
     <h1>Solutions <span class="accent">crafted</span> for Businesses</h1>
     <div class="contact__columns">
-      <Image src={grid} alt="" widths={[320, 480, 640]} sizes={`${MQ.mdDown} 100vw, 40vw`} class="contact__image" />
+      <Image src={grid} alt="" widths={imageWidths(grid)} sizes={`${MQ.mdDown} 100vw, 40vw`} class="contact__image" />
       <div class="contact__form">
         <h2 class="sr-only">Start your project</h2>
         <ContactForm />

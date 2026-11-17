@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import { imageWidths } from '@lib/images';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import fallingCameras from '@assets/images/about/falling-cameras.webp';
 import workshop from '@assets/images/about/workshop-laptop.jpg';
@@ -23,6 +24,7 @@ import { MQ } from '@config/breakpoints';
       src={fallingCameras}
       alt="Hannah taking a self portrait with cameras falling around her"
       layout="full-width"
+      widths={imageWidths(fallingCameras)}
       loading="eager"
       fetchpriority="high"
       class="about__hero"
@@ -40,8 +42,8 @@ import { MQ } from '@config/breakpoints';
           little research on the internet, I was able to build an online space in one night.
         </p>
       </div>
-      <Image src={workshop} alt="A child building a robot at a laptop in the engineering workshop" widths={[320, 480, 640]} sizes={`${MQ.mdDown} 50vw, 25vw`} class="about__photo about__photo--offset" />
-      <Image src={hannahCamera} alt="Hannah smiling and holding a camera with a flash" widths={[320, 480, 640]} sizes={`${MQ.mdDown} 50vw, 25vw`} class="about__photo" />
+      <Image src={workshop} alt="A child building a robot at a laptop in the engineering workshop" widths={imageWidths(workshop)} sizes={`${MQ.mdDown} 100vw, 28vw`} class="about__photo about__photo--offset" />
+      <Image src={hannahCamera} alt="Hannah smiling and holding a camera with a flash" widths={imageWidths(hannahCamera)} sizes={`${MQ.mdDown} 100vw, 28vw`} class="about__photo" />
       </div>
     </section>
 
@@ -61,7 +63,7 @@ import { MQ } from '@config/breakpoints';
     </div>
 
     <section class="about__lean" aria-labelledby="lean">
-      <Image src={jumping} alt="A child leaping off a sofa mid-air, in black and white" widths={[480, 720, 1024]} sizes={`${MQ.mdDown} 100vw, 60vw`} />
+      <Image src={jumping} alt="A child leaping off a sofa mid-air, in black and white" widths={imageWidths(jumping)} sizes={`${MQ.mdDown} 100vw, 60vw`} />
       <div>
         <h2 id="lean">Lean business is the goal.</h2>
         <p>
@@ -89,7 +91,7 @@ import { MQ } from '@config/breakpoints';
           I love sharing best practices here at the Baya Garden Studio. Connect with me through my newsletter to receive
           quick tips on what’s working today.
         </p>
-        <Image src={signature} alt="Signed, Hannah Ogunyinka" width={300} class="about__signature" />
+        <Image src={signature} alt="Signed, Hannah Ogunyinka" widths={imageWidths(signature, 416)} sizes="26rem" class="about__signature" />
       </div>
     </div>
     </div>
