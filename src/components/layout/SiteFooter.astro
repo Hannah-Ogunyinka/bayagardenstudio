@@ -2,7 +2,10 @@
 /**
  * Footer plus the newsletter band that sits behind it.
  * The band is `position: sticky; bottom: 0` underneath the footer, so it is
- * revealed as the footer scrolls up and away.
+ * revealed as the footer scrolls up and away. It only turns sticky once the
+ * footer is near: iOS Safari and Brave tint their toolbars from any dark
+ * sticky element touching the screen edge, which painted a black bar on
+ * every page.
  */
 import { Image } from 'astro:assets';
 import Badge from '@assets/icons/badge-strategically-crafted.svg';
@@ -64,6 +67,17 @@ const columns = [
     </div>
   </div>
 </section>
+
+<script>
+  const footer = document.querySelector<HTMLElement>('.site-footer');
+  const band = document.querySelector<HTMLElement>('.newsletter-band');
+  if (footer && band) {
+    new IntersectionObserver(([entry]) => {
+      const reached = entry.isIntersecting || entry.boundingClientRect.top < 0;
+      band.toggleAttribute('data-revealing', reached);
+    }).observe(footer);
+  }
+</script>
 
 <style>
   .site-footer {
@@ -160,12 +174,16 @@ const columns = [
   }
 
   .newsletter-band {
-    position: sticky;
+    position: relative;
     bottom: 0;
     z-index: 1;
     padding: var(--space-xl) var(--space-md) 0;
     background-color: var(--color-text);
     font-family: var(--font-body);
+  }
+
+  .newsletter-band[data-revealing] {
+    position: sticky;
   }
 
   .newsletter-band__inner {
