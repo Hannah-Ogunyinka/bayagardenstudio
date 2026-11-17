@@ -171,19 +171,25 @@ const columns = [
   .newsletter-band__inner {
     display: flex;
     max-width: var(--container-l);
-    max-height: var(--thumb-max-height);
     margin-inline: auto;
     gap: var(--space-md);
-    overflow-y: clip;
 
     @media (--md-down) {
       flex-direction: column;
-      max-height: none;
     }
   }
 
+  /* Only the photo is cropped, so a form message can grow the band. */
   .newsletter-band__image {
     flex: 0 0 40%;
+    align-self: flex-end;
+    max-height: var(--thumb-max-height);
+    overflow-y: clip;
+
+    @media (--md-down) {
+      align-self: auto;
+      max-height: none;
+    }
   }
 
   .newsletter-band__content {
