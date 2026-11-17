@@ -72,7 +72,7 @@ export const POST: APIRoute = async ({ request }) => {
       ].join('\n'),
     });
   } catch (error) {
-    console.error('Contact form: email not sent', error);
+    console.error(`Contact form: email not sent: ${error instanceof Error ? error.message : String(error)}`);
     return formResponse(
       request,
       { ok: false, message: `Sorry, something went wrong. Please email ${env.CONTACT_TO ?? 'us'} instead.` },

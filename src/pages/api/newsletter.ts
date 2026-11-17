@@ -36,7 +36,7 @@ export const POST: APIRoute = async ({ request }) => {
   try {
     await subscribe(parsed.data);
   } catch (error) {
-    console.error('Newsletter: sign-up failed', error);
+    console.error(`Newsletter: sign-up failed: ${error instanceof Error ? error.message : String(error)}`);
     // Tell Hannah, so an expired Brevo key (keys lapse after 90 days unused) never goes unnoticed.
     if (env.CONTACT_TO && env.CONTACT_FROM) {
       await sendEmail({
