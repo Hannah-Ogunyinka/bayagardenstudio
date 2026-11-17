@@ -19,6 +19,10 @@ export default defineConfig({
   // Every live URL ends in a slash; keep them identical for SEO.
   trailingSlash: 'always',
   build: { format: 'directory' },
+  // The site keeps no server-side sessions (the gallery gate uses its own signed cookie), so turn
+  // off Astro sessions. Otherwise the Cloudflare adapter adds a SESSION KV binding with no
+  // namespace ID, which `wrangler preview` rejects and so breaks the PR preview builds.
+  session: false,
   // Code blocks use the same Shiki theme as the live articles.
   markdown: { shikiConfig: { theme: 'nord' } },
 
