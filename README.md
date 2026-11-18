@@ -2,6 +2,8 @@
 
 The Astro rebuild of bayagardenstudio.com.
 
+How changes are made, reviewed and released (branches, pull requests, going live): see [WORKFLOW.md](WORKFLOW.md). Design tokens and styles: see [DESIGN-SYSTEM.md](DESIGN-SYSTEM.md).
+
 ## Forms and client galleries
 
 Everything here runs on the Cloudflare Worker; all other pages are static.
