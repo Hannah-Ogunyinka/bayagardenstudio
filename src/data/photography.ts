@@ -7,7 +7,8 @@ import type { ImageMetadata } from 'astro';
 export const PHOTO_CATEGORIES = ['portraits', 'products', 'events'] as const;
 export type PhotoCategory = (typeof PHOTO_CATEGORIES)[number];
 
-const files = import.meta.glob<{ default: ImageMetadata }>('../assets/images/photography/*.jpg', { eager: true });
+// Any of these photo formats can be used; Astro converts them to WebP at build time.
+const files = import.meta.glob<{ default: ImageMetadata }>('../assets/images/photography/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}', { eager: true });
 
 function photo(file: string) {
   const image = files[`../assets/images/photography/${file}`]?.default;
