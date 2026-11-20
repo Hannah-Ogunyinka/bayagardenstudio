@@ -13,7 +13,7 @@
  * - Hovering a bird (mouse or trackpad) wakes it, and all three celebrate when
  *   the contact form is sent.
  *
- * Lines are 2px outlines and 1.25px details at every size (non-scaling strokes).
+ * Lines are 2px outlines and 1.25px details, and one even 1.5px weight on phones.
  * Shapes whose outlines join (the wood, each cloud) are drawn twice: a 4px
  * outline pass, then a fill pass that hides the inner half and the overlaps.
  * The artwork is generated; edit coordinates with care.
@@ -164,6 +164,24 @@
   .contact-tree.dip-b1 .on-b1 .tree-cloud__inner,
   .contact-tree.dip-b0 .on-b0 .tree-cloud__inner {
     animation: tree-cloud-shiver 0.9s 0.1s;
+  }
+
+  /* On phones every line is one weight. The joined outlines (wood, clouds) are
+     4-unit strokes that shrink with the drawing, so here they become fixed
+     strokes too, and everything else drops to match them. */
+  @media (--md-down) {
+    .contact-tree [stroke-width='4'] {
+      stroke-width: 3px; /* token-exempt: SVG line weight, half is hidden under the fill */
+    }
+
+    .contact-tree [stroke-width='4'] > * {
+      vector-effect: non-scaling-stroke;
+    }
+
+    .contact-tree [stroke-width='2'],
+    .contact-tree [stroke-width='1.25'] {
+      stroke-width: 1.5px; /* token-exempt: SVG line weight, matches the visible outline */
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
