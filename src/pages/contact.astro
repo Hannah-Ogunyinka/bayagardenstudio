@@ -1,10 +1,7 @@
 ---
-import { Image } from 'astro:assets';
-import { imageWidths } from '@lib/images';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import ContactForm from '@components/forms/ContactForm.astro';
-import grid from '@assets/images/contact/contact-grid.png';
-import { MQ } from '@config/breakpoints';
+import ContactTree from '@components/contact/ContactTree.astro';
 ---
 
 <BaseLayout
@@ -14,20 +11,24 @@ import { MQ } from '@config/breakpoints';
   <div class="contact">
     <h1>Solutions <span class="accent">crafted</span> for Businesses</h1>
     <div class="contact__columns">
-      <Image src={grid} alt="" widths={imageWidths(grid)} sizes={`${MQ.mdDown} 100vw, 40vw`} class="contact__image" />
       <div class="contact__form">
         <h2 class="sr-only">Start your project</h2>
         <ContactForm />
+      </div>
+      <div class="contact__tree">
+        <ContactTree />
       </div>
     </div>
   </div>
 </BaseLayout>
 
 <style>
+  /* Wider side margins than the rest of the site: about 24px on phones, 77px at
+     1280px and up to 112px on large screens. */
   .contact {
     max-width: var(--container-wide);
     margin-inline: auto;
-    padding: var(--space-md) var(--space-md) var(--space-xl);
+    padding: var(--space-md) clamp(var(--space-md), 6vw, var(--space-2xl)) var(--space-xl);
   }
 
   /* Theme: a 900px heading box set to the right. On the live site
@@ -49,20 +50,22 @@ import { MQ } from '@config/breakpoints';
     color: var(--color-purple);
   }
 
+  /* The form takes the right half. The tree stands on the form's last line and
+     rises above the form, so its top branches sit beside "Businesses". */
   .contact__columns {
+    position: relative;
     display: flex;
-    gap: var(--space-md);
-    justify-content: space-between;
-    align-items: flex-start;
+    justify-content: flex-end;
 
-    /* On phones the form comes first, as on the live site. */
+    /* On phones the tree follows the form. */
     @media (--md-down) {
-      flex-direction: column-reverse;
-      align-items: stretch;
+      flex-direction: column;
     }
   }
 
   .contact__form {
+    position: relative;
+    z-index: 1;
     flex: 0 0 calc(50% - var(--space-md) / 2);
 
     @media (--md-down) {
@@ -70,12 +73,18 @@ import { MQ } from '@config/breakpoints';
     }
   }
 
-  .contact__image {
-    max-width: min(50%, 29.8125rem); /* token-exempt: the collage's natural width (477px) */
-    height: auto;
+  .contact__tree {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: min(calc(50% - 1.5rem), 36rem); /* token-exempt: sized so the branch tips clear "Businesses" at 1440px */
+    aspect-ratio: 480 / 720;
 
     @media (--md-down) {
-      max-width: 100%;
+      position: static;
+      width: 100%;
+      /* Matches the page's bottom padding, so the tree has even space above and below. */
+      margin-top: var(--space-xl);
     }
   }
 </style>

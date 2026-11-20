@@ -131,7 +131,11 @@ function enhance(form: HTMLFormElement): void {
       const result = (await response.json()) as { ok: boolean; message: string; fields?: string[] };
       say(result.message);
       markInvalid(result.fields ?? []);
-      if (result.ok) form.reset();
+      if (result.ok) {
+        form.reset();
+        // Lets the page celebrate (the contact page tree's birds flutter).
+        form.dispatchEvent(new CustomEvent('bgs:form-sent', { bubbles: true }));
+      }
     } catch {
       say('Sorry, the form could not be sent. Please check your connection and try again.');
     } finally {
