@@ -9,12 +9,11 @@ const IDLE_FOR_MS = 30_000;
 const IDLE_MIN_MS = 3_000;
 const IDLE_SPREAD_MS = 3_000;
 
-type Move = 'flutter' | 'flick' | 'turn' | 'peek';
+type Move = 'flutter' | 'flick' | 'peek';
 
 const MOVE_CLASS: Record<Move, string> = {
   flutter: 'is-flying',
   flick: 'is-flicking',
-  turn: 'is-turning',
   peek: 'is-peeking',
 };
 
@@ -22,7 +21,6 @@ const MOVE_CLASS: Record<Move, string> = {
 const END_OF: Record<string, string> = {
   'tree-bird-flap': 'is-flying',
   'tree-bird-flick': 'is-flicking',
-  'tree-bird-turn': 'is-turning',
   'tree-bird-peek': 'is-peeking',
 };
 
@@ -62,11 +60,8 @@ export function initContactTree(): void {
   let idleTimer: number | undefined;
   let lastBird: SVGGElement | undefined;
 
-  const randomMove = (): Move => {
-    const roll = Math.random();
-    if (roll < 0.45) return 'flutter';
-    return roll < 0.75 ? 'flick' : 'turn';
-  };
+  // Roughly half the moves are a full flutter, the rest a tail flick on its own.
+  const randomMove = (): Move => (Math.random() < 0.5 ? 'flutter' : 'flick');
 
   const scheduleIdle = (): void => {
     window.clearTimeout(idleTimer);
