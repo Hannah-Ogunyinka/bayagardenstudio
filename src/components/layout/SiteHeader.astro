@@ -5,7 +5,7 @@
  */
 import Button from '@components/ui/Button.astro';
 import MenuOverlay from './MenuOverlay.astro';
-import LogoMark from '@assets/icons/logo-mark.svg';
+import AnimatedLogo from './AnimatedLogo.astro';
 import { SITE } from '@config/site';
 
 const isHome = Astro.url.pathname === '/';
@@ -16,7 +16,7 @@ const isHome = Astro.url.pathname === '/';
 <header class="site-header" data-inert-when-menu-open>
   <div class="site-header__inner">
     <a href="/" class="site-header__brand" aria-current={isHome ? 'page' : undefined}>
-      <LogoMark class="site-header__logo" aria-hidden="true" width={50} height={50} />
+      <AnimatedLogo />
       <span class="site-header__title hide-mobile">{SITE.name}</span>
       <span class="sr-only">{SITE.name} home</span>
     </a>
@@ -64,11 +64,6 @@ const isHome = Astro.url.pathname === '/';
     gap: var(--space-xs);
     color: var(--color-text);
     text-decoration: none;
-  }
-
-  .site-header__logo {
-    width: var(--logo-size);
-    height: var(--logo-size);
   }
 
   .site-header__title {

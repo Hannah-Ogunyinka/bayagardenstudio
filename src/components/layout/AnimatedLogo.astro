@@ -1,0 +1,197 @@
+---
+/**
+ * The bird logo mark, animated: on the first page of a visit the wing lifts,
+ * flutters four beats and settles, with the tail and back wing following.
+ * It flies again when the logo link is hovered or focused, and blinks now and
+ * then while resting. Visitors who ask for reduced motion see it still.
+ *
+ * Same artwork and size as src/assets/icons/logo-mark.svg (--logo-size).
+ * The tail and wings are the original shapes, clipped so they can move.
+ */
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<svg
+  class:list={['baya-logo', className]}
+  data-baya-logo
+  xmlns="http://www.w3.org/2000/svg"
+  width="50"
+  height="50"
+  viewBox="0 0 56 56"
+  fill="none"
+  aria-hidden="true"
+  focusable="false"
+>
+  <defs>
+      <clipPath id="baya-logo-clip">
+      <path d="M56 28C56 12.5462 43.4577 0 28.0093 0H27.9907C12.5423 0 0 12.5462 0 28C0 43.4531 12.5423 56 27.9907 56H28.0093C43.4577 56 56 43.4531 56 28Z"/>
+      </clipPath>
+      <clipPath id="baya-logo-wing-clip">
+      <path d="M37.6157 9.6524C37.5385 10.1311 38.3123 29.9265 33.7453 33.2112C29.263 36.4352 20.2179 35.4445 20.1793 35.6554C19.6391 38.5579 19.8524 47.5353 19.6659 47.1192C17.7945 47.1347 15.9456 47.0667 14.25 46.4586C14.25 46.4586 22.6306 13.9145 28.2812 10.1394C31.9875 7.66283 37.2094 9.54802 37.6157 9.6524Z"/>
+      <path d="M37.62 0V9.65L33 14L20 36L0 56V0Z"/>
+      </clipPath>
+      <clipPath id="baya-logo-tail-clip">
+      <rect x="0" y="33.5" width="20.25" height="22.5"/>
+      </clipPath>
+      <clipPath id="baya-logo-upper-clip">
+      <rect x="0" y="0" width="56" height="36.6"/>
+      <rect x="20.25" y="0" width="35.75" height="56"/>
+      </clipPath>
+  </defs>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M56 28C56 12.5462 43.4577 0 28.0093 0H27.9907C12.5423 0 0 12.5462 0 28C0 43.4531 12.5423 56 27.9907 56H28.0093C43.4577 56 56 43.4531 56 28Z" fill="#1D1D1D" />
+  <g clip-path="url(#baya-logo-clip)">
+    <g class="baya-logo__bird">
+      <!-- back wing: behind the body, only shows when lifted -->
+      <g clip-path="url(#baya-logo-wing-clip)">
+        <path class="baya-logo__wing baya-logo__wing--far" fill-rule="evenodd" clip-rule="evenodd" d="M37.4419 18.9569C37.2918 18.566 29.0474 18.4386 25.1085 22.3869C21.1706 26.3338 19.594 35.4664 20.1363 35.8156C22.4268 36.0389 30.3347 35.3843 32.9521 33.9433C37.5652 31.4037 37.2018 20.9027 37.4419 18.9569Z" fill="#7A2FB8" />
+      </g>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M37.5806 9.64291L41.7499 10.8928L37.6063 12.739L37.5806 9.64291Z" fill="#AE47FF" />
+      <!-- tail: the body shape clipped below the hips -->
+      <g class="baya-logo__tail">
+        <g clip-path="url(#baya-logo-tail-clip)">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M37.6157 9.6524C37.5385 10.1311 38.3123 29.9265 33.7453 33.2112C29.263 36.4352 20.2179 35.4445 20.1793 35.6554C19.6391 38.5579 19.8524 47.5353 19.6659 47.1192C17.7945 47.1347 15.9456 47.0667 14.25 46.4586C14.25 46.4586 22.6306 13.9145 28.2812 10.1394C31.9875 7.66283 37.2094 9.54802 37.6157 9.6524ZM34.3316 11.0103C34.8096 11.0103 35.1966 11.3978 35.1966 11.8752C35.1966 12.3524 34.8096 12.7399 34.3316 12.7399C33.8546 12.7399 33.4677 12.3524 33.4677 11.8752C33.4677 11.3978 33.8546 11.0103 34.3316 11.0103Z" fill="#EAEAEA" />
+        </g>
+      </g>
+      <!-- body above the hips -->
+      <g clip-path="url(#baya-logo-upper-clip)">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M37.6157 9.6524C37.5385 10.1311 38.3123 29.9265 33.7453 33.2112C29.263 36.4352 20.2179 35.4445 20.1793 35.6554C19.6391 38.5579 19.8524 47.5353 19.6659 47.1192C17.7945 47.1347 15.9456 47.0667 14.25 46.4586C14.25 46.4586 22.6306 13.9145 28.2812 10.1394C31.9875 7.66283 37.2094 9.54802 37.6157 9.6524ZM34.3316 11.0103C34.8096 11.0103 35.1966 11.3978 35.1966 11.8752C35.1966 12.3524 34.8096 12.7399 34.3316 12.7399C33.8546 12.7399 33.4677 12.3524 33.4677 11.8752C33.4677 11.3978 33.8546 11.0103 34.3316 11.0103Z" fill="#EAEAEA" />
+      </g>
+      <!-- front wing -->
+      <g clip-path="url(#baya-logo-wing-clip)">
+        <path class="baya-logo__wing baya-logo__wing--near" fill-rule="evenodd" clip-rule="evenodd" d="M37.4419 18.9569C37.2918 18.566 29.0474 18.4386 25.1085 22.3869C21.1706 26.3338 19.594 35.4664 20.1363 35.8156C22.4268 36.0389 30.3347 35.3843 32.9521 33.9433C37.5652 31.4037 37.2018 20.9027 37.4419 18.9569Z" fill="#AE47FF" />
+      </g>
+      <!-- eye sits above the wing so it stays visible when the wing is raised -->
+      <circle cx="34.3316" cy="11.8752" r="0.95" fill="#EAEAEA" />
+      <circle class="baya-logo__eye" cx="34.3316" cy="11.8752" r="0.8647" fill="#1D1D1D" />
+    </g>
+  </g>
+</svg>
+
+<script>
+  import { initAnimatedLogo } from '../../scripts/animated-logo';
+  initAnimatedLogo();
+</script>
+
+<style>
+  .baya-logo {
+    width: var(--logo-size);
+    height: var(--logo-size);
+  }
+
+  .baya-logo__wing {
+    transform-box: view-box;
+    transform-origin: 36.6px 20px; /* token-exempt: shoulder pivot in the 56-unit SVG artwork */
+  }
+
+  .baya-logo__tail {
+    transform-box: view-box;
+    transform-origin: 20.2px 35.7px; /* token-exempt: hip pivot in the 56-unit SVG artwork */
+  }
+
+  .baya-logo__eye {
+    transform-box: view-box;
+    transform-origin: 34.33px 11.88px; /* token-exempt: eye centre in the 56-unit SVG artwork */
+    animation: baya-logo-blink 4.6s infinite;
+  }
+
+  /* One flight, 1.4s. The script adds .is-flying and removes it when the flight ends. */
+  .baya-logo.is-flying .baya-logo__bird {
+    animation: baya-logo-bob 1.4s ease-in-out;
+  }
+
+  .baya-logo.is-flying .baya-logo__wing--near {
+    animation: baya-logo-flap 1.4s;
+  }
+
+  .baya-logo.is-flying .baya-logo__wing--far {
+    animation: baya-logo-flap-far 1.4s;
+  }
+
+  .baya-logo.is-flying .baya-logo__tail {
+    animation: baya-logo-tail 1.4s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .baya-logo__eye,
+    .baya-logo.is-flying .baya-logo__bird,
+    .baya-logo.is-flying .baya-logo__wing--near,
+    .baya-logo.is-flying .baya-logo__wing--far,
+    .baya-logo.is-flying .baya-logo__tail {
+      animation: none;
+    }
+  }
+
+  /* Front wing: a small dip, then four beats that taper. Each beat pushes down
+     fast and recovers slowly, and the wing shortens at the top as it turns. */
+  @keyframes baya-logo-flap {
+    0%, 4.6% { transform: rotate(0deg) scale(1,1); animation-timing-function: ease-out; }
+    11.4% { transform: rotate(-7deg) scale(1,1); animation-timing-function: cubic-bezier(.3,0,.2,1); }
+    22.9% { transform: rotate(74deg) scale(.96,.86); animation-timing-function: cubic-bezier(.55,0,.85,.45); }
+    26.5% { transform: rotate(42deg) scale(1,1); animation-timing-function: cubic-bezier(.15,.55,.35,1); }
+    32% { transform: rotate(68deg) scale(.96,.86); animation-timing-function: cubic-bezier(.55,0,.85,.45); }
+    35.7% { transform: rotate(40deg) scale(1,1); animation-timing-function: cubic-bezier(.15,.55,.35,1); }
+    41.1% { transform: rotate(60deg) scale(.96,.86); animation-timing-function: cubic-bezier(.55,0,.85,.45); }
+    44.8% { transform: rotate(36deg) scale(1,1); animation-timing-function: cubic-bezier(.15,.55,.35,1); }
+    50.3% { transform: rotate(52deg) scale(.96,.86); animation-timing-function: cubic-bezier(.55,0,.85,.45); }
+    53.9% { transform: rotate(30deg) scale(1,1); animation-timing-function: cubic-bezier(.15,.55,.35,1); }
+    59.4% { transform: rotate(40deg) scale(1,1); animation-timing-function: ease-in-out; }
+    75.4% { transform: rotate(-6deg) scale(1,1); animation-timing-function: ease-out; }
+    84.6% { transform: rotate(3deg) scale(1,1); animation-timing-function: ease-in-out; }
+    93.7%, 100% { transform: rotate(0deg) scale(1,1); }
+  }
+
+  /* Back wing: a little higher, trailing the front wing slightly. */
+  @keyframes baya-logo-flap-far {
+    0%, 6.9% { transform: rotate(0deg) scale(1,1); animation-timing-function: ease-out; }
+    13.7% { transform: rotate(-7deg) scale(1,1); animation-timing-function: cubic-bezier(.3,0,.2,1); }
+    25.1% { transform: rotate(82deg) scale(.96,.86); animation-timing-function: cubic-bezier(.55,0,.85,.45); }
+    28.8% { transform: rotate(50deg) scale(1,1); animation-timing-function: cubic-bezier(.15,.55,.35,1); }
+    34.3% { transform: rotate(76deg) scale(.96,.86); animation-timing-function: cubic-bezier(.55,0,.85,.45); }
+    37.9% { transform: rotate(48deg) scale(1,1); animation-timing-function: cubic-bezier(.15,.55,.35,1); }
+    43.4% { transform: rotate(68deg) scale(.96,.86); animation-timing-function: cubic-bezier(.55,0,.85,.45); }
+    47.1% { transform: rotate(44deg) scale(1,1); animation-timing-function: cubic-bezier(.15,.55,.35,1); }
+    52.6% { transform: rotate(60deg) scale(.96,.86); animation-timing-function: cubic-bezier(.55,0,.85,.45); }
+    56.2% { transform: rotate(38deg) scale(1,1); animation-timing-function: cubic-bezier(.15,.55,.35,1); }
+    61.7% { transform: rotate(48deg) scale(1,1); animation-timing-function: ease-in-out; }
+    77.7% { transform: rotate(-6deg) scale(1,1); animation-timing-function: ease-out; }
+    86.9% { transform: rotate(3deg) scale(1,1); animation-timing-function: ease-in-out; }
+    96%, 100% { transform: rotate(0deg) scale(1,1); }
+  }
+
+  /* Tail: flicks with each beat, a fraction behind the wing. */
+  @keyframes baya-logo-tail {
+    0%, 6.9% { transform: rotate(0deg); animation-timing-function: ease-out; }
+    13.7% { transform: rotate(-2deg); animation-timing-function: cubic-bezier(.3,0,.2,1); }
+    25.1% { transform: rotate(7deg); animation-timing-function: cubic-bezier(.55,0,.85,.45); }
+    28.8% { transform: rotate(2deg); animation-timing-function: cubic-bezier(.15,.55,.35,1); }
+    34.3% { transform: rotate(6deg); animation-timing-function: cubic-bezier(.55,0,.85,.45); }
+    37.9% { transform: rotate(2deg); animation-timing-function: cubic-bezier(.15,.55,.35,1); }
+    43.4% { transform: rotate(5deg); animation-timing-function: cubic-bezier(.55,0,.85,.45); }
+    47.1% { transform: rotate(1.5deg); animation-timing-function: cubic-bezier(.15,.55,.35,1); }
+    52.6% { transform: rotate(4deg); animation-timing-function: cubic-bezier(.55,0,.85,.45); }
+    56.2% { transform: rotate(1deg); animation-timing-function: cubic-bezier(.15,.55,.35,1); }
+    61.7% { transform: rotate(1deg); animation-timing-function: ease-in-out; }
+    77.7% { transform: rotate(-3deg); animation-timing-function: ease-out; }
+    86.9% { transform: rotate(1deg); animation-timing-function: ease-in-out; }
+    96%, 100% { transform: rotate(0deg); }
+  }
+
+  /* The bird rises a little while it flutters. */
+  @keyframes baya-logo-bob {
+    0%, 13.7%   { transform: translateY(0); }
+    32%, 59.4% { transform: translateY(-1.4px); } /* token-exempt: SVG artwork units */
+    82.3%      { transform: translateY(0.4px); } /* token-exempt: SVG artwork units */
+    96%, 100% { transform: translateY(0); }
+  }
+
+  /* Blinks run on their own 4.6s clock, so they rarely line up with a flight.
+     The eye shuts quickly and opens more slowly. */
+  @keyframes baya-logo-blink {
+    0%, 30%, 33%, 70%, 72.5%, 74%, 76.5%, 100% { transform: scaleY(1); animation-timing-function: ease-in; }
+    30.8%, 70.8%, 74.8% { transform: scaleY(0.1); animation-timing-function: ease-out; }
+  }
+</style>
